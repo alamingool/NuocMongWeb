@@ -134,34 +134,100 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure script runs afte
          }
     });
 
-    // 3. Implement Looping via Scroll Event Listener
+    // 3. Implement Looping via Scroll Event Listener (Revised)
+    let isHandlingLoop = false; // Flag to prevent infinite loops during the jump
+
     galleryTrack.addEventListener('scroll', () => {
+        if (isHandlingLoop) return; // Don't trigger loop logic while already jumping
+
         const scrollLeft = galleryTrack.scrollLeft;
-        const maxScrollLeft = galleryTrack.scrollWidth - galleryTrack.offsetWidth;
+        const trackWidth = galleryTrack.offsetWidth;
+        const itemWidth = galleryItems[0].offsetWidth; // Assuming items have similar width, or get actual width
+        const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
+        const scrollPosCentered = scrollLeft + (trackWidth / 2); // Center of the visible area
 
-        // Get the scroll position of the first real image (after duplicates)
-        const firstRealImageScrollLeft = getScrollLeftForIndex(numDuplicatesStart);
-        // Get the scroll position of the last real image (before duplicates)
-        const lastRealImageScrollLeft = getScrollLeftForIndex(galleryItems.length - 1 - numDuplicatesEnd);
+        // Find the index of the item closest to the center of the view
+        // This is a simple approximation, scroll-snap helps make this reliable
+        let closestIndex = 0;
+        let minDiff = Math.abs((galleryItems[0].offsetLeft + itemWidth / 2) - scrollPosCentered);
 
-
-        // Check if scrolled to the end duplicates (teleport to start real images)
-        // We need a small tolerance because scroll positions might not be exact pixel values
-        if (scrollLeft >= maxScrollLeft - galleryItems[0].offsetWidth * numDuplicatesEnd - 10) { // Adjust tolerance if needed
-             console.log("Reached end duplicates, jumping to start real images...");
-             galleryTrack.scrollTo({
-                 left: firstRealImageScrollLeft,
-                 behavior: 'instant' // Jump instantly
-             });
+        for (let i = 1; i < galleryItems.length; i++) {
+             const diff = Math.abs((galleryItems[i].offsetLeft + galleryItems[i].offsetWidth / 2) - scrollPosCentered);
+             if (diff < minDiff) {
+                  minDiff = diff;
+                  closestIndex = i;
+             }
         }
-        // Check if scrolled to the start duplicates (teleport to end real images)
-        else if (scrollLeft <= getScrollLeftForIndex(0) + galleryItems[0].offsetWidth * numDuplicatesStart + 10) { // Adjust tolerance
-             console.log("Reached start duplicates, jumping to end real images...");
-             galleryTrack.scrollTo({
-                  left: lastRealImageScrollLeft,
-                  behavior: 'instant' // Jump instantly
-             });
+
+        // Determine if we are currently centered on a duplicate item
+        // Check if the closest centered item is in the duplicate zones
+        const totalItems = galleryItems.length;
+        const firstRealIndex = numDuplicatesStart;
+        const lastRealIndex = totalItems - 1 - numDuplicatesEnd;
+
+        let targetIndex = -1; // -1 means no jump needed yet
+
+        // Check if centered on a START duplicate (indices 0 to numDuplicatesStart-1)
+        if (closestIndex < firstRealIndex) {
+            targetIndex = firstRealIndex + (closestIndex); // Jump to the corresponding real item index
+            console.log(`Centered on start duplicate (index ${closestIndex}), planning jump to real index ${targetIndex}`);
         }
+        // Check if centered on an END duplicate (indices totalItems-numDuplicatesEnd to totalItems-1)
+        else if (closestIndex > lastRealIndex) {
+             targetIndex = firstRealIndex + (closestIndex - (lastRealIndex + 1)); // Jump to corresponding real index
+             console.log(`Centered on end duplicate (index ${closestIndex}), planning jump to real index ${targetIndex}`);
+        }
+
+
+        // If a jump is needed
+        if (targetIndex !== -1) {
+             isHandlingLoop = true; // Set the flag
+             const targetScrollLeft = getScrollLeftForIndex(targetIndex);
+
+             // Wait for the smooth scroll started by button/manual scroll to potentially finish
+             // or just trigger the instant jump immediately based on scroll position reaching the boundary
+             // The original scrollLeft check logic might be better for *triggering* the jump instantly
+             // Let's combine: use scrollLeft boundaries to trigger, but index to confirm/calculate target
+
+            // --- Refined Loop Logic (combining scrollLeft bounds check with index for target) ---
+             const scrollAtFirstReal = getScrollLeftForIndex(firstRealIndex);
+             const scrollAtLastReal = getScrollLeftForIndex(lastRealIndex);
+             const tolerance = 5; // Small pixel tolerance
+
+             if (scrollLeft <= scrollAtFirstReal - tolerance) {
+                  // Scrolled left past the start of the real images (into duplicates)
+                  console.log("Boundary crossed Left, jumping to end real images...");
+                  galleryTrack.scrollTo({
+                       left: scrollAtLastReal,
+                       behavior: 'instant'
+                  });
+                  // Reset flag after the instant scroll completes (or very shortly after)
+                  // A small timeout might be needed if the instant scroll isn't truly instant in all cases
+                   requestAnimationFrame(() => { // Or setTimeout(..., 0);
+                        isHandlingLoop = false;
+                        console.log("Loop handling finished.");
+                   });
+
+             } else if (scrollLeft >= scrollAtLastReal + tolerance) {
+                  // Scrolled right past the end of the real images (into duplicates)
+                  console.log("Boundary crossed Right, jumping to start real images...");
+                   galleryTrack.scrollTo({
+                       left: scrollAtFirstReal,
+                       behavior: 'instant'
+                  });
+                   requestAnimationFrame(() => { // Or setTimeout(..., 0);
+                        isHandlingLoop = false;
+                         console.log("Loop handling finished.");
+                   });
+             } else {
+                 // If no jump was needed based on boundary, reset flag if it was set
+                 // (This handles cases where a scroll stops just before the boundary)
+                 isHandlingLoop = false;
+             }
+        }
+         // else { // If no jump was needed at all, ensure flag is false
+         //      isHandlingLoop = false; // This might be redundant if logic is right, but safer
+         // }
     });
 
     // --- Optional: Keyboard Navigation (Left/Right Arrow Keys) ---

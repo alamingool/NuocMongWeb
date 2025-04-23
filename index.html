@@ -20,22 +20,25 @@
             <div class="logo">
                 <a href="index.html">
                     <!-- Make sure the path to your logo is correct -->
+                    <!-- If logo is text, use h1 or div with styles -->
+                    <!-- REMINDER: Replace with your actual logo image -->
                     <img src="images/logo.png" alt="Nuoc Mong Logo">
                 </a>
             </div>
             <ul>
                 <li><a href="#home">Home</a></li>
-                <!-- *** MOVED Gallery Link Up *** -->
                 <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#trailer">Trailer</a></li> <!-- Added Trailer link back -->
-                <li><a href="#features">Features</a></li> <!-- Added Features link back -->
+                <li><a href="#trailer">Trailer</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="#community">Community</a></li>
+                <li><a href="#requirements">Requirements</a></li> <!-- Shortened link text -->
+                <li><a href="#community">Community</a></li> <!-- Re-added Community link -->
                 <!-- Optional News Link -->
                 <!-- <li><a href="#news">News</a></li> -->
             </ul>
             <!-- *** CTA Button in Navigation *** -->
-            <a href="[Your Itch.io Game Page Link]" class="cta-button nav-cta" target="_blank" rel="noopener noreferrer">Add to Collection!</a>
+             <!-- REMINDER: Replace with your actual Itch.io link -->
+            <a href="https://itch.io/your-game-link" class="cta-button nav-cta" target="_blank" rel="noopener noreferrer">Add to Collection!</a>
             <!-- Add a Mobile Menu Toggle Button here later if needed -->
         </nav>
     </header>
@@ -45,18 +48,31 @@
         <!-- ===== 1. Homepage Content ===== -->
         <section id="home" class="hero">
             <div class="hero-content container">
-                 <!-- Placeholder for stunning visual (Background via CSS or foreground element) -->
+                 <!-- Background is now set via CSS on .hero::before -->
                 <h1>Nuoc Mong</h1> <!-- Game Title -->
                 <h2>Where Tradition Meets Innovation – You're in Control</h2>
                 <p>Uncover the vibrant tapestry of Vietnamese heritage, where centuries-old traditions come to life with stunning precision.
                     All from the comfort of your PC.</p>
+
+                <!-- *** The homepage image is now a CSS background *** -->
+                <!-- <img src="screenshots/02.png" alt="Nuoc Mong Game Graphic or Key Art" class="hero-image"> -->
+
                  <!-- *** Primary CTA Button *** -->
-                <a href="[Your Itch.io Game Page Link]" class="cta-button hero-cta" target="_blank" rel="noopener noreferrer">Add to Collection on Itch.io</a>
+                  <!-- REMINDER: Replace with your actual Itch.io link -->
+                <a href="https://itch.io/your-game-link" class="cta-button hero-cta" target="_blank" rel="noopener noreferrer">Add to Collection on Itch.io</a>
             </div>
             <!-- Optional: Add subtle scroll down indicator -->
         </section>
 
-        <!-- ===== Fluid Gallery Section (MOVED TO TOP & Enhanced) ===== -->
+        <!-- ===== Intro Section (Placed before Gallery for fade effect) ===== -->
+         <section id="intro" class="container content-section">
+            <h2>Discover an Enchanting World</h2>
+            <p>Nuoc Mong is an immersive, interactive experience that reimagines the timeless art of Vietnamese water puppetry, blending tradition with cutting-edge technology. Players don't just watch the performance; they step into the heart of the story, becoming the unseen hand that guides the show. Through intuitive hand-tracking controls, you will breathe life into vibrant puppets, manipulate the environment, and influence the unfolding narrative. It's a unique fusion of cultural heritage and modern interactive storytelling, inviting you to connect with Vietnamese folklore in a deeply personal way.</p>
+            <!-- A pseudo-element on this section will create the fade effect to the gallery below -->
+        </section>
+
+
+        <!-- ===== Fluid Gallery Section ===== -->
         <section id="gallery" class="content-section">
             <div class="container"> <!-- Container for the heading -->
                  <h2>Screenshots</h2>
@@ -75,117 +91,198 @@
                         Ensure 'alt' text indicates they are duplicates if you like.
                     -->
                     <!-- DUPLICATES (LAST 2 REAL IMAGES) -->
-                     <img src="screenshots/12.png" alt="Nuoc Mong Screenshot 11 (Duplicate)" class="gallery-item is-duplicate">
-                     <img src="screenshots/13.png" alt="Nuoc Mong Screenshot 12 (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/12.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/13.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
                     <!-- END DUPLICATES -->
 
                     <!-- REAL IMAGES (Your actual screenshots) -->
-                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot 1" class="gallery-item">
-                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot 2" class="gallery-item">
-                    <img src="screenshots/04.png" alt="Nuoc Mong Screenshot 3" class="gallery-item">
-                    <img src="screenshots/05.png" alt="Nuoc Mong Screenshot 4" class="gallery-item">
-                    <img src="screenshots/06.png" alt="Nuoc Mong Screenshot 5" class="gallery-item">
-                    <img src="screenshots/07.png" alt="Nuoc Mong Screenshot 6" class="gallery-item">
-                    <img src="screenshots/08.png" alt="Nuoc Mong Screenshot 7" class="gallery-item">
-                    <img src="screenshots/09.png" alt="Nuoc Mong Screenshot 8" class="gallery-item">
-                    <img src="screenshots/10.png" alt="Nuoc Mong Screenshot 9" class="gallery-item">
-                    <img src="screenshots/11.png" alt="Nuoc Mong Screenshot 10" class="gallery-item">
-                    <img src="screenshots/12.png" alt="Nuoc Mong Screenshot 11" class="gallery-item">
-                    <img src="screenshots/13.png" alt="Nuoc Mong Screenshot 12" class="gallery-item">
+                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot showing a puppet on the water stage." class="gallery-item">
+                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot of detailed puppet design." class="gallery-item">
+                    <img src="screenshots/04.png" alt="Nuoc Mong Screenshot showing the watery stage environment." class="gallery-item">
+                    <img src="screenshots/05.png" alt="Nuoc Mong Screenshot featuring unique lighting effects." class="gallery-item">
+                    <img src="screenshots/06.png" alt="Nuoc Mong Screenshot of a character performance." class="gallery-item">
+                    <img src="screenshots/07.png" alt="Nuoc Mong Screenshot depicting a scene from Vietnamese folklore." class="gallery-item">
+                    <img src="screenshots/08.png" alt="Nuoc Mong Screenshot of the interactive interface." class="gallery-item">
+                    <img src="screenshots/09.png" alt="Nuoc Mong Screenshot showing dynamic water effects." class="gallery-item">
+                    <img src="screenshots/10.png" alt="Nuoc Mong Screenshot of another puppet character." class="gallery-item">
+                    <img src="screenshots/11.png" alt="Nuoc Mong Screenshot highlighting environmental details." class="gallery-item">
+                    <img src="screenshots/12.png" alt="Nuoc Mong Screenshot of a climactic story moment." class="gallery-item">
+                    <img src="screenshots/13.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
                     <!-- END REAL IMAGES -->
 
                     <!-- DUPLICATES (FIRST 2 REAL IMAGES) -->
-                     <img src="screenshots/01.png" alt="Nuoc Mong Screenshot 1 (Duplicate)" class="gallery-item is-duplicate">
-                     <img src="screenshots/02.png" alt="Nuoc Mong Screenshot 2 (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/01.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/02.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
                     <!-- END DUPLICATES -->
 
                 </div>
 
                 <!-- Navigation Buttons -->
-                <button class="gallery-nav-button left">
+                <button class="gallery-nav-button left" aria-label="Previous Screenshot">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
                 </button>
-                <button class="gallery-nav-button right">
+                <button class="gallery-nav-button right" aria-label="Next Screenshot">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 12.6 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
                 </button>
             </div>
 
             <!-- Optional: Add a button below the gallery -->
             <div class="container" style="text-align: center; margin-top: 2rem;">
-                 <a href="[Your Itch.io Game Page Link]#gallery" class="cta-button secondary-cta" target="_blank" rel="noopener noreferrer">View More on Itch.io</a>
+                 <!-- REMINDER: Replace with your actual Itch.io gallery link -->
+                 <a href="https://itch.io/your-game-link#screenshots" class="cta-button secondary-cta" target="_blank" rel="noopener noreferrer">View More on Itch.io</a>
             </div>
         </section>
 
-        <!-- ===== Trailer Section (Moved below Gallery) ===== -->
+        <!-- ===== Trailer Section ===== -->
         <section id="trailer" class="container content-section">
              <h2>Watch the Trailer</h2>
              <div class="video-placeholder">
-                <!-- Placeholder: Replace with YouTube/Vimeo embed code -->
-                <p><em>[Embed your main trailer here.]</em></p>
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> <!-- Example Placeholder -->
+                <!-- Replace with your actual YouTube/Vimeo embed code -->
+                <!-- Example YouTube Embed (Replace dQw4w9WgXcQ with your video ID) -->
+                <iframe width="700" height="394" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Nuoc Mong Official Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
             </div>
+             <!-- Optional: Add a link below the trailer -->
+             <div class="container" style="text-align: center; margin-top: 1rem;">
+                  <!-- REMINDER: Replace with your actual YouTube link -->
+                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+             </div>
         </section>
 
-        <!-- ===== Intro Section (Moved below Trailer) ===== -->
-         <section id="intro" class="container content-section">
-            <h2>Discover an Enchanting World</h2>
-            <p>Nuoc Mong is an immersive, interactive experience that reimagines the timeless art of Vietnamese water puppetry, blending tradition with cutting-edge technology. Players step into the heart of the story, actively participating in key moments where their actions shape the narrative. As the game unfolds, users must engage with the vibrant world of Vietnamese folklore through hand-tracking controls, guiding puppet movements, manipulating lighting, and influencing the story's direction. Far from being passive spectators, players become vital parts of the performance, bringing the rich cultural tapestry of Vietnam to life in a dynamic and personal way.</p>
-        </section>
-
-        <!-- ===== Features Section (Moved below Intro) ===== -->
-        <section id="features" class="container content-section">
+        <!-- ===== Features Section ===== -->
+        <section id="features" class="content-section">
             <h2>Key Features</h2>
             <div class="features-grid">
                 <div class="feature-item">
-                    <!-- <img src="images/icon-hands.png" alt="Hand Interaction Icon"> -->
-                    <div class="icon-placeholder">[ICON]</div>
-                    <h3>Intuitive Hand Controls</h3>
-                    <p>[Briefly describe how hand interaction works.]</p>
+                    <!-- REMINDER: Replace with your actual feature image -->
+                    <img src="screenshots/10.png" alt="Feature: Intuitive Hand Controls">
+                    <div class="feature-text">
+                        <h3>Intuitive Hand Controls</h3>
+                        <p>Utilize webcam-based hand tracking to interact naturally with the watery stage, controlling puppet movements and environmental effects with simple gestures.</p>
+                    </div>
                 </div>
                 <div class="feature-item">
-                    <!-- <img src="images/icon-puppet.png" alt="Water Puppetry Icon"> -->
-                    <div class="icon-placeholder">[ICON]</div>
-                    <h3>Authentic Water Puppetry</h3>
-                    <p>[Mention the inspiration and unique art form.]</p>
+                     <!-- REMINDER: Replace with your actual feature image -->
+                    <img src="screenshots/02.png" alt="Feature: Authentic Water Puppetry">
+                     <div class="feature-text">
+                        <h3>Authentic Water Puppetry</h3>
+                        <p>Experience the unique aesthetic and charm of traditional Vietnamese water puppetry, faithfully recreated with beautiful 3D visuals and dynamic water physics.</p>
+                    </div>
                 </div>
                 <div class="feature-item">
-                    <!-- <img src="images/icon-story.png" alt="Story Icon"> -->
-                    <div class="icon-placeholder">[ICON]</div>
-                    <h3>[Another Key Feature]</h3>
-                    <p>[Briefly describe another selling point - story, atmosphere, etc.]</p>
+                     <!-- REMINDER: Replace with your actual feature image -->
+                    <img src="screenshots/15.png" alt="Feature: Captivating Folklore">
+                     <div class="feature-text">
+                        <h3>Captivating Folklore</h3>
+                        <p>Immerse yourself in enchanting stories inspired by Vietnamese myths, legends, and rural life, where your actions directly influence the narrative and the puppets' fate.</p>
+                    </div>
                 </div>
+                <div class="feature-item">
+                     <!-- REMINDER: Replace with your actual feature image -->
+                     <img src="screenshots/09.png" alt="Feature: Rich Audiovisual Experience">
+                      <div class="feature-text">
+                        <h3>Rich Audiovisual Experience</h3>
+                        <p>Delight in a vibrant world brought to life with evocative lighting, atmospheric sounds, and a musical score inspired by traditional Vietnamese instruments.</p>
+                    </div>
+                 </div>
             </div>
         </section>
 
 
-        <!-- ===== 2. About the Game Section (Moved below Features) ===== -->
-        <section id="about" class="container content-section">
-            <h2>About The Game</h2>
-            <h3>[Detailed Description Subheading]</h3>
-            <p>[Expand on the game's concept, setting, story. What is the player's goal or experience?]</p>
-            <h3>[Gameplay Mechanics Subheading]</h3>
-            <p>[Explain how the hand interaction works in more detail. What can players do? How does it connect to the puppetry?]</p>
-            <h3>[World & Art Style Subheading]</h3>
-            <p>[Talk about the inspiration (Vietnamese water puppetry), the visual aesthetic, the mood, the audio experience.]</p>
-            <!-- You can add more images/videos specific to the About section here -->
+        <!-- ===== About the Game Section (Alternating layout) ===== -->
+        <section id="about" class="content-section">
+            <h2>About Nuoc Mong</h2>
+
+            <!-- About Item 1: Image Left, Text Right -->
+            <div class="about-item about-item-1"> <!-- Added unique class -->
+                 <!-- REMINDER: Replace with your actual image -->
+                <div class="about-image">
+                    <img src="screenshots/14.png" alt="Description of the image related to becoming the puppeteer">
+                </div>
+                <div class="about-text">
+                    <h3>Become the Puppeteer</h3>
+                    <p>In Nuoc Mong, you aren't just watching a show; you are the unseen hand guiding the performance. Set against the backdrop of a traditional Vietnamese water stage, you will interact with the scene using your hands, detected via a standard webcam. This innovative control method allows for a fluid and intuitive connection with the puppets and their world, blurring the lines between player and performer.</p>
+                </div>
+            </div>
+
+            <!-- About Item 2: Text Left, Image Right -->
+            <div class="about-item about-item-2"> <!-- Added unique class -->
+                 <!-- REMINDER: Replace with your actual image -->
+                <div class="about-image">
+                    <img src="screenshots/13.png" alt="Description of the image related to folklore stories">
+                </div>
+                <div class="about-text">
+                    <h3>Unfold Ancient Tales</h3>
+                    <p>The game presents a series of captivating vignettes, each telling a story from Vietnamese folklore – from playful tales of villagers and animals to heroic legends and spiritual journeys. Your interaction isn't about solving puzzles in a traditional sense, but about interpreting and influencing the performance through your control over the puppets and stage elements. It's about expressing the narrative and feeling the rhythm of the show.</p>
+                </div>
+            </div>
+
+            <!-- About Item 3: Image Left, Text Right -->
+            <div class="about-item about-item-3"> <!-- Added unique class -->
+                 <!-- REMINDER: Replace with your actual image -->
+                <div class="about-image">
+                    <img src="screenshots/04.png" alt="Description of the image related to art style and atmosphere">
+                </div>
+                <div class="about-text">
+                    <h3>A Living Painting</h3>
+                    <p>Every element of Nuoc Mong, from the handcrafted look of the puppets to the shimmering surface of the water and the atmospheric stage lighting, is designed to evoke the magic of a live water puppetry performance. The visuals are complemented by a rich soundscape featuring traditional instruments, creating an experience that is both visually stunning and culturally resonant.</p>
+                </div>
+            </div>
+
         </section>
 
 
-        <!-- ===== 4. Community/Connect Section (Kept its place at the bottom of main content) ===== -->
+        <!-- ===== System Requirements Section (Recommended) ===== -->
+        <!-- Good to include for a PC game -->
+         <section id="requirements" class="container content-section">
+            <h2>System Requirements</h2>
+            <div class="requirements-list">
+                 <ul>
+                     <li><strong>OS:</strong> Windows 10 64-bit</li>
+                     <li><strong>Processor:</strong> 1 gigahertz (GHz) or faster processor or SoC</li>
+                     <li><strong>Memory:</strong> 2GB of RAM</li>
+                     <li><strong>Graphics:</strong> Any card with 1GB of VRAM (it's that low)</li>
+                     <li><strong>DirectX:</strong> DirectX version 11</li>
+                     <li><strong>Storage:</strong> 3 GB available space</li>
+                     <li><strong>Webcam:</strong> A cromulant webcam will do.</li>
+                 </ul>
+                 <p><a href="https://support.microsoft.com/en-us/windows/windows-10-system-requirements-6d4e9a79-66bf-7950-467c-795cf0386715" target="_blank" rel="noopener noreferrer" style="font-size: 18px;"><strong>Basically follow this link</strong></a></p>
+             </div>
+        </section>
+
+         <!-- ===== Community/Connect Section (Moved after Requirements) ===== -->
         <section id="community" class="container content-section">
             <h2>Join the Community</h2>
-            <p>Connect with us and other players! Follow our development journey on Itch.io and social media.</p>
+            <p>Connect with us and other players! Follow our development journey, share your thoughts, and get the latest updates.</p>
             <div class="social-links">
-                <a href="[Your Itch.io Game Page Link]" target="_blank" rel="noopener noreferrer">Itch.io Page</a>
-                <a href="[Your Discord Link]" target="_blank" rel="noopener noreferrer">Discord</a>
-                <a href="[Your Twitter Link]" target="_blank" rel="noopener noreferrer">Twitter</a>
-                <a href="[Your Facebook Link]" target="_blank" rel="noopener noreferrer">Facebook</a>
+                <!-- REMINDER: Replace with your actual social links -->
+                <a href="https://itch.io/your-game-link" target="_blank" rel="noopener noreferrer">Itch.io Page</a>
+                <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener noreferrer">Discord</a>
+                <a href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer">Twitter</a>
+                <a href="https://facebook.com/your-page" target="_blank" rel="noopener noreferrer">Facebook</a>
                 <!-- Add other relevant links (Reddit, Instagram, etc.) -->
             </div>
         </section>
 
         <!-- ===== 5. Optional News/Dev Blog Section ===== -->
-        <!-- Keep this commented out if not using -->
+        <!-- You could uncomment and build this out if you plan to post updates directly on the site -->
+        <!-- <section id="news" class="container content-section">
+             <h2>Latest News</h2>
+             <div class="news-grid">
+                  <div class="news-item">
+                       <h3>[News Title 1]</h3>
+                       <p>[Summary of news item 1...]</p>
+                       <a href="#">Read More</a>
+                  </div>
+                   <div class="news-item">
+                       <h3>[News Title 2]</h3>
+                       <p>[Summary of news item 2...]</p>
+                       <a href="#">Read More</a>
+                  </div>
+                  // Add more news items
+             </div>
+        </section> -->
+
 
     </main>
 
@@ -193,11 +290,12 @@
     <footer>
         <div class="container">
             <div class="footer-links">
-                <!-- Repeat Social Links or add Privacy Policy/Terms -->
+                <!-- REMINDER: Replace with your actual policy links -->
                 <a href="[Your Privacy Policy Link]">Privacy Policy</a>
                 <a href="[Your Terms of Service Link]">Terms of Service</a>
-                <p>© 2025 BaConSoi. All rights reserved.</p>
+                 <!-- Add credits or other links here -->
             </div>
+             <p>© 2025 BaConSoi. All rights reserved.</p>
             <!-- Maybe add platform logos (Itch.io, etc.) here -->
         </div>
     </footer>

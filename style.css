@@ -7,6 +7,10 @@
 
 html {
     scroll-behavior:smooth;
+    /* Add padding to the top of the viewport when scrolling to anchors,
+       to prevent fixed header from obscuring content. Adjust value
+       to match your header's height. */
+       scroll-padding-top: 50px; /* <-- Add this line. Adjust the pixel value. */
 }
 
 body {
@@ -21,8 +25,24 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     padding: 0 20px;
-    text-align:center;
+    /* text-align:center; Removed default center for container, apply to specific elements like headings/paragraphs */
 }
+
+/* Center content within containers where needed */
+.container h1,
+.container h2,
+.container h3,
+.hero-content {
+     text-align: center;
+}
+
+/* Specific paragraphs that should be centered */
+#intro p,
+#community p,
+#requirements .requirements-list p {
+    text-align: center;
+}
+
 
 h1, h2, h3 {
     margin-bottom: 1rem;
@@ -37,19 +57,30 @@ h3 { font-size: 1.5rem; }
 
 p {
     margin-bottom: 1rem;
+    line-height: 1.6; /* Improve readability */
+    /* Default text-align is browser default (usually left) */
 }
+
 
 a {
     /* --- DARK MODE CHANGES --- */
     color: #00aaff; /* Brighter link color */
     text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease; /* Add transition */
 }
 
 a:hover {
-    text-decoration: none; /* Removed underline */
+    text-decoration: underline; /* Added underline back for standard links */
     /* --- DARK MODE CHANGES --- */
     color: #4dcdff; /* Slightly lighter on hover */
 }
+
+/* Remove underline from CTA buttons */
+.cta-button,
+.cta-button:hover {
+    text-decoration: none;
+}
+
 
 img {
     max-width: 100%;
@@ -60,18 +91,15 @@ img {
 /* ===== Utility Classes ===== */
 .content-section {
     padding: 60px 0;
-    /* --- DARK MODE CHANGES --- */
-    border-top: 1px solid #333; /* Darker separator */
+    background-color: #1a1a1a; /* Ensure a consistent background for transitions */
+    border-top: 1px solid #333; /* Darker separator - RE-ADDED */
+    position: relative; /* Needed for pseudo-elements */
+    overflow: hidden; /* Hide elements like the fade gradient if they spill */
 }
 
 .content-section:first-of-type {
-    border-top: none;
+    border-top: none; /* Keep no border on the first section */
 }
-
-#intro { /* Keep this from the previous step */
-    text-align: center;
-}
-
 
 /* ===== Header & Navigation ===== */
 header {
@@ -86,41 +114,70 @@ header {
 
 header .container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* --- Centering Header Items --- */
+    justify-content: center; /* Center the flex items horizontally */
+    gap: 20px; /* Add space between flex items */
+    /* --- End Centering Header Items --- */
+    align-items: center; /* Vertically center flex items */
     padding: 0 20px;
+    text-align: left; /* Align flex items to left */
+}
+
+/* --- Logo Specific Styles --- */
+header .logo {
+    /* Make logo a flex item, give it a defined height */
+    height: 35px; /* Match the image height */
+    display: flex; /* Make the logo div a flex container */
+    align-items: center; /* Vertically center content inside logo div */
+    flex-shrink: 0; /* Prevent logo from shrinking */
 }
 
 header .logo a {
-    display: block;
+    display: flex; /* Make the link a flex container */
+    align-items: center; /* Vertically center content inside the link */
+    height: 100%; /* Make the link take the full height of the logo div */
     text-decoration: none;
 }
 
 header .logo img {
-    height: 35px; /* Adjust this value */
-    width: auto;
+    height: 100%; /* Make the image take the full height of the link/logo div */
+    width: auto; /* Maintain aspect ratio */
     display: block;
+    /* Ensure visibility */
+    visibility: visible;
+    opacity: 1;
 }
+/* --- End Logo Specific Styles --- */
+
 
 nav ul {
     list-style: none;
     display: flex;
-    margin-left: 20px; /* Adjust this value for space between logo and nav */
+    /* --- Removed Margin and Flex Grow --- */
+    margin-left: 0; /* Remove margin left */
+    margin-right: 0; /* Remove margin right */
+    flex-grow: 0; /* Prevent nav from taking up excess space */
+    flex-shrink: 1;
+    /* --- End Removed Styles --- */
     padding: 0;
+    /* Vertically center nav links within the header flex container */
+    align-items: center;
 }
 
 nav ul li {
-    margin-left: 0;
+    margin-left: 0; /* Reset default li margin */
+    /* Add margin here if not using padding in a */
 }
 
 nav ul li a {
     color: #e0e0e0;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Match button font size */
     transition: color 0.3s ease;
     padding: 10px 20px; /* Adjust horizontal padding for spacing between links */
     display: block;
+    line-height: 1.2; /* Match button line height */
 }
 
 nav ul li a:hover,
@@ -136,22 +193,26 @@ nav ul li a.active {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.2rem; /* Match nav link font size */
     font-weight: bold;
     text-align: center;
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    line-height: 1.2; /* Match nav link line height */
+    flex-shrink: 0; /* Prevent button from shrinking */
 }
 
 .cta-button:hover {
     background-color: #0088cc;
     color: #1a1a1a;
-    text-decoration: none;
 }
 
 .nav-cta {
-    margin-left: 30px; /* Adjust space between nav and button */
+    /* --- Removed Margin --- */
+    margin-left: 0; /* Remove margin left */
+    /* Removed margin-top: 1rem; for desktop */
+    /* --- End Removed Margin --- */
 }
 
 .hero-cta {
@@ -171,16 +232,57 @@ nav ul li a.active {
     color: #fff;
 }
 
+
 /* ===== Hero Section ===== */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://via.placeholder.com/1920x1080?text=Hero+Background') no-repeat center center/cover;
-    color: #fff;
-    height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 20px;
+    /* REMOVED background: linear-gradient(...) url(...) ...; */ /* Background handled by pseudo-elements */
+    color: #fff; /* Text color */
+    height: 80vh; /* Keep height */
+    display: flex; /* Keep flex for centering content */
+    align-items: center; /* Keep vertical centering */
+    justify-content: center; /* Keep horizontal centering */
+    text-align: center; /* Keep text-align center for text elements */
+    padding: 0 20px; /* Keep padding */
+    position: relative; /* Needed for absolute positioning of pseudo-elements */
+    overflow: hidden; /* Hide anything outside the section bounds */
+}
+
+/* *** Pseudo-element for Background Image and Blur *** */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* REMINDER: Replace with your actual homepage image path */
+    background: url('screenshots/02.png') no-repeat center center/cover;
+    filter: blur(8px); /* Apply blur filter - Adjust value as needed */
+    z-index: 1; /* Below the content and the overlay */
+    pointer-events: none; /* Allow clicks through */
+}
+
+/* *** Pseudo-element for Dark Overlay and Blending Gradient *** */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Gradient: Dark Overlay -> Dark Overlay -> Fade to Page Background */
+    background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.6) 0%,    /* Start with dark overlay */
+        rgba(0, 0, 0, 0.6) 70%,   /* Stay dark for most of the section */
+        #1a1a1a 100%              /* Fade to page background color at the bottom */
+    );
+    z-index: 2; /* Above the background image, below the content */
+    pointer-events: none; /* Allow clicks through */
+}
+
+
+.hero-content { /* Re-centered hero content specifically */
+     text-align: center;
+     /* Add display flex and flex-direction column to stack content vertically */
+     display: flex;
+     flex-direction: column;
+     align-items: center; /* Center items horizontally within the flex container */
+     position: relative; /* Needed for z-index */
+     z-index: 3; /* Ensure content is above both pseudo-elements */
 }
 
 .hero-content h1 {
@@ -198,80 +300,26 @@ nav ul li a.active {
     color: #e0e0e0;
 }
 
-/* ===== Features Section ===== */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 2rem;
+/* --- End Style for the old hero image --- */
+
+/* ===== Intro Section & Fade Effect ===== */
+#intro {
+    position: relative; /* Needed for the pseudo-element positioning */
+    z-index: 1; /* Ensure it's above the gallery border/background */
 }
 
-.feature-item {
-    text-align: center;
-    background-color: #282828;
-    color: #e0e0e0;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.feature-item .icon-placeholder {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #00aaff;
-    border: 2px dashed #555;
-    width: 60px;
-    height: 60px;
-    line-height: 60px;
-    margin: 0 auto 1rem auto;
-    border-radius: 50%;
-}
-
-.feature-item h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #fff;
-}
-
-/* ===== Trailer Section (Former Visual Showcase) ===== */
-.video-placeholder {
-    margin: 2rem auto;
-    text-align: center;
-    background-color: #282828;
-    padding: 20px;
-    border-radius: 5px;
-    max-width: 800px;
-}
-
-.video-placeholder p {
-    color: #aaa;
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-
-.video-placeholder iframe {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    border-radius: 5px;
-}
-
-/* ===== Fluid Gallery Section (NEW/MODIFIED STYLES) ===== */
+/* ===== Fluid Gallery Section ===== */
 #gallery {
     position: relative; /* Needed for absolute positioning of buttons and gradients */
     overflow: hidden; /* Hide overflowing pseudo-elements and content */
-    /* Remove default content-section padding-left/right if you want true edge-to-edge */
-    /* padding-left: 0; */
-    /* padding-right: 0; */
-    /* Adjust top/bottom padding if needed */
-    padding-top: 60px;
+    padding-top: 60px; /* Keep padding top */
     padding-bottom: 60px;
+    /* background-color: #1a1a1a; Already set on content-section */
 }
 
 #gallery .container h2 {
      text-align: center; /* Center the heading */
 }
-
 
 .gallery-wrapper {
     position: relative; /* Needed for absolute positioning of buttons/gradients */
@@ -309,7 +357,7 @@ nav ul li a.active {
     scroll-snap-align: center; /* Snap to the center of the image */
 }
 
-/* --- Gradient Overlays --- */
+/* --- Gradient Overlays (Keep these for side fades) --- */
 .gallery-wrapper::before,
 .gallery-wrapper::after {
     content: "";
@@ -324,13 +372,13 @@ nav ul li a.active {
 .gallery-wrapper::before {
     left: 0;
     /* Gradient from transparent to dark background */
-    background: linear-gradient(to right, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background */
+    background: linear-gradient(to right, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background #1a1a1a */
 }
 
 .gallery-wrapper::after {
     right: 0;
     /* Gradient from dark background to transparent */
-     background: linear-gradient(to left, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background */
+     background: linear-gradient(to left, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background #1a1a1a */
 }
 
 /* --- Navigation Buttons --- */
@@ -372,19 +420,383 @@ nav ul li a.active {
     right: 10px; /* Distance from right edge */
 }
 
-/* Optional: Hide buttons if only one image is present (needs JS) */
-/* .gallery-nav-button.hidden { display: none; } */
+
+/* ===== Features Section (Modified Layout) ===== */
+#features {
+    padding: 60px 200px; /* Add horizontal padding to the section itself */
+}
+
+#features h2 {
+    text-align: center; /* Ensure heading is centered */
+}
+
+#features .features-grid {
+    display: grid; /* Use grid for horizontal layout */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 columns on large, adapts down */
+    gap: 30px; /* Space between grid items */
+    margin-top: 2rem;
+    min-height: 0;
+    overflow: visible;
+    /* Removed max-width and auto margins - grid handles centering within section padding */
+    /* max-width: 800px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+}
+
+#features .feature-item {
+    text-align: left; /* Align text to the left */
+    background-color: transparent; /* Remove background */
+    padding: 0; /* Remove padding */
+    border-radius: 0; /* Remove border-radius */
+    box-shadow: none; /* Remove shadow */
+    min-height: 0;
+    overflow: visible;
+}
+
+#features .feature-item img { /* Style for the new feature images */
+    display: block;
+    width: 100%; /* Image fills its grid column */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensure image covers the area without distortion */
+    border-radius: 5px; /* Optional: rounded corners for images */
+    margin-bottom: 1rem; /* Space below the image */
+}
+
+
+#features .feature-item .icon-placeholder {
+    display: none; /* Hide the placeholder div */
+}
+
+#features .feature-item .feature-text {
+    min-height: 0;
+    overflow: visible;
+}
+
+#features .feature-item h3 {
+    font-size: 1.2rem;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+#features .feature-item p {
+    margin-bottom: 0; /* Remove margin-bottom from last paragraph in item */
+}
+
+
+/* ===== Trailer Section ===== */
+#trailer .video-placeholder {
+    margin: 2rem auto;
+    text-align: center;
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 800px;
+}
+
+#trailer .video-placeholder p {
+    color: #aaa;
+    font-style: italic;
+    margin-top: 1rem; /* Space above the fallback paragraph */
+    margin-bottom: 0; /* No margin below */
+    text-align: center; /* Center the fallback text */
+    font-size: 0.9rem;
+}
+
+#trailer .video-placeholder iframe {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+/* ===== About Section (Alternating Layout with Backgrounds & Blending) ===== */
+#about {
+    /* Keep vertical padding */
+    padding: 60px 0; /* Remove horizontal padding here, the inner items will constrain themselves */
+    /* background-color: #1a1a1a; Inherited from .content-section */
+}
+
+#about h2 {
+    margin-bottom: 3rem; /* More space below main heading */
+    text-align: center; /* Ensure heading is centered */
+}
+
+#about .about-item {
+   display: flex; /* Keep flex layout for alternating image/text */
+   align-items: center; /* Vertically center items */
+   gap: 40px; /* Space between image and text */
+   /* REMOVED margin-bottom: 60px; */ /* Remove gap between items */
+   padding: 0; /* REMOVED padding */ /* Remove padding from the main block */
+   background-color: transparent; /* Ensure background is transparent to see the image */
+   border-radius: 0; /* REMOVED border-radius */ /* Remove border-radius for seamless look */
+   box-shadow: none; /* REMOVED box-shadow */ /* Remove shadow */
+   position: relative; /* Needed for pseudo-elements and z-indexing */
+   overflow: hidden; /* Hide any overflowing content or background parts */
+   /* Removed min-height here, let content determine height */
+   /* min-height: 450px; */
+
+   /* *** Background Image Styles for the entire item block *** */
+   background-size: cover;
+   background-position: center center; /* Adjust if needed for specific image */
+   background-repeat: no-repeat;
+   /* *** End Background Image Styles *** */
+
+   /* Removed max-width and auto margins - let the container padding and text max-width handle it */
+   /* max-width: 1100px; */
+   /* margin-left: auto; */
+   /* margin-right: auto; */
+}
+
+#about .about-item:last-child {
+   margin-bottom: 0; /* Ensure no margin after the last item */
+}
+
+/* *** Set Specific Background Images for each item *** */
+/* REMINDER: Replace with your actual image paths */
+.about-item-1 {
+   background-image: url('screenshots/14.png');
+}
+
+.about-item-2 {
+   background-image: url('screenshots/13.png');
+}
+
+.about-item-3 {
+   background-image: url('screenshots/04.png');
+}
+/* *** End Specific Background Images *** */
+
+
+/* *** Base Dark Overlay (Covers the background image) *** */
+#about .about-item::before {
+   content: "";
+   position: absolute;
+   top: 0; left: 0; right: 0; bottom: 0;
+   background-color: rgba(0, 0, 0, 0.8); /* Solid dark overlay (adjust opacity as needed) */
+   z-index: 1; /* Below foreground content, above background image */
+   pointer-events: none; /* Allow clicks through the overlay */
+}
+
+/* *** Vertical Gradient Overlay (Creates the blending effect into page background) *** */
+#about .about-item::after {
+   content: "";
+   position: absolute;
+   top: 0; left: 0; right: 0; bottom: 0;
+   /* Vertical gradient: page-bg -> transparent -> transparent -> page-bg */
+   /* This gradient is applied *over* the ::before dark overlay */
+   background: linear-gradient(to bottom,
+       #1a1a1a 0%,    /* Start with page background color */
+       rgba(26, 26, 26, 0) 15%,     /* Fade to transparent by 15% of the item height */
+       rgba(26, 26, 26, 0) 85%,     /* Stay transparent until 85% of the item height */
+       #1a1a1a 100%   /* Fade back to page background color by 100% */
+   );
+   z-index: 2; /* Above ::before, below foreground content */
+   pointer-events: none;
+}
+
+
+/* Styles for the foreground content (image and text) */
+/* Ensure they have padding and are above the overlays */
+
+#about .about-item .about-image {
+   flex: 1; /* Keep flex properties */
+   min-width: 250px; /* Keep min-width */
+   border-radius: 5px; /* Keep border-radius */
+   overflow: hidden; /* Keep overflow */
+   position: relative; /* Needed for z-index */
+   z-index: 3; /* Ensure image is above both pseudo-elements */
+   /* Padding is applied below */
+}
+
+/* Adjust padding for alternating images */
+#about .about-item:nth-child(odd) .about-image { /* Image on the left */
+    padding: 40px 0 40px 40px; /* Top, Right, Bottom, Left */
+}
+#about .about-item:nth-child(even) .about-image { /* Image on the right */
+    padding: 40px 40px 40px 0; /* Top, Right, Bottom, Left */
+}
+
+
+#about .about-item .about-image img {
+    display: block; /* Keep display */
+    width: 100%; /* Keep width */
+    height: auto; /* Keep height */
+    object-fit: cover; /* Keep object-fit */
+    border-radius: 5px; /* Keep border-radius */
+}
+
+
+#about .about-item .about-text {
+   flex: 1; /* Keep flex properties */
+   min-width: 300px; /* Keep min-width */
+   text-align: left; /* Keep text-align */
+   position: relative; /* Needed for z-index */
+   z-index: 3; /* Ensure text is above both pseudo-elements */
+   color: #fff; /* Ensure text is white for contrast */
+   /* Padding is applied below */
+}
+
+/* Adjust padding for alternating text blocks */
+#about .about-item:nth-child(odd) .about-text { /* Text on the right */
+    padding: 40px 40px 40px 0; /* Top, Right, Bottom, Left */
+}
+#about .about-item:nth-child(even) .about-text { /* Text on the left */
+    padding: 40px 0 40px 40px; /* Top, Right, Bottom, Left */
+}
+
+
+#about .about-item .about-text h3 {
+   margin-top: 0; /* Remove top margin from headings within text block */
+   color: #fff; /* Ensure heading is white */
+}
+
+#about .about-item .about-text p {
+    /* Keep default p styling, adjust color */
+    color: #e0e0e0; /* Lighter white for body text */
+    margin-bottom: 0; /* Remove margin from the last paragraph in the text block */
+}
+
+/* Adjust alternating layout (Keep original flex-direction) */
+#about .about-item:nth-child(even) { /* Target the 2nd, 4th, etc. items */
+   flex-direction: row-reverse; /* Reverse order: Text Left, Image Right */
+}
+
+
+/* ===== Responsive Design Adjustments for About Section ===== */
+@media (max-width: 768px) {
+
+   #about {
+        padding: 40px 0; /* Adjust vertical padding for mobile */
+   }
+
+    #about h2 {
+         margin-bottom: 2rem; /* Reduce space below main heading */
+    }
+
+   #about .about-item {
+       flex-direction: column; /* Stack image and text vertically */
+       gap: 20px; /* Reduce gap */
+       /* REMOVED margin-bottom */
+       padding: 0; /* REMOVED padding */
+       /* Removed min-height here */
+   }
+
+   /* Reset flex-direction for alternating items on mobile (they all stack) */
+   #about .about-item:nth-child(even) {
+        flex-direction: column;
+   }
+
+    /* Adjust gradient stops for mobile if needed */
+    #about .about-item::after {
+        background: linear-gradient(to bottom,
+           #1a1a1a 0%,
+           rgba(26, 26, 26, 0) 10%, /* Fade faster */
+           rgba(26, 26, 26, 0) 90%, /* Stay transparent longer */
+           #1a1a1a 100%
+       );
+    }
+
+   /* Adjust padding for foreground content on mobile */
+   #about .about-image,
+   #about .about-text {
+       max-width: 100%; /* Allow both to take full width when stacked */
+       min-width: auto; /* Remove min-width constraint */
+       padding: 20px; /* Apply consistent padding around content block */
+       text-align: center; /* Center text when stacked */
+   }
+
+   /* Remove specific alternating padding on mobile */
+   #about .about-item:nth-child(odd) .about-image,
+   #about .about-item:nth-child(even) .about-image,
+   #about .about-item:nth-child(odd) .about-text,
+   #about .about-item:nth-child(even) .about-text {
+        padding: 20px; /* Consistent padding on all sides for mobile */
+   }
+
+
+    #about .about-image img {
+         margin: 0 auto; /* Center image if it doesn't take full width */
+    }
+
+   #about .about-text h3,
+   #about .about-text p {
+        text-align: center; /* Ensure text is centered when stacked */
+   }
+}
+
+/* ===== System Requirements Section ===== */
+#requirements .requirements-list {
+    margin-top: 2rem;
+    text-align: left; /* Align list items left */
+    background-color: #282828;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 600px; /* Limit width for readability */
+    margin-left: auto; /* Center the block */
+    margin-right: auto; /* Center the block */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+#requirements .requirements-list ul {
+    list-style: none; /* Remove default bullets */
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+#requirements .requirements-list li {
+    margin-bottom: 10px;
+    padding-left: 1.5rem; /* Space for custom bullet */
+    position: relative;
+}
+
+/* Custom bullet style */
+#requirements .requirements-list li::before {
+    content: "•"; /* Dot or any character */
+    color: #00aaff; /* Bullet color */
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#requirements .requirements-list strong {
+    color: #fff; /* Highlight the requirement category */
+}
+
+#requirements .requirements-list p {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-top: 1rem;
+    text-align: center; /* Center the note */
+}
 
 
 /* ===== Community Section ===== */
-.social-links {
-    margin-top: 1.5rem;
+#community {
+     /* margin-top: 60px; Already handled by .content-section padding-top */
+     text-align: center; /* Center the main heading and paragraph */
+}
+
+#community h2 {
     text-align: center;
 }
 
-.social-links a {
-    display: inline-block;
-    margin: 0 10px;
+#community p {
+    text-align: center;
+}
+
+#community .social-links {
+    margin-top: 1.5rem;
+    text-align: center;
+    display: flex; /* Use flexbox for alignment */
+    flex-wrap: wrap; /* Allow links to wrap */
+    justify-content: center; /* Center the links */
+    gap: 10px; /* Space between links */
+}
+
+#community .social-links a {
+    display: inline-block; /* Or block if using flexbox */
     padding: 8px 15px;
     background-color: #3a3a3a;
     color: #e0e0e0;
@@ -392,11 +804,12 @@ nav ul li a.active {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.social-links a:hover {
+#community .social-links a:hover {
     background-color: #00aaff;
     color: #1a1a1a;
     text-decoration: none;
 }
+
 
 /* ===== Footer ===== */
 footer {
@@ -408,15 +821,19 @@ footer {
     border-top: 1px solid #333;
 }
 
+footer .container {
+     text-align: center; /* Center footer content */
+}
+
+
 footer .footer-links {
-    margin-bottom: 0rem;
+    margin-bottom: 10px; /* Space below links */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 15px;
     font-size: 0.9rem;
-    padding-bottom: 10px;
 }
 
 footer .footer-links a {
@@ -427,26 +844,66 @@ footer .footer-links a {
 
 footer p {
     margin-bottom: 0;
+    text-align: center; /* Ensure copyright text is centered */
+    font-size: 0.9rem;
 }
 
 footer .footer-links a:hover {
     color: #fff;
-    text-decoration: none;
+    text-decoration: underline; /* Underline footer links on hover */
 }
 
 
-/* ===== Responsive Design (Basic Example) ===== */
+/* ===== Responsive Design ===== */
 @media (max-width: 768px) {
+    /* General Adjustments */
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.6rem; }
+    h3 { font-size: 1.3rem; }
+
+    .content-section {
+         padding: 40px 0;
+    }
+
     header .container {
         flex-direction: column;
         align-items: center;
+        text-align: center; /* Re-center nav items */
+        /* --- Mobile Header Gap --- */
+        gap: 10px; /* Adjust gap for stacked items */
+        /* --- End Mobile Header Gap --- */
     }
 
+    /* --- Mobile Logo Adjustment --- */
+    header .logo {
+        height: auto; /* Allow height to be determined by content */
+        margin-bottom: 1rem; /* Add space below logo when stacked */
+    }
+     header .logo a {
+          height: auto; /* Allow height to be determined by content */
+     }
+     header .logo img {
+          height: 35px; /* Keep a fixed height for the image */
+          width: auto;
+     }
+     
+    html {
+        /* Keep smooth scroll */
+        scroll-behavior: smooth;
+        /* Adjust padding for mobile header height */
+        /* You'll need to estimate or measure the height of your stacked mobile header */
+        scroll-padding-top: 100px; /* <-- Adjust this value for mobile */
+    }
+    /* --- End Mobile Logo Adjustment --- */
+
+
     nav ul {
-        margin-top: 1rem;
+        margin-top: 0; /* Remove margin top */
         margin-bottom: 1rem;
         flex-direction: column;
         align-items: center;
+        margin-left: 0; /* Remove margin left */
+        margin-right: 0; /* Remove margin right */
     }
 
     nav ul li {
@@ -455,26 +912,36 @@ footer .footer-links a:hover {
 
     nav ul li a {
         padding: 8px 15px;
+        font-size: 1rem; /* Adjust font size for mobile nav */
     }
 
     .nav-cta {
         margin-left: 0;
-        margin-top: 1rem;
+        margin-top: 1rem; /* Add margin top back for mobile stacking */
+        font-size: 1rem; /* Adjust font size for mobile button */
+        padding: 10px 20px; /* Adjust padding for mobile button */
     }
 
+    
     .hero {
-        height: auto;
-        padding: 80px 20px;
+        height: auto; /* Keep auto height */
+        min-height: 60vh; /* Keep min-height */
+        padding: 80px 20px; /* Keep padding */
+    }
+
+    /* Pseudo-elements automatically adjust to .hero size */
+    .hero::before,
+    .hero::after {
+        /* No specific mobile adjustments needed unless you want different blur/gradient */
     }
 
     .hero-content h1 { font-size: 2.5rem; }
     .hero-content h2 { font-size: 1.4rem; }
+    .hero-cta { font-size: 1rem; padding: 10px 20px; }
 
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
+    /* --- End Mobile style for the old hero image --- */
 
-    /* Adjustments for the fluid gallery on small screens */
+     /* Gallery Adjustments */
     .fluid-gallery-track {
         gap: 10px; /* Reduce gap on smaller screens */
         padding: 0 10px; /* Reduce padding */
@@ -502,10 +969,105 @@ footer .footer-links a:hover {
      .gallery-nav-button.left { left: 5px; }
      .gallery-nav-button.right { right: 5px; }
 
+     /* Intro Fade Adjustment */
+     #intro::after {
+          height: 80px; /* Reduce fade height */
+     }
 
-    /* Adjust video placeholder on small screens */
-    .video-placeholder {
+
+    /* Trailer Adjustments */
+    #trailer .video-placeholder {
          margin: 1.5rem auto;
          padding: 15px;
     }
+
+    /* Features Adjustments */
+    #features {
+         padding: 40px 20px; /* Adjust padding for mobile */
+    }
+    #features .features-grid {
+        grid-template-columns: 1fr; /* Stack features vertically */
+        gap: 20px; /* Reduce gap */
+    }
+
+     #features .feature-item {
+         /* No specific flex/align items needed here anymore */
+         padding: 0; /* Remove padding */
+     }
+
+     #features .feature-item img {
+          margin-bottom: 0.5rem; /* Adjust margin below image */
+     }
+
+     #features .feature-item .feature-text {
+          text-align: center; /* Center text block */
+     }
+     #features .feature-item h3,
+     #features .feature-item p {
+          text-align: center; /* Ensure text is centered */
+     }
+
+
+    /* About Adjustments */
+    #about {
+         padding: 40px 0; /* Adjust padding for mobile */
+    }
+    #about .about-item {
+        flex-direction: column; /* Stack image and text vertically */
+        gap: 20px; /* Reduce gap */
+        margin-bottom: 40px; /* Adjust space between items */
+        padding: 15px; /* Adjust padding */
+    }
+
+    #about .about-item:nth-child(even) { /* Reset flex-direction for alternating items */
+         flex-direction: column;
+    }
+
+    /* Adjust inner container for mobile */
+    #about .about-item .container {
+         flex-direction: column; /* Stack inner items vertically */
+         gap: 20px; /* Adjust gap */
+         padding: 0; /* Ensure no padding */
+         margin: 0 auto; /* Center the inner container */
+    }
+
+
+    #about .about-image,
+    #about .about-text {
+        max-width: 100%; /* Allow both to take full width when stacked */
+        min-width: auto; /* Remove min-width constraint */
+        text-align: center; /* Center text when stacked */
+    }
+
+     #about .about-image img {
+          margin: 0 auto; /* Center image if it doesn't take full width */
+     }
+
+    #about .about-text h3,
+    #about .about-text p {
+         text-align: center; /* Ensure text is centered */
+    }
+
+
+    /* Requirements Adjustments */
+     #requirements .requirements-list {
+          padding: 15px;
+          max-width: 100%; /* Allow full width minus padding */
+     }
+
+      #requirements .requirements-list li {
+          padding-left: 1.2rem; /* Adjust padding for smaller bullet */
+      }
+      #requirements .requirements-list li::before {
+          font-size: 1rem; /* Adjust bullet size */
+      }
+
+    /* Community Adjustments */
+     #community .social-links {
+         gap: 8px; /* Adjust social link spacing */
+     }
+
+     footer .footer-links {
+          gap: 10px;
+     }
 }
