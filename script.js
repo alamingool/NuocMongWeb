@@ -21,118 +21,93 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure script runs afte
     }
 
     // Configuration based on number of actual images and duplicates
-    const numRealImages = galleryItems.length - 4; // Assuming 2 duplicates at start, 2 at end
-    if (numRealImages <= 0) {
-         console.warn("Less than 1 real image found. Skipping gallery JS.");
+    // Need at least 1 real image + enough duplicates for smooth looping
+    const minRequiredItems = 1 + 2 + 2; // 1 real + 2 start duplicates + 2 end duplicates
+    if (galleryItems.length < minRequiredItems) {
+         console.warn(`Not enough gallery items (${galleryItems.length}). Need at least ${minRequiredItems}. Skipping gallery JS.`);
           if (leftButton) leftButton.style.display = 'none';
           if (rightButton) rightButton.style.display = 'none';
           return;
     }
+
     const numDuplicatesStart = 2; // Number of duplicates at the beginning
     const numDuplicatesEnd = 2;   // Number of duplicates at the end
+    const numRealImages = galleryItems.length - numDuplicatesStart - numDuplicatesEnd;
 
-    // Function to calculate the scroll position for a specific item index
-    // We scroll to the *start* of the item, adjusted by half the track width
-    // minus half the item width to try and center it due to scroll-snap: center
+     // Function to calculate the scroll position for a specific item index
+     // We scroll to the *start* of the item, adjusted by half the track width
+     // minus half the item width to try and center it due to scroll-snap: center
+     // NOTE: This calculation might need fine-tuning based on exact element widths and padding/margin
+     // The core issue is likely the scrollBy amount, but centering helps with snap alignment.
     function getScrollLeftForIndex(index) {
          if (!galleryItems[index]) return 0;
-         const itemLeft = galleryItems[index].offsetLeft;
-         const itemWidth = galleryItems[index].offsetWidth;
+         const item = galleryItems[index];
+         // item.offsetLeft is relative to its offsetParent (usually the track)
+         const itemLeft = item.offsetLeft;
+         const itemWidth = item.offsetWidth;
          const trackWidth = galleryTrack.offsetWidth;
 
          // Calculate position to center the item
+         // ScrollLeft = (Start of item relative to track) - (Half track width) + (Half item width)
          const scrollLeft = itemLeft - (trackWidth / 2) + (itemWidth / 2);
 
+         // Ensure we don't scroll past the natural limits if calculation is slightly off at ends
+         // This might interfere with loop logic if not careful. Better to trust the snap.
+         // For now, let's rely on snap and loop logic to handle boundaries.
          return scrollLeft;
     }
+
 
     // 1. Initial Scroll Position: Scroll to the start of the *real* images (after the duplicates)
     // Use a timeout to ensure layout is stable after page load
     window.addEventListener('load', () => { // Use load event for safer layout calculation
+         // Scroll to the position that centers the first *real* image (index = numDuplicatesStart)
          const initialScrollLeft = getScrollLeftForIndex(numDuplicatesStart);
          galleryTrack.scrollTo({
               left: initialScrollLeft,
               behavior: 'instant' // Jump instantly on load
          });
-          console.log(`Initial scroll set to index ${numDuplicatesStart} (${initialScrollLeft}px)`);
+          console.log(`Initial scroll set to center item index ${numDuplicatesStart} (${initialScrollLeft}px)`);
     });
 
 
     // 2. Handle Button Clicks
     leftButton.addEventListener('click', () => {
         // Find the index of the currently snapped/most visible item
-        let currentIndex = Array.from(galleryItems).findIndex(item => {
-             const itemLeft = item.offsetLeft - galleryTrack.parentElement.offsetLeft; // Position relative to track parent
-             const itemRight = itemLeft + item.offsetWidth;
-             const trackCenter = galleryTrack.scrollLeft + (galleryTrack.offsetWidth / 2);
-             // Check if the center of the item is close to the center of the visible track area
-             return trackCenter >= itemLeft && trackCenter < itemRight;
-        });
+        // This logic can be tricky. A simpler approach might be to scroll by a fixed step (item width + gap)
+        // and let scroll-snap correct, then handle the loop. Let's try the fixed step first as it's simpler.
 
-        // If no item is clearly centered, find the one whose start is closest to the current scrollLeft
-         if (currentIndex === -1) {
-             currentIndex = Array.from(galleryItems).reduce((closestIndex, item, index, arr) => {
-                 const dist = Math.abs(item.offsetLeft - galleryTrack.scrollLeft);
-                 const currentClosestDist = Math.abs(arr[closestIndex].offsetLeft - galleryTrack.scrollLeft);
-                 return dist < currentClosestDist ? index : closestIndex;
-             }, 0); // Start with the first item as the closest
-         }
+        const firstItem = galleryItems[0]; // Assuming all items are roughly the same width
+        if (!firstItem) return;
+        const itemWidth = firstItem.offsetWidth;
+        const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
+        const scrollStep = itemWidth + gap;
 
-        const targetIndex = currentIndex - 1;
-        console.log(`Left button clicked. Current index: ${currentIndex}, Target index: ${targetIndex}`);
+        console.log(`Left button clicked. Scrolling left by ${scrollStep}px`);
+         galleryTrack.scrollBy({
+             left: -scrollStep, // Scroll left by one item width + gap
+             behavior: 'smooth'
+         });
 
-         if (targetIndex < 0) {
-              // We are moving into the left duplicates (which correspond to the end of real images)
-              // We'll handle the loop jump AFTER the smooth scroll completes (via scroll listener)
-               galleryTrack.scrollBy({
-                    left: -galleryItems[currentIndex].offsetWidth - (parseFloat(getComputedStyle(galleryTrack).gap) || 0),
-                    behavior: 'smooth'
-               });
-         } else {
-             const targetScrollLeft = getScrollLeftForIndex(targetIndex);
-             galleryTrack.scrollTo({
-                  left: targetScrollLeft,
-                  behavior: 'smooth'
-             });
-         }
+        // The loop logic in the scroll listener will handle the jump if needed
     });
 
     rightButton.addEventListener('click', () => {
-         // Find the index of the currently snapped/most visible item (Same logic as left button)
-         let currentIndex = Array.from(galleryItems).findIndex(item => {
-             const itemLeft = item.offsetLeft - galleryTrack.parentElement.offsetLeft;
-             const itemRight = itemLeft + item.offsetWidth;
-             const trackCenter = galleryTrack.scrollLeft + (galleryTrack.offsetWidth / 2);
-              return trackCenter >= itemLeft && trackCenter < itemRight;
+         const firstItem = galleryItems[0]; // Assuming all items are roughly the same width
+         if (!firstItem) return;
+         const itemWidth = firstItem.offsetWidth;
+         const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
+         const scrollStep = itemWidth + gap;
+
+         console.log(`Right button clicked. Scrolling right by ${scrollStep}px`);
+         galleryTrack.scrollBy({
+             left: scrollStep, // Scroll right by one item width + gap
+             behavior: 'smooth'
          });
 
-         if (currentIndex === -1) {
-             currentIndex = Array.from(galleryItems).reduce((closestIndex, item, index, arr) => {
-                 const dist = Math.abs(item.offsetLeft - galleryTrack.scrollLeft);
-                 const currentClosestDist = Math.abs(arr[closestIndex].offsetLeft - galleryTrack.scrollLeft);
-                 return dist < currentClosestDist ? index : closestIndex;
-             }, 0);
-         }
-
-        const targetIndex = currentIndex + 1;
-         console.log(`Right button clicked. Current index: ${currentIndex}, Target index: ${targetIndex}`);
-
-
-         if (targetIndex >= galleryItems.length) {
-             // We are moving into the right duplicates (which correspond to the start of real images)
-             // We'll handle the loop jump AFTER the smooth scroll completes (via scroll listener)
-               galleryTrack.scrollBy({
-                   left: galleryItems[currentIndex].offsetWidth + (parseFloat(getComputedStyle(galleryTrack).gap) || 0),
-                   behavior: 'smooth'
-               });
-         } else {
-             const targetScrollLeft = getScrollLeftForIndex(targetIndex);
-              galleryTrack.scrollTo({
-                 left: targetScrollLeft,
-                 behavior: 'smooth'
-              });
-         }
+        // The loop logic in the scroll listener will handle the jump if needed
     });
+
 
     // 3. Implement Looping via Scroll Event Listener (Revised)
     let isHandlingLoop = false; // Flag to prevent infinite loops during the jump
@@ -141,93 +116,83 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure script runs afte
         if (isHandlingLoop) return; // Don't trigger loop logic while already jumping
 
         const scrollLeft = galleryTrack.scrollLeft;
-        const trackWidth = galleryTrack.offsetWidth;
-        const itemWidth = galleryItems[0].offsetWidth; // Assuming items have similar width, or get actual width
-        const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
-        const scrollPosCentered = scrollLeft + (trackWidth / 2); // Center of the visible area
-
-        // Find the index of the item closest to the center of the view
-        // This is a simple approximation, scroll-snap helps make this reliable
-        let closestIndex = 0;
-        let minDiff = Math.abs((galleryItems[0].offsetLeft + itemWidth / 2) - scrollPosCentered);
-
-        for (let i = 1; i < galleryItems.length; i++) {
-             const diff = Math.abs((galleryItems[i].offsetLeft + galleryItems[i].offsetWidth / 2) - scrollPosCentered);
-             if (diff < minDiff) {
-                  minDiff = diff;
-                  closestIndex = i;
-             }
-        }
-
-        // Determine if we are currently centered on a duplicate item
-        // Check if the closest centered item is in the duplicate zones
         const totalItems = galleryItems.length;
         const firstRealIndex = numDuplicatesStart;
         const lastRealIndex = totalItems - 1 - numDuplicatesEnd;
 
-        let targetIndex = -1; // -1 means no jump needed yet
+        // Calculate the scrollLeft positions corresponding to the *start* of the first/last real images
+        // Use the getScrollLeftForIndex function for consistency with initial scroll
+        const scrollPosAtFirstRealCentered = getScrollLeftForIndex(firstRealIndex);
+        const scrollPosAtLastRealCentered = getScrollLeftForIndex(lastRealIndex);
 
-        // Check if centered on a START duplicate (indices 0 to numDuplicatesStart-1)
-        if (closestIndex < firstRealIndex) {
-            targetIndex = firstRealIndex + (closestIndex); // Jump to the corresponding real item index
-            console.log(`Centered on start duplicate (index ${closestIndex}), planning jump to real index ${targetIndex}`);
+        // Use a tolerance for floating point comparisons
+        const tolerance = 5; // Pixels
+
+        // Check if the user has scrolled "into" the duplicate sections
+        // Compare current scrollLeft to the scrollLeft needed to be centered on the *real* boundary items
+        // This needs careful calibration. A simpler trigger might be if scrollLeft is less than the offsetLeft
+        // of the first real item, or greater than the offsetLeft of the last real item + its width.
+
+        // Let's try a simpler trigger based on the offsetLeft boundaries of the real content:
+        const firstRealItemOffsetLeft = galleryItems[firstRealIndex].offsetLeft;
+        const lastRealItemOffsetLeft = galleryItems[lastRealIndex].offsetLeft;
+        const lastRealItemWidth = galleryItems[lastRealIndex].offsetWidth;
+
+
+        // Check if we have scrolled to the left of the first real item (into start duplicates)
+        // or scrolled to the right of the last real item (into end duplicates)
+        // Adding/subtracting scrollStep accounts for being one item away from the boundary after a scrollBy call
+        // This trigger logic can be complex and depends on scroll-snap's exact behavior.
+
+        // Let's try a trigger based on the *center* of the view entering the duplicate area.
+        const trackCenterScroll = scrollLeft + (galleryTrack.offsetWidth / 2); // Center of the visible viewport
+        const firstRealItemCenterScroll = galleryItems[firstRealIndex].offsetLeft + (galleryItems[firstRealIndex].offsetWidth / 2);
+        const lastRealItemCenterScroll = galleryItems[lastRealIndex].offsetLeft + (galleryItems[lastRealIndex].offsetWidth / 2);
+
+         // Check if the center of the view has passed the center of the first real item (scrolling left)
+         // or passed the center of the last real item (scrolling right)
+        if (trackCenterScroll < firstRealItemCenterScroll - tolerance) {
+             // Scrolled left past the first real item (into duplicates)
+             console.log("Boundary crossed Left (centered), jumping to end real images...");
+             isHandlingLoop = true; // Set the flag BEFORE the scroll
+
+             // Calculate the scroll position needed to center the last real item
+             const jumpTargetScrollLeft = getScrollLeftForIndex(lastRealIndex);
+
+              galleryTrack.scrollTo({
+                   left: jumpTargetScrollLeft,
+                   behavior: 'instant' // Instant jump for seamless loop
+              });
+
+              // Reset flag after the instant scroll completes. requestAnimationFrame is good for this.
+               requestAnimationFrame(() => {
+                    isHandlingLoop = false;
+                    console.log("Loop handling finished.");
+               });
+
+        } else if (trackCenterScroll > lastRealItemCenterScroll + tolerance) {
+             // Scrolled right past the last real item (into duplicates)
+             console.log("Boundary crossed Right (centered), jumping to start real images...");
+             isHandlingLoop = true; // Set the flag BEFORE the scroll
+
+             // Calculate the scroll position needed to center the first real item
+             const jumpTargetScrollLeft = getScrollLeftForIndex(firstRealIndex);
+
+              galleryTrack.scrollTo({
+                   left: jumpTargetScrollLeft,
+                   behavior: 'instant' // Instant jump
+              });
+
+               requestAnimationFrame(() => {
+                    isHandlingLoop = false;
+                    console.log("Loop handling finished.");
+               });
         }
-        // Check if centered on an END duplicate (indices totalItems-numDuplicatesEnd to totalItems-1)
-        else if (closestIndex > lastRealIndex) {
-             targetIndex = firstRealIndex + (closestIndex - (lastRealIndex + 1)); // Jump to corresponding real index
-             console.log(`Centered on end duplicate (index ${closestIndex}), planning jump to real index ${targetIndex}`);
-        }
-
-
-        // If a jump is needed
-        if (targetIndex !== -1) {
-             isHandlingLoop = true; // Set the flag
-             const targetScrollLeft = getScrollLeftForIndex(targetIndex);
-
-             // Wait for the smooth scroll started by button/manual scroll to potentially finish
-             // or just trigger the instant jump immediately based on scroll position reaching the boundary
-             // The original scrollLeft check logic might be better for *triggering* the jump instantly
-             // Let's combine: use scrollLeft boundaries to trigger, but index to confirm/calculate target
-
-            // --- Refined Loop Logic (combining scrollLeft bounds check with index for target) ---
-             const scrollAtFirstReal = getScrollLeftForIndex(firstRealIndex);
-             const scrollAtLastReal = getScrollLeftForIndex(lastRealIndex);
-             const tolerance = 5; // Small pixel tolerance
-
-             if (scrollLeft <= scrollAtFirstReal - tolerance) {
-                  // Scrolled left past the start of the real images (into duplicates)
-                  console.log("Boundary crossed Left, jumping to end real images...");
-                  galleryTrack.scrollTo({
-                       left: scrollAtLastReal,
-                       behavior: 'instant'
-                  });
-                  // Reset flag after the instant scroll completes (or very shortly after)
-                  // A small timeout might be needed if the instant scroll isn't truly instant in all cases
-                   requestAnimationFrame(() => { // Or setTimeout(..., 0);
-                        isHandlingLoop = false;
-                        console.log("Loop handling finished.");
-                   });
-
-             } else if (scrollLeft >= scrollAtLastReal + tolerance) {
-                  // Scrolled right past the end of the real images (into duplicates)
-                  console.log("Boundary crossed Right, jumping to start real images...");
-                   galleryTrack.scrollTo({
-                       left: scrollAtFirstReal,
-                       behavior: 'instant'
-                  });
-                   requestAnimationFrame(() => { // Or setTimeout(..., 0);
-                        isHandlingLoop = false;
-                         console.log("Loop handling finished.");
-                   });
-             } else {
-                 // If no jump was needed based on boundary, reset flag if it was set
-                 // (This handles cases where a scroll stops just before the boundary)
-                 isHandlingLoop = false;
-             }
-        }
-         // else { // If no jump was needed at all, ensure flag is false
-         //      isHandlingLoop = false; // This might be redundant if logic is right, but safer
-         // }
+         // If no jump was needed based on boundary, ensure flag is false
+         // This is important if a smooth scroll *stops* just before the boundary.
+         else {
+             isHandlingLoop = false;
+         }
     });
 
     // --- Optional: Keyboard Navigation (Left/Right Arrow Keys) ---
@@ -270,3 +235,224 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure script runs afte
     // Requires adding a CSS class like '.visible' with transition styles.
 
 }); // End DOMContentLoaded
+
+
+// Wait for the HTML document to be fully loaded before running scripts
+document.addEventListener('DOMContentLoaded', () => {
+
+     // --- TÁCH CHỮ CÁI CHO GIÁ TIỀN ---
+     const priceTextWrapper = document.querySelector('.hero-price span');
+     if (priceTextWrapper) {
+         const originalText = priceTextWrapper.textContent;
+         priceTextWrapper.innerHTML = originalText.replace(/./g, "<span class='letter'>$&</span>");
+         // Giải thích regex:
+         // /./g : Chọn mọi ký tự (dấu .) trong chuỗi, g là global (tìm tất cả)
+         // "$&" : Trong phần thay thế, "$&" đại diện cho chính ký tự đã khớp
+         // => Bọc mỗi ký tự tìm thấy bằng <span class='letter'>...</span>
+     }
+     // --- KẾT THÚC TÁCH CHỮ ---
+
+
+     // --- 1. Hero Section Animation on Load ---
+     function animateHeroSection() {
+         const tl = anime.timeline({
+             easing: 'easeOutExpo',
+             duration: 1000,
+             complete: function(anim) {
+                 // Giữ lại animation pulse cho CTA nếu có
+                 animateCtaPulse(); // Call pulse animation when hero animation finishes
+             }
+         });
+
+         // Logo Animation
+         tl.add({
+             targets: '.hero-content img',
+             opacity: [0, 1],
+             scale: [0.6, 1],
+             duration: 900,
+             easing: 'easeOutExpo',
+         })
+         // --- ANIMATION CHO CHỮ CÁI GIÁ TIỀN ---
+         .add({
+             targets: '.hero-price .letter', // Target the split letters
+             translateY: ["1.1em", 0], // Jump up (1.1em = slightly higher than font height)
+             opacity: [0, 1], // Fade in simultaneously
+             easing: "easeOutExpo",
+             duration: 800, // Duration for each letter's jump
+             delay: anime.stagger(40) // IMPORTANT: Each letter starts with a 40ms delay
+         }, '-=700') // Start this animation 700ms before the logo ends (runs almost simultaneously with H1/Price)
+         // --- KẾT THÚC ANIMATION CHỮ CÁI ---
+
+         // Text & Button Animations (adjust offset as needed)
+         // Ensure the price text appears before/with the h1 if that's the desired order
+         .add({
+            targets: '.hero-price', // Animate the price block's container if needed
+            opacity: [0, 1], // Price letters already animated, this might be redundant or for the container itself
+            // translateY: [30, 0] // If price container needs initial slide
+            duration: 1 // Use minimal duration as letters are already animated
+         }, '-=1000') // Adjust offset to make it appear when letters are almost done
+
+         .add({
+             targets: '.hero-content h1', // Assuming there's an H1
+             opacity: [0, 1],
+             translateY: [30, 0],
+         }, '-=900') // Adjust offset for H1 to appear after/with the price
+         .add({
+             targets: '.hero-content h2',
+             opacity: [0, 1],
+             translateY: [30, 0],
+         }, '-=800')
+         .add({
+             targets: '.hero-content p',
+             opacity: [0, 1],
+             translateY: [30, 0],
+         }, '-=800')
+         .add({
+             targets: '.hero .hero-cta',
+             opacity: [0, 1],
+             translateY: [30, 0],
+             duration: 800
+         }, '-=700'); // CTA button appears last
+     }
+     // Removed the duplicate animateHeroSection() call right here
+
+     // --- NEW FUNCTION: CTA Pulse Animation ---
+     function animateCtaPulse() {
+         anime({
+             targets: '.hero .hero-cta', // Only target the CTA button in the hero
+             scale: [
+                 { value: 1, duration: 500 },    // Normal state
+                 { value: 1.05, duration: 600 }, // Slightly enlarge
+                 { value: 1, duration: 500 }     // Return to normal
+             ],
+             easing: 'easeInOutSine', // Smooth easing for the whole process
+             duration: 1600, // Total duration for one pulse cycle (500+600+500)
+             loop: true // Repeat animation infinitely
+         });
+     }
+
+     animateHeroSection(); // Run the initial hero animation
+
+
+ }); // End DOMContentLoaded listener
+
+
+ // Wait for the HTML document to be fully loaded before running scripts
+document.addEventListener('DOMContentLoaded', () => {
+
+     // --- Scroll-Triggered Animations using Intersection Observer ---
+     const observerOptions = {
+         root: null, // Use the viewport as the root
+         rootMargin: '0px',
+         threshold: 0.1 // Trigger when 10% of the element is visible
+     };
+
+     const observerCallback = (entries, observer) => {
+         entries.forEach(entry => {
+             // Check if the element is intersecting (entering the viewport)
+             if (entry.isIntersecting) {
+                 const element = entry.target;
+
+                 // Apply animation based on the element's class
+                 if (element.matches('.content-section h2') || element.matches('#intro p')) {
+                     anime({
+                         targets: element,
+                         opacity: [0, 1],
+                         translateY: [20, 0],
+                         duration: 800,
+                         easing: 'easeOutSine',
+                         delay: element.matches('#intro p') ? 200 : 0 // Slight delay for intro paragraph
+                     });
+                 } else if (element.matches('.feature-item')) {
+                     // Stagger animation for feature items
+                     anime({
+                         targets: element,
+                         opacity: [0, 1],
+                         translateY: [40, 0],
+                         duration: 600,
+                         easing: 'easeOutExpo',
+                         // Find index among siblings for stagger delay (simple approach)
+                         delay: Array.from(element.parentNode.children).indexOf(element) * 100
+                     });
+                 } else if (element.matches('.about-item')) {
+                     // Slide in from alternating sides
+                     // Check if the element is the 1st, 3rd, 5th child *among about-items*
+                     // This might be better: element.classList.contains('about-item-1') etc.
+                     const isOddItem = Array.from(element.parentNode.children).filter(child => child.classList.contains('about-item')).indexOf(element) % 2 === 0;
+
+                     // If odd index (0, 2, 4...) --> image left, text right. Image comes from left. Text comes from right.
+                     // If even index (1, 3, 5...) --> text left, image right. Text comes from left. Image comes from right.
+                     // Since the *container* .about-item is the target, and we reversed flex-direction for even items,
+                     // if the item itself is the target, we need to slide the *whole block*.
+                     // Let's slide the odd blocks from left, even blocks from right.
+                     const slideDirection = isOddItem ? -50 : 50; // Slide from left or right based on index
+
+
+                     anime({
+                         targets: element,
+                         opacity: [0, 1],
+                         translateX: [slideDirection, 0],
+                         duration: 900,
+                         easing: 'easeOutCubic'
+                     });
+                 } else if (element.matches('.requirements-list') || element.matches('.social-links')) {
+                      anime({
+                         targets: element,
+                         opacity: [0, 1],
+                         translateY: [30, 0],
+                         duration: 700,
+                         easing: 'easeOutSine'
+                     });
+                 }
+                 // Add more specific animations for other sections if needed
+
+                 // Stop observing the element after it has animated once
+                 observer.unobserve(element);
+             }
+         });
+     };
+
+     // Create the Intersection Observer
+     const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+     // Select all elements you want to animate on scroll
+     const elementsToAnimate = document.querySelectorAll(
+         '.content-section h2, #intro p, .feature-item, .about-item, .requirements-list, .social-links, #trailer .video-placeholder'
+         // Added video-placeholder
+         // Add other selectors here, e.g., '.trailer iframe', '.news-item'
+     );
+
+     // Start observing each element
+     elementsToAnimate.forEach(el => {
+         // Set initial state to invisible (optional, can also be done with CSS)
+         // el.style.opacity = 0;
+         scrollObserver.observe(el);
+     });
+
+     // --- Simple Hover Animations ---
+     const interactiveElements = document.querySelectorAll('.cta-button, .gallery-nav-button, .social-links a, nav ul li a');
+
+     interactiveElements.forEach(el => {
+         el.addEventListener('mouseenter', () => {
+             anime({
+                 targets: el,
+                 scale: 1.05, // Slightly enlarge
+                 duration: 200,
+                 easing: 'easeOutSine'
+             });
+         });
+
+         el.addEventListener('mouseleave', () => {
+             anime({
+                 targets: el,
+                 scale: 1, // Return to normal size
+                 duration: 300,
+                 easing: 'easeOutSine'
+             });
+         });
+     });
+
+     // --- REMOVED DUPLICATE GALLERY SCROLLING LOGIC HERE ---
+     // The gallery scrolling and looping is handled by the block at the top.
+
+}); // End DOMContentLoaded listener

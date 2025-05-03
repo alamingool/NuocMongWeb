@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'title'; /* Tên bạn sẽ dùng để gọi font trong CSS */
+    src: url('font/Coolvetica\ Rg.otf') format('opentype'); /* Ưu tiên WOFF2 */
+}
+
+@font-face {
+    font-family: 'title-italic'; /* Tên bạn sẽ dùng để gọi font trong CSS */
+    src: url('font/Coolvetica\ Rg\ It.otf') format('opentype'); /* Ưu tiên WOFF2 */
+}
+
 html {
     scroll-behavior:smooth;
     /* Add padding to the top of the viewport when scrolling to anchors,
@@ -18,7 +28,7 @@ body {
     font-optical-sizing: auto;
     /* --- DARK MODE CHANGES --- */
     color: #e0e0e0; /* Light text color */
-    background-color: #1a1a1a; /* Dark background */
+    background-color: #000000; /* Dark background */
 }
 
 .container {
@@ -48,8 +58,25 @@ h1, h2, h3 {
     margin-bottom: 1rem;
     line-height: 1.2;
     /* --- DARK MODE CHANGES --- */
-    color: #ffffff; /* White color for headings */
+    color: #ff03c4; /* White color for headings */
 }
+
+h2 {
+    font-family: 'title';
+}
+#title{
+    color:#ffffff;
+    font-family: 'title';
+}
+
+
+/* --- STYLE CHO LOGO TRONG HERO --- */
+.hero-content img {
+    height: 130px; /* Đặt chiều cao mong muốn cho logo */
+    width: auto; /* Giữ tỷ lệ khung hình */
+    max-width: 85%; /* Ngăn logo quá rộng trên màn hình nhỏ */
+    margin-bottom: 1.5rem; /* Tạo khoảng cách giữa logo và tiêu đề/phụ đề bên dưới */
+  }
 
 h1 { font-size: 2.8rem; }
 h2 { font-size: 2rem; }
@@ -60,6 +87,36 @@ p {
     line-height: 1.6; /* Improve readability */
     /* Default text-align is browser default (usually left) */
 }
+
+
+/* --- STYLE CHO GIÁ TIỀN TRONG HERO --- */
+/* --- CSS CHO ANIMATION CHỮ CÁI --- */
+.hero-price span {
+    /* Ngăn chữ cái nhảy ra ngoài làm thay đổi layout */
+    overflow: hidden;
+    /* Đảm bảo span cha chiếm không gian */
+    display: inline-block; /* Hoặc block nếu muốn */
+}
+
+.hero-price .letter {
+    display: inline-block; /* QUAN TRỌNG: Cho phép transform */
+    /* Không thêm padding/margin ở đây để tránh ảnh hưởng khoảng cách chữ */
+    white-space: pre; /* Giữ lại khoảng trắng nếu có */
+}
+/* --- KẾT THÚC CSS CHỮ CÁI --- */
+
+.hero-price {
+    margin-bottom: 0.3rem; /* Khoảng cách giữa giá và nút CTA */
+    font-size: 1.3rem; /* Kích thước chữ lớn hơn một chút */
+    font-weight: 600; /* Hơi đậm */
+    color: #FFFFFF; /* Màu trắng (hoặc màu phù hợp với theme sáng/tối) */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ cho dễ đọc */
+    padding: 5px 15px; /* Padding nhỏ xung quanh */
+    display: inline-block; /* Để padding và background hoạt động đúng */
+}
+
+
+/* --- KẾT THÚC STYLE GIÁ TIỀN --- */
 
 
 a {
@@ -91,8 +148,8 @@ img {
 /* ===== Utility Classes ===== */
 .content-section {
     padding: 60px 0;
-    background-color: #1a1a1a; /* Ensure a consistent background for transitions */
-    border-top: 1px solid #333; /* Darker separator - RE-ADDED */
+    background-color: #000000; /* Ensure a consistent background for transitions */
+    border-top: 1px solid #000000; /* Darker separator - RE-ADDED */
     position: relative; /* Needed for pseudo-elements */
     overflow: hidden; /* Hide elements like the fade gradient if they spill */
 }
@@ -104,7 +161,7 @@ img {
 /* ===== Header & Navigation ===== */
 header {
     /* --- DARK MODE CHANGES --- */
-    background-color: #282828; /* Darker nav background */
+    background-color: #000000; /* Darker nav background */
     padding: 1rem 0;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Stronger shadow */
     position: sticky;
@@ -189,7 +246,7 @@ nav ul li a.active {
 .cta-button {
     display: inline-block;
     background-color: #00aaff;
-    color: #1a1a1a;
+    color: #000000;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -205,7 +262,7 @@ nav ul li a.active {
 
 .cta-button:hover {
     background-color: #0088cc;
-    color: #1a1a1a;
+    color: #000000;
 }
 
 .nav-cta {
@@ -268,7 +325,7 @@ nav ul li a.active {
     background: linear-gradient(to bottom,
         rgba(0, 0, 0, 0.6) 0%,    /* Start with dark overlay */
         rgba(0, 0, 0, 0.6) 70%,   /* Stay dark for most of the section */
-        #1a1a1a 100%              /* Fade to page background color at the bottom */
+        #000000 100%              /* Fade to page background color at the bottom */
     );
     z-index: 2; /* Above the background image, below the content */
     pointer-events: none; /* Allow clicks through */
@@ -293,10 +350,11 @@ nav ul li a.active {
 }
 
 .hero-content h2 {
+    font-family: 'title-italic';
     font-size: 1.8rem;
     margin-bottom: 1rem;
     font-weight: lighter;
-    font-style: italic;
+    font-style: normal;
     color: #e0e0e0;
 }
 
@@ -431,17 +489,12 @@ nav ul li a.active {
 }
 
 #features .features-grid {
-    display: grid; /* Use grid for horizontal layout */
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 columns on large, adapts down */
-    gap: 30px; /* Space between grid items */
-    margin-top: 2rem;
-    min-height: 0;
-    overflow: visible;
-    /* Removed max-width and auto margins - grid handles centering within section padding */
-    /* max-width: 800px; */
-    /* margin-left: auto; */
-    /* margin-right: auto; */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cột */
+    grid-template-rows: repeat(2, auto);   /* 2 hàng */
+    gap: 40px;
 }
+
 
 #features .feature-item {
     text-align: left; /* Align text to the left */
@@ -586,10 +639,10 @@ nav ul li a.active {
    /* Vertical gradient: page-bg -> transparent -> transparent -> page-bg */
    /* This gradient is applied *over* the ::before dark overlay */
    background: linear-gradient(to bottom,
-       #1a1a1a 0%,    /* Start with page background color */
-       rgba(26, 26, 26, 0) 15%,     /* Fade to transparent by 15% of the item height */
-       rgba(26, 26, 26, 0) 85%,     /* Stay transparent until 85% of the item height */
-       #1a1a1a 100%   /* Fade back to page background color by 100% */
+       #000000 0%,    /* Start with page background color */
+       rgba(0, 0, 0, 0) 15%,     /* Fade to transparent by 15% of the item height */
+       rgba(0, 0, 0, 0) 85%,     /* Stay transparent until 85% of the item height */
+       #000000 100%   /* Fade back to page background color by 100% */
    );
    z-index: 2; /* Above ::before, below foreground content */
    pointer-events: none;
@@ -690,10 +743,10 @@ nav ul li a.active {
     /* Adjust gradient stops for mobile if needed */
     #about .about-item::after {
         background: linear-gradient(to bottom,
-           #1a1a1a 0%,
-           rgba(26, 26, 26, 0) 10%, /* Fade faster */
-           rgba(26, 26, 26, 0) 90%, /* Stay transparent longer */
-           #1a1a1a 100%
+           #000000 0%,
+           rgba(0, 0, 0, 0) 10%, /* Fade faster */
+           rgba(0, 0, 0, 0) 90%, /* Stay transparent longer */
+           #000000 100%
        );
     }
 
@@ -724,6 +777,7 @@ nav ul li a.active {
         text-align: center; /* Ensure text is centered when stacked */
    }
 }
+
 
 /* ===== System Requirements Section ===== */
 #requirements .requirements-list {
@@ -813,12 +867,12 @@ nav ul li a.active {
 
 /* ===== Footer ===== */
 footer {
-    background-color: #1a1a1a;
-    color: #aaa;
+    background-color: #7300ff;
+    color: #ffffff;
     text-align: center;
     padding: 20px 0;
     margin-top: 40px;
-    border-top: 1px solid #333;
+    border-top: 1px solid #000000;
 }
 
 footer .container {
@@ -837,7 +891,7 @@ footer .footer-links {
 }
 
 footer .footer-links a {
-    color: #aaa;
+    color: #ffffff;
     padding: 0 5px;
     text-decoration: none;
 }
@@ -849,7 +903,7 @@ footer p {
 }
 
 footer .footer-links a:hover {
-    color: #fff;
+    color: #ffffff;
     text-decoration: underline; /* Underline footer links on hover */
 }
 
