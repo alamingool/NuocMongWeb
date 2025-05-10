@@ -39,7 +39,6 @@
                 <!-- <li><a href="#news">News</a></li> -->
             </ul>
             <!-- *** CTA Button in Navigation *** -->
-             <!-- REMINDER: Replace with your actual Itch.io link -->
             <a href="https://itch.io/your-game-link" class="cta-button nav-cta" target="_blank" rel="noopener noreferrer">Add to Collection!</a>
             <!-- Add a Mobile Menu Toggle Button here later if needed -->
         </nav>
@@ -47,40 +46,62 @@
 
     <main>
 
-        <!-- ===== 1. Homepage Content ===== -->
+        <!-- 1. Ảnh nhân vật đặt ở đây, bên ngoài content -->
+        <img src="images/linh.png" class="hero-character hero-character-left" alt="Nhân vật Lính">
+        <img src="images/vua.png" class="hero-character hero-character-right" alt="Nhân vật Vua">
+        <img src="images/rem.png" class="rem">
+        
         <section id="home" class="hero">
+
+            
+
+        
+            <!-- 2. Nội dung chính ở giữa -->
             <div class="hero-content container">
-                 <!-- Background is now set via CSS on .hero::before -->
-                <!--h1 id="title">NƯỚC MỘNG</h1--> <!-- Game Title -->
-                <img src="images/logo.png">
-                <h2>Where Tradition Meets Innovation – You're in Control</h2>
-                <p>Uncover the vibrant tapestry of Vietnamese heritage, where centuries-old traditions come to life with stunning precision.
-                    All from the comfort of your PC.</p>
-
-
-                    
-                <!-- *** THÊM GIÁ TIỀN Ở ĐÂY *** -->
+                <img class="logo" src="images/logo.png">
+                <!--h2>Where Tradition Meets Innovation – You're in Control</h2-->
+                <p>Uncover the vibrant tapestry of Vietnamese heritage, where centuries-old traditions come to life with stunning precision. All from the comfort of your PC.</p>
+        
                 <div class="hero-price">
                     <span>Available Now for 29.999 VND</span>
                 </div>
-                <!-- *** KẾT THÚC PHẦN GIÁ TIỀN *** -->
-
-                <!-- *** The homepage image is now a CSS background *** -->
-                <!-- <img src="screenshots/02.png" alt="Nuoc Mong Game Graphic or Key Art" class="hero-image"> -->
-
-                 <!-- *** Primary CTA Button *** -->
-                  <!-- REMINDER: Replace with your actual Itch.io link -->
+        
                 <a href="https://itch.io/your-game-link" class="cta-button hero-cta" target="_blank" rel="noopener noreferrer">Add to Collection on Itch.io</a>
             </div>
+        
             <!-- Optional: Add subtle scroll down indicator -->
         </section>
 
-        <!-- ===== Intro Section (Placed before Gallery for fade effect) ===== -->
-         <section id="intro" class="container content-section">
-            <h2>Discover an Enchanting World</h2>
-            <p>Nuoc Mong is an immersive, interactive experience that reimagines the timeless art of Vietnamese water puppetry, blending tradition with cutting-edge technology. Players don't just watch the performance; they step into the heart of the story, becoming the unseen hand that guides the show. Through intuitive hand-tracking controls, you will breathe life into vibrant puppets, manipulate the environment, and influence the unfolding narrative. It's a unique fusion of cultural heritage and modern interactive storytelling, inviting you to connect with Vietnamese folklore in a deeply personal way.</p>
-            <!-- A pseudo-element on this section will create the fade effect to the gallery below -->
+
+
+        <section class="black-break-section">
+            <img src="images/dragon.png" class="centered-break-image">
         </section>
+
+
+
+
+        <!-- ===== Intro Section ===== -->
+<section id="intro"> <!-- Chỉ giữ lại ID -->
+
+    <img src="images/chua.png" class="intro-background-image" alt="Nền giới thiệu">
+    <img src="images/hand.png" class="intro-foreground-image" alt="Bàn tay điều khiển">
+
+    <div class="intro-content-wrapper container content-section"> <!-- Đặt class vào div con -->
+        <!--h2>Discover an Enchanting World</h2-->
+        <p id="still"> Nuoc Mong is an immersive experience that brings Vietnamese water puppetry to life through interactive <span class="highlight-yellow">hand-tracking controls</span>. 
+        </p> 
+
+        <p id="appear"> Step into the story as the unseen hand behind the show—guiding puppets, shaping the world, and influencing the tale. Tradition meets technology in this unique blend of cultural heritage and modern storytelling.
+        </p> 
+    </div>
+
+    
+</section>
+
+
+
+
 
 
         <!-- ===== Fluid Gallery Section ===== -->
@@ -141,7 +162,6 @@
 
             <!-- Optional: Add a button below the gallery -->
             <div class="container" style="text-align: center; margin-top: 2rem;">
-                 <!-- REMINDER: Replace with your actual Itch.io gallery link -->
                  <a href="https://itch.io/your-game-link#screenshots" class="cta-button secondary-cta" target="_blank" rel="noopener noreferrer">View More on Itch.io</a>
             </div>
         </section>
@@ -212,7 +232,7 @@
                     <img src="screenshots/14.png" alt="Description of the image related to becoming the puppeteer">
                 </div>
                 <div class="about-text">
-                    <h3>Become the Puppeteer</h3>
+                    <h3>Become the Puppeter</h3>
                     <p>In Nuoc Mong, you aren't just watching a show; you are the unseen hand guiding the performance. Set against the backdrop of a traditional Vietnamese water stage, you will interact with the scene using your hands, detected via a standard webcam. This innovative control method allows for a fluid and intuitive connection with the puppets and their world, blurring the lines between player and performer.</p>
                 </div>
             </div>
@@ -298,8 +318,15 @@
 
     </main>
 
+
+<div class="footer-separator">
+    <img src="images/chua.png" alt="Water ripples decoration">
+</div>
+
+
     <!-- ===== Footer ===== -->
     <footer>
+
         <div class="container">
             <div class="footer-links">
                 <!-- REMINDER: Replace with your actual policy links -->

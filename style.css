@@ -5,28 +5,92 @@
     box-sizing: border-box;
 }
 
+
+.black-break-section {
+    background-color: #000000; /* Màu đen */
+    width: 100%;             /* Chiếm toàn bộ chiều rộng */
+    height: 400px;            /* Chiều cao của khoảng nghỉ - ĐIỀU CHỈNH GIÁ TRỊ NÀY */
+    display: block;          /* Đảm bảo nó là một khối */
+    margin: 0;               /* Xóa margin mặc định nếu có */
+    padding: 50px;              /* Xóa padding mặc định nếu có */
+    border: none;            /* Xóa border mặc định nếu có */
+
+
+    
+    /* --- THÊM CÁC THUỘC TÍNH FLEXBOX --- */
+    display: flex;           /* Kích hoạt Flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center;     /* Căn giữa theo chiều dọc */
+    /* ---------------------------------- */
+
+    overflow: hidden; /* Đề phòng ảnh quá lớn tràn ra ngoài */
+}
+
+
+/* --- Style cho ảnh ở giữa --- */
+.centered-break-image {
+    display: block; /* Loại bỏ khoảng trắng thừa dưới ảnh */
+    max-height: 75%; /* Giới hạn chiều cao tối đa (ví dụ: 90% chiều cao section) */
+                     /* Để ảnh không chạm sát mép trên/dưới */
+    max-width: 100%; /* Đảm bảo ảnh không rộng hơn section */
+    height: auto;    /* Giữ tỷ lệ khung hình */
+    width: auto;     /* Giữ tỷ lệ khung hình */
+}
+
+
+
+
+
+
+/* Ẩn thanh cuộn cho TOÀN BỘ trang (KHÔNG KHUYẾN NGHỊ) */
+body::-webkit-scrollbar {
+    display: none; /* Hoặc width: 0; height: 0; */
+  }
+  
+  /* Ẩn thanh cuộn cho MỘT PHẦN TỬ CỤ THỂ */
+  .your-scrollable-element::-webkit-scrollbar {
+    display: none; /* Hoặc width: 0; height: 0; */
+  }
+  
+  /* Bạn cũng cần đảm bảo phần tử đó có thể cuộn */
+  .your-scrollable-element {
+    overflow-y: scroll; /* Hoặc auto, cho phép cuộn dọc */
+    /* Hoặc overflow-x: scroll; cho cuộn ngang */
+    height: 300px; /* Phải có chiều cao/chiều rộng giới hạn để overflow hoạt động */
+  }
+
+
 @font-face {
-    font-family: 'title'; /* Tên bạn sẽ dùng để gọi font trong CSS */
-    src: url('font/Coolvetica\ Rg.otf') format('opentype'); /* Ưu tiên WOFF2 */
+    font-family: 'title';
+    letter-spacing: 1.3px;
+    src: url('font/palab.ttf') format('opentype'); /* Ưu tiên WOFF2 */
 }
 
 @font-face {
-    font-family: 'title-italic'; /* Tên bạn sẽ dùng để gọi font trong CSS */
-    src: url('font/Coolvetica\ Rg\ It.otf') format('opentype'); /* Ưu tiên WOFF2 */
+    font-family: 'title-italic';
+    letter-spacing: 1px;
+    src: url('font/Tagesschrift-Regular.ttf') format('opentype'); /* Ưu tiên WOFF2 */
+}
+
+@font-face {
+    font-family: 'title-light';
+    src: url('font/SF-Pro-Display-Thin.otf') format('opentype'); /* Ưu tiên WOFF2 */
+}
+
+@font-face {
+    font-family: 'title-bold';
+    src: url('font/SF-Pro-Display-Semibold.otf') format('opentype'); /* Ưu tiên WOFF2 */
 }
 
 html {
     scroll-behavior:smooth;
-    /* Add padding to the top of the viewport when scrolling to anchors,
-       to prevent fixed header from obscuring content. Adjust value
-       to match your header's height. */
-       scroll-padding-top: 50px; /* <-- Add this line. Adjust the pixel value. */
+    scroll-padding-top: 50px;
 }
 
 body {
-    font-family: "Montserrat", sans-serif;
+    font-family: 'title-light';
+    letter-spacing: 1px;
     font-optical-sizing: auto;
-    /* --- DARK MODE CHANGES --- */
     color: #e0e0e0; /* Light text color */
     background-color: #000000; /* Dark background */
 }
@@ -56,35 +120,128 @@ body {
 
 h1, h2, h3 {
     margin-bottom: 1rem;
-    line-height: 1.2;
-    /* --- DARK MODE CHANGES --- */
-    color: #ff03c4; /* White color for headings */
 }
 
 h2 {
     font-family: 'title';
+    text-transform: uppercase;
+
+    /* --- Hiệu ứng Bạc/Chrome --- */
+    background-image: linear-gradient(
+        175deg,
+        #ffffff 0%,
+        #ffffff 15%,
+        #e7e7e7 40%,
+        #d6d6d6 60%,
+        #a0a0a0 85%,
+        #888888 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    text-shadow:
+        1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.4); /* Highlight trắng rõ hơn */
+
+    font-weight: bold;
 }
+
 #title{
     color:#ffffff;
     font-family: 'title';
 }
 
 
+
+
+/* ===== Hero Section ===== */
+.hero {
+    position: relative; /* Rất quan trọng để định vị tuyệt đối cho ảnh con */
+    width: 100%;       /* Chiếm toàn bộ chiều rộng */
+    min-height: 100vh; /* Chiều cao tối thiểu (ví dụ: 85% chiều cao màn hình) */
+    padding: 80px 0;  /* Padding trên dưới */
+    background-size: cover;
+    background-position: center;
+    display: flex;       /* Sử dụng flexbox để căn giữa nội dung */
+    flex-direction: row;
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    overflow: hidden;    /* Ngăn ảnh tràn ra ngoài nếu quá lớn */
+
+    margin-top: 10px;
+}
+
+
+/* Nội dung chính ở giữa */
+.hero-content.container {
+    position: relative; 
+    z-index: 3;        
+    max-width: 850px;
+    width: 100%;
+    text-align: center;
+    padding: 30px 40px;
+    overflow-wrap: break-word;
+    white-space: normal;
+
+    overflow: hidden;
+
+}
+
+/* Tạo lớp gradient overlay */
+.hero::before {
+    content: '';         
+    position: absolute;   
+    bottom: 0;      
+    left: 0;
+    width: 100%;        
+    height: 70%; 
+    background: linear-gradient(
+        to top,
+        rgb(0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50% 
+    );
+    z-index: -1;
+    pointer-events: none; 
+}
+
+
+
+
+
+.hero-content.container .logo,
+.hero-content.container h2,
+.hero-content.container p,
+.hero-content.container .hero-price,
+.hero-content.container .hero-cta { /* Nút CTA thường cũng nên là block hoặc inline-block */
+    display: block;      /* Buộc các phần tử này xuống dòng */
+    margin-left: auto;
+    margin-right: auto;  /* Căn giữa block element */
+    margin-bottom: 15px;
+
+}
+
+.hero-content.container .hero-cta {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+
 /* --- STYLE CHO LOGO TRONG HERO --- */
-.hero-content img {
-    height: 130px; /* Đặt chiều cao mong muốn cho logo */
+.hero-content .logo {
+    height: 100%; /* Đặt chiều cao mong muốn cho logo */
     width: auto; /* Giữ tỷ lệ khung hình */
-    max-width: 85%; /* Ngăn logo quá rộng trên màn hình nhỏ */
+    max-width: 100%; /* Ngăn logo quá rộng trên màn hình nhỏ */
     margin-bottom: 1.5rem; /* Tạo khoảng cách giữa logo và tiêu đề/phụ đề bên dưới */
   }
 
 h1 { font-size: 2.8rem; }
-h2 { font-size: 2rem; }
+h2 { font-size: 2.5rem; }
 h3 { font-size: 1.5rem; }
 
 p {
     margin-bottom: 1rem;
-    line-height: 1.6; /* Improve readability */
+    line-height: 1.2rem;
     /* Default text-align is browser default (usually left) */
 }
 
@@ -92,26 +249,44 @@ p {
 /* --- STYLE CHO GIÁ TIỀN TRONG HERO --- */
 /* --- CSS CHO ANIMATION CHỮ CÁI --- */
 .hero-price span {
-    /* Ngăn chữ cái nhảy ra ngoài làm thay đổi layout */
     overflow: hidden;
-    /* Đảm bảo span cha chiếm không gian */
     display: inline-block; /* Hoặc block nếu muốn */
+
+
+    font-size: 1.8rem; /* Kích thước chữ lớn hơn một chút */
+    font-family: 'title';
+    text-transform: uppercase;
+
+    /* --- Hiệu ứng Bạc/Chrome --- */
+    background-image: linear-gradient(
+        175deg,
+        #ffffff 0%,
+        #ffffff 15%,
+        #e7e7e7 40%,
+        #d6d6d6 60%,
+        #a0a0a0 85%,
+        #888888 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    text-shadow:
+        1px 1px 1px rgba(70, 70, 70, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.4); /* Highlight trắng rõ hơn */
+
+    font-weight: bold;
+    
 }
 
 .hero-price .letter {
     display: inline-block; /* QUAN TRỌNG: Cho phép transform */
-    /* Không thêm padding/margin ở đây để tránh ảnh hưởng khoảng cách chữ */
     white-space: pre; /* Giữ lại khoảng trắng nếu có */
 }
 /* --- KẾT THÚC CSS CHỮ CÁI --- */
 
 .hero-price {
-    margin-bottom: 0.3rem; /* Khoảng cách giữa giá và nút CTA */
-    font-size: 1.3rem; /* Kích thước chữ lớn hơn một chút */
-    font-weight: 600; /* Hơi đậm */
-    color: #FFFFFF; /* Màu trắng (hoặc màu phù hợp với theme sáng/tối) */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Bóng đổ nhẹ cho dễ đọc */
-    padding: 5px 15px; /* Padding nhỏ xung quanh */
+    font-family: 'title-bold';
     display: inline-block; /* Để padding và background hoạt động đúng */
 }
 
@@ -160,14 +335,18 @@ img {
 
 /* ===== Header & Navigation ===== */
 header {
-    /* --- DARK MODE CHANGES --- */
-    background-color: #000000; /* Darker nav background */
+    background: linear-gradient(
+        to bottom,
+        #000000 5%,   /* Bắt đầu: Màu nền header, Mờ đục */
+        rgba(0, 0, 0, 0) 80%  /* Kết thúc: Màu nền header, Trong suốt */
+    );    
     padding: 1rem 0;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3); /* Stronger shadow */
-    position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000; /* Tăng z-index nếu cần để chắc chắn nó trên mọi thứ */
+    position: -webkit-sticky; /* Cho Safari cũ */
+    position: sticky;
 }
+
 
 header .container {
     display: flex;
@@ -200,7 +379,6 @@ header .logo img {
     height: 100%; /* Make the image take the full height of the link/logo div */
     width: auto; /* Maintain aspect ratio */
     display: block;
-    /* Ensure visibility */
     visibility: visible;
     opacity: 1;
 }
@@ -227,7 +405,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #e0e0e0;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 700;
     font-size: 1.2rem; /* Match button font size */
@@ -239,29 +417,59 @@ nav ul li a {
 
 nav ul li a:hover,
 nav ul li a.active {
-    color: #00aaff;
+    color: #fcc127;
+    text-decoration: none;
 }
 
 /* ===== Call to Action Buttons ===== */
 .cta-button {
-    display: inline-block;
-    background-color: #00aaff;
-    color: #000000;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem; /* Match nav link font size */
+    display: inline-block; /* QUAN TRỌNG: Cho phép kích thước tự nhiên & căn giữa bằng text-align của parent */
+    margin-top: 0px;      /* Khoảng cách trên */
+    margin-bottom: 0;      /* Không có khoảng cách dưới (nếu là cuối) */
+
+    background-color: #fcc127; /* Màu nền */
+    color: #000000;           /* Màu chữ (đen) */
+    padding: 10px 20px;    /* Padding bên trong nút */
+     /* --- Hiệu ứng Kim loại Mạnh Mẽ Hơn --- */
+    color: #1a1a1a; /* Màu chữ đen đậm hơn */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3); /* Bóng trắng nhẹ hơn */
+
+    /* Viền kim loại rõ ràng */
+    border: 2px solid #777; /* Viền xám đậm hơn */
+    border-radius: 50px;
+
+    /* Gradient nền với độ tương phản cao */
+    background-image: linear-gradient(
+        to bottom,
+        #fefefe 0%,  /* Bắt đầu: Trắng sáng (highlight mạnh) */
+        #d8d8d8 5%,  /* Chuyển nhanh sang xám nhạt */
+        #b8b8b8 50%, /* Xám trung bình ở giữa */
+        #c4c4c4 95%, /* Hơi sáng lên gần đáy */
+        #aaaaaa 100% /* Cạnh dưới cùng tối hơn */
+    );
+
+    /* Bóng đổ phức tạp hơn để tạo cạnh và độ bóng */
+    box-shadow:
+        /* Highlight trắng sắc nét bên trong phía trên */
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        /* Bóng tối nhẹ bên trong phía dưới (tạo cạnh vát) */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.15),
+        /* Bóng đổ chính bên ngoài */
+        0 3px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;       /* Căn giữa chữ BÊN TRONG nút (nếu có nhiều dòng) */
+    cursor: pointer;          /* Con trỏ hình bàn tay */
+    text-decoration: none;    /* Bỏ gạch chân (nếu là thẻ <a>) */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền */
+    line-height: 1.2;         /* Chiều cao dòng chữ */
+    flex-shrink: 0;           
+
+
+    font-size: 1.3rem;
     font-weight: bold;
-    text-align: center;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    line-height: 1.2; /* Match nav link line height */
-    flex-shrink: 0; /* Prevent button from shrinking */
 }
 
 .cta-button:hover {
-    background-color: #0088cc;
+    background-color: #fcc127;
     color: #000000;
 }
 
@@ -273,9 +481,9 @@ nav ul li a.active {
 }
 
 .hero-cta {
+    width: 40%;
     margin-top: 1rem;
     font-size: 1.2rem;
-    padding: 12px 25px;
 }
 
 .secondary-cta {
@@ -290,57 +498,41 @@ nav ul li a.active {
 }
 
 
-/* ===== Hero Section ===== */
-.hero {
-    /* REMOVED background: linear-gradient(...) url(...) ...; */ /* Background handled by pseudo-elements */
-    color: #fff; /* Text color */
-    height: 80vh; /* Keep height */
-    display: flex; /* Keep flex for centering content */
-    align-items: center; /* Keep vertical centering */
-    justify-content: center; /* Keep horizontal centering */
-    text-align: center; /* Keep text-align center for text elements */
-    padding: 0 20px; /* Keep padding */
-    position: relative; /* Needed for absolute positioning of pseudo-elements */
-    overflow: hidden; /* Hide anything outside the section bounds */
+
+/* ===== Fixed Side Images ===== */
+
+/* Ảnh nhân vật ở hai bên */
+.hero-character {
+    position: absolute;      /* QUAN TRỌNG: Giữ vị trí cố định so với khung nhìn (viewport) */
+    bottom: 0;         /* Đặt ở dưới cùng của .hero */
+    height: 115%;       /* Chiều cao gần bằng 100% của .hero (Để lại ít khoảng trống nếu muốn) */
+    width: auto;       /* Chiều rộng tự động để giữ tỷ lệ */
+    z-index: -4;        
+    top: 55%;
+    transform: translateY(-50%);
+
+    display: block; /* Đảm bảo hoạt động như block-level element */
 }
 
-/* *** Pseudo-element for Background Image and Blur *** */
-.hero::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    /* REMINDER: Replace with your actual homepage image path */
-    background: url('screenshots/02.png') no-repeat center center/cover;
-    filter: blur(8px); /* Apply blur filter - Adjust value as needed */
-    z-index: 1; /* Below the content and the overlay */
-    pointer-events: none; /* Allow clicks through */
+.rem{
+    position: absolute; 
+    z-index: -5;
+    top:0;
+    width:100%;
+    left: 50%;       /* Đẩy cạnh trái của phần tử vào giữa khối chứa */
+    transform: translateX(-50%); 
 }
 
-/* *** Pseudo-element for Dark Overlay and Blending Gradient *** */
-.hero::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    /* Gradient: Dark Overlay -> Dark Overlay -> Fade to Page Background */
-    background: linear-gradient(to bottom,
-        rgba(0, 0, 0, 0.6) 0%,    /* Start with dark overlay */
-        rgba(0, 0, 0, 0.6) 70%,   /* Stay dark for most of the section */
-        #000000 100%              /* Fade to page background color at the bottom */
-    );
-    z-index: 2; /* Above the background image, below the content */
-    pointer-events: none; /* Allow clicks through */
+.hero-character-left {
+    left: 0;
+}
+
+.hero-character-right {
+    right: 0;
 }
 
 
-.hero-content { /* Re-centered hero content specifically */
-     text-align: center;
-     /* Add display flex and flex-direction column to stack content vertically */
-     display: flex;
-     flex-direction: column;
-     align-items: center; /* Center items horizontally within the flex container */
-     position: relative; /* Needed for z-index */
-     z-index: 3; /* Ensure content is above both pseudo-elements */
-}
+
 
 .hero-content h1 {
     font-size: 3.5rem;
@@ -358,13 +550,177 @@ nav ul li a.active {
     color: #e0e0e0;
 }
 
-/* --- End Style for the old hero image --- */
 
-/* ===== Intro Section & Fade Effect ===== */
+
+
+
+
+/* ===== Intro Section Styling ===== */
 #intro {
-    position: relative; /* Needed for the pseudo-element positioning */
-    z-index: 1; /* Ensure it's above the gallery border/background */
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    position: relative; 
+    overflow: hidden;   
 }
+
+
+/* Tạo lớp gradient overlay */
+#intro::before {
+    content: '';         
+    position: absolute;   
+    bottom: 0;      
+    left: 0;
+    width: 100%;        
+    height: 70%; 
+    background: linear-gradient(
+        to top,
+        rgb(0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50% 
+    );
+    z-index: 3;
+    pointer-events: none; 
+}
+
+/* Tạo lớp gradient overlay */
+#intro::after {
+    content: '';         
+    position: absolute;   
+    top: 0;      
+    left: 0;
+    width: 100%;        
+    height: 70%; 
+    background: linear-gradient(
+        to bottom,
+        rgb(0, 0, 0) 0%,
+        rgba(0, 0, 0, 0) 50% 
+    );
+    z-index: 3;
+    pointer-events: none; 
+}
+
+
+
+
+/* --- Ảnh Nền và Ảnh Tay --- */
+.intro-background-image,
+.intro-foreground-image {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.intro-background-image { /* Ảnh nền (nen.png) */
+    z-index: 1; /* Đặt ở lớp 1 (dương) */
+    bottom:-4rem;
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+
+    transition: filter 0.5s ease-in-out;
+}
+
+.intro-foreground-image { /* Ảnh tay (hand.png) */
+    z-index: 2; /* Đặt ở lớp 2, trên nền */
+    top: 0;
+
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    pointer-events: none;
+    filter: blur(4px);
+    transition: filter 0.5s ease-in-out;
+}
+
+/* --- Wrapper cho nội dung bên trong Intro --- */
+/* --- Wrapper cho nội dung bên trong Intro --- */
+.intro-content-wrapper {
+    width: 100%;
+    max-width: 1500px;
+    height: 100vh;
+    background: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    box-sizing: border-box;
+}
+
+/* --- CSS chung cho các thẻ <p> bên trong --- */
+.intro-content-wrapper p {
+    font-size: 1.1rem;
+    line-height: 1.2;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    color: white;
+
+    text-shadow:
+     /* Shadow chính, hơi lệch, khá rõ */
+     1px 1px 2px rgb(0, 0, 0),
+     /* Thêm một lớp shadow mờ nhẹ xung quanh để tăng độ tách biệt */
+     0 0 5px rgba(0, 0, 0, 0.6);
+    /* --- Chỉ giữ định vị cơ bản --- */
+    position: absolute;
+    margin: 0;
+    text-align: center;
+
+}
+
+.intro-content-wrapper span {
+    font-family: 'title-bold';
+}
+
+/* --- Định vị và kiểu dáng cụ thể cho #still --- */
+#still {
+    top: 15%;
+    left: 40px;  /* = padding-left của .intro-content-wrapper */
+    right: 40px; /* = padding-right của .intro-content-wrapper */
+    width: auto; /* Chiều rộng sẽ tự tính */
+}
+
+/* --- Định vị và kiểu dáng cụ thể cho #appear --- */
+#appear {
+    bottom: 15%;
+    width: auto; /* Chiều rộng sẽ tự tính */
+    left: 430px;  /* = padding-left của .intro-content-wrapper */
+    right: 430px;
+    line-height: 1.2rem;
+
+
+    display: none;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+
+.intro-content-wrapper p span.highlight-yellow {
+    color: #ff5900;
+    font-weight: bold;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    text-shadow: none;
+    cursor: pointer;  
+    transition: color 0.3s easee;
+
+}
+
+.intro-content-wrapper p span.highlight-yellow:hover {
+    color: #Fcc427;           
+}
+
+
+
+
 
 /* ===== Fluid Gallery Section ===== */
 #gallery {
@@ -372,8 +728,14 @@ nav ul li a.active {
     overflow: hidden; /* Hide overflowing pseudo-elements and content */
     padding-top: 60px; /* Keep padding top */
     padding-bottom: 60px;
-    /* background-color: #1a1a1a; Already set on content-section */
 }
+
+#gallery a{
+    color: black;
+    font-weight: bold;
+}
+
+
 
 #gallery .container h2 {
      text-align: center; /* Center the heading */
@@ -479,6 +841,7 @@ nav ul li a.active {
 }
 
 
+
 /* ===== Features Section (Modified Layout) ===== */
 #features {
     padding: 60px 200px; /* Add horizontal padding to the section itself */
@@ -525,13 +888,26 @@ nav ul li a.active {
     overflow: visible;
 }
 
+
 #features .feature-item h3 {
-    font-size: 1.2rem;
+    /*font-size: 1.2rem;*/
     margin-top: 0; /* Remove top margin */
     margin-bottom: 0.5rem;
     color: #fff;
+    position: relative;
+    display: inline-block;
 }
 
+#features .feature-item h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 0.4em;
+    background-color: #ff03c4;
+    z-index: -1;
+}
 #features .feature-item p {
     margin-bottom: 0; /* Remove margin-bottom from last paragraph in item */
 }
@@ -702,6 +1078,19 @@ nav ul li a.active {
 #about .about-item .about-text h3 {
    margin-top: 0; /* Remove top margin from headings within text block */
    color: #fff; /* Ensure heading is white */
+   position: relative;
+   display: inline-block;
+}
+
+#about .about-item .about-text h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.1em;
+    width: 100%;
+    height: 0.4em;
+    background-color: #ff03c4;
+    z-index: -1;
 }
 
 #about .about-item .about-text p {
@@ -864,15 +1253,31 @@ nav ul li a.active {
     text-decoration: none;
 }
 
+/* ===== Footer Image ===== */
+.footer-separator {
+    width: 100%;
+    line-height: 0;
+}
+
+.footer-separator img {
+    position: relative; /* Allows z-index */
+    width: 100%;
+    height: auto;
+    display: block;
+    z-index: -5;       /* Tries to push image behind other elements */
+    margin-bottom: -250px; /* Pulls the footer UPWARDS over the image */
+}
+
 
 /* ===== Footer ===== */
 footer {
-    background-color: #7300ff;
+    background-color: #b91c0c; /* Footer has its own background */
     color: #ffffff;
     text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
+    padding: 80px 0;
+    margin-top: 40px; /* Space above the footer (before overlap) */
     border-top: 1px solid #000000;
+    /* Note: No position: relative here by default */
 }
 
 footer .container {
@@ -1060,6 +1465,15 @@ footer .footer-links a:hover {
      #features .feature-item p {
           text-align: center; /* Ensure text is centered */
      }
+ 
+     #features .feature-item h3 {
+        background-color: rgb(255, 0, 128); /* nền nhạt để làm nổi bật */
+        padding: 4px 8px;
+        border-radius: 6px;
+        display: inline-block;
+    }
+    
+
 
 
     /* About Adjustments */

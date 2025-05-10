@@ -451,8 +451,128 @@ document.addEventListener('DOMContentLoaded', () => {
              });
          });
      });
+     
 
      // --- REMOVED DUPLICATE GALLERY SCROLLING LOGIC HERE ---
      // The gallery scrolling and looping is handled by the block at the top.
 
 }); // End DOMContentLoaded listener
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const highlightSpan = document.querySelector('#still .highlight-yellow');
+    const backgroundImage = document.querySelector('.intro-background-image');
+    const foregroundImage = document.querySelector('.intro-foreground-image');
+    const appearParagraph = document.querySelector('#appear');
+
+    function splitSpanText(el) {
+        const text = el.textContent;
+        const newText = text.replace(/\S/g, "<span class='letter'>$&</span>");
+        el.innerHTML = newText;
+    }
+
+    if (highlightSpan) {
+        splitSpanText(highlightSpan); // Tách chữ
+    }
+
+    // Animate từng chữ khi vừa load
+    // Animate từng chữ khi load
+anime({
+    targets: '.highlight-yellow .letter',
+    opacity: [0, 1],
+    translateY: ["1em", 0],
+    duration: 300,
+    delay: anime.stagger(30),
+    easing: "easeOutExpo",
+    complete: () => {
+        // Sau khi load xong, bắt đầu chớp tắt vô hạn
+        anime({
+            targets: '.highlight-yellow .letter',
+            opacity: [
+                { value: 0.8, duration: 500 },
+                { value: 1, duration: 500 }
+            ],
+            loop: true,
+            easing: 'easeInOutSine',
+            delay: anime.stagger(50, { from: 'center' }) // nhấp nháy như sóng
+        });
+    }
+});
+
+    
+    if (appearParagraph) {
+        appearParagraph.style.display = 'none'; // Ẩn ban đầu
+        appearParagraph.style.opacity = '0'; // Đặt opacity sẵn sàng cho animation
+        appearParagraph.style.transform = 'translateY(15px)'; // Đặt transform sẵn sàng
+    }
+
+    if (highlightSpan && backgroundImage && appearParagraph) {
+
+        highlightSpan.addEventListener('mouseenter', () => {
+            // Làm mờ ảnh nền
+            anime({
+                targets: backgroundImage,
+                filter: ['blur(0px)', 'blur(5px)'],
+                duration: 300,
+                easing: 'easeInOutQuad'
+            });
+
+             // 2. Làm RÕ ảnh tay (hand.png)
+             anime({
+                targets: foregroundImage,
+                filter: ['blur(4px)', 'blur(0px)'], // Từ mờ -> rõ (dùng giá trị blur ban đầu)
+                duration: 300,
+                easing: 'easeInOutQuad'
+            });
+
+            // Hiện đoạn #appear
+            appearParagraph.style.display = 'block';
+            requestAnimationFrame(() => { // Hoặc setTimeout(() => { ... }, 0);
+                anime({
+                    targets: appearParagraph,
+                    opacity: [0, 1],
+                    translateY: ['50px', '0px'],
+                    duration: 500,
+                    easing: 'easeInOutQuad'
+                });
+            });
+        });
+
+        highlightSpan.addEventListener('mouseleave', () => {
+            // Làm rõ ảnh nền
+            anime({
+                targets: backgroundImage,
+                filter: ['blur(5px)', 'blur(0px)'],
+                duration: 300,
+                easing: 'easeInOutQuad'
+            });
+
+            // 2. Làm MỜ ảnh tay (hand.png) trở lại
+            anime({
+                targets: foregroundImage,
+                filter: ['blur(0px)', 'blur(4px)'], // Từ rõ -> mờ (về giá trị blur ban đầu)
+                duration: 300,
+                easing: 'easeInOutQuad'
+            });
+
+            // Ẩn đoạn #appear
+            anime({
+                targets: appearParagraph,
+                opacity: [1, 0],
+                translateY: ['0px', '50px'],
+                duration: 500,
+                easing: 'easeInOutQuad',
+                complete: function(anim) {
+                    // 3. Đặt lại display: none sau khi animation hoàn tất
+                    appearParagraph.style.display = 'none';
+                }
+            });
+        });
+
+    } else {
+        console.error("Không tìm thấy một hoặc nhiều phần tử cần thiết cho hoạt ảnh.");
+    }
+});
+
+
