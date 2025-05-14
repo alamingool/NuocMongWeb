@@ -126,7 +126,6 @@ h2 {
     font-family: 'title';
     text-transform: uppercase;
 
-    /* --- Hiệu ứng Bạc/Chrome --- */
     background-image: linear-gradient(
         175deg,
         #ffffff 0%,
@@ -242,6 +241,9 @@ h3 { font-size: 1.5rem; }
 p {
     margin-bottom: 1rem;
     line-height: 1.2rem;
+    font-size: 1rem;
+    color:#dddddd;
+
     /* Default text-align is browser default (usually left) */
 }
 
@@ -327,10 +329,11 @@ img {
     border-top: 1px solid #000000; /* Darker separator - RE-ADDED */
     position: relative; /* Needed for pseudo-elements */
     overflow: hidden; /* Hide elements like the fade gradient if they spill */
+    margin-bottom: 80px;
 }
 
 .content-section:first-of-type {
-    border-top: none; /* Keep no border on the first section */
+    border-top: none; 
 }
 
 /* ===== Header & Navigation ===== */
@@ -438,7 +441,6 @@ nav ul li a.active {
     border: 2px solid #777; /* Viền xám đậm hơn */
     border-radius: 50px;
 
-    /* Gradient nền với độ tương phản cao */
     background-image: linear-gradient(
         to bottom,
         #fefefe 0%,  /* Bắt đầu: Trắng sáng (highlight mạnh) */
@@ -488,13 +490,13 @@ nav ul li a.active {
 
 .secondary-cta {
     background-color: #555;
-    color: #fff;
+    color: #000000;
     margin-top: 1rem;
 }
 
 .secondary-cta:hover {
     background-color: #666;
-    color: #fff;
+    color: #000000;
 }
 
 
@@ -566,6 +568,8 @@ nav ul li a.active {
     box-sizing: border-box;
     position: relative; 
     overflow: hidden;   
+
+    margin-bottom: 100px;
 }
 
 
@@ -692,8 +696,8 @@ nav ul li a.active {
 #appear {
     bottom: 15%;
     width: auto; /* Chiều rộng sẽ tự tính */
-    left: 430px;  /* = padding-left của .intro-content-wrapper */
-    right: 430px;
+    left: 15rem;  /* = padding-left của .intro-content-wrapper */
+    right: 15rem;
     line-height: 1.2rem;
 
 
@@ -888,28 +892,76 @@ nav ul li a.active {
     overflow: visible;
 }
 
+#features .feature-item .feature-text {
+    /* Các style hiện tại của bạn cho feature-text */
+    /* min-height: 0; */ /* (Bạn có thể đã có cái này) */
+    /* overflow: visible; */ /* (Bạn có thể đã có cái này) */
+}
+
+
+/* Thêm ô vuông bằng pseudo-element ::before */
+#features .feature-item h3::before {
+    content: ""; /* Bắt buộc phải có cho pseudo-elements */
+    position: absolute; /* Định vị tuyệt đối so với h3 */
+    left: 0; /* Đặt ở cạnh trái của padding-left của h3 */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%); /* Điều chỉnh lại vị trí để căn giữa chính xác */
+
+    width: 12px;  
+    height: 12px;
+
+    /* Lựa chọn 2: Ô vuông metallic nhẹ */
+    background-image: linear-gradient(
+        135deg, /* Chéo để tạo hiệu ứng cạnh */
+        #fcc427, 
+        #dda200 
+    );
+    border: 1px solid #c08e06; /* Viền xám nhẹ */
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+
+    border-radius: 2px; 
+}
+
+
 
 #features .feature-item h3 {
-    /*font-size: 1.2rem;*/
-    margin-top: 0; /* Remove top margin */
-    margin-bottom: 0.5rem;
-    color: #fff;
+    font-family: 'title';
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    margin-top: 0.2rem; /* Remove top margin */
+    margin-bottom: 0.2rem;
     position: relative;
     display: inline-block;
+
+    
+    background-image: linear-gradient(
+        175deg,
+        #ffffff 0%,
+        #ffffff 15%,
+        #e7e7e7 40%,
+        #d6d6d6 60%,
+        #a0a0a0 85%,
+        #888888 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    text-shadow:
+        1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.4); /* Highlight trắng rõ hơn */
+
+    font-weight: bold;
+
+    padding-left: 22px;
 }
 
-#features .feature-item h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0.1em;
-    width: 100%;
-    height: 0.4em;
-    background-color: #ff03c4;
-    z-index: -1;
-}
+
 #features .feature-item p {
     margin-bottom: 0; /* Remove margin-bottom from last paragraph in item */
+    text-align: justify;
+    max-width: 500px;
+
 }
 
 
@@ -917,9 +969,8 @@ nav ul li a.active {
 #trailer .video-placeholder {
     margin: 2rem auto;
     text-align: center;
-    background-color: #282828;
-    padding: 20px;
     border-radius: 5px;
+    align-content: center;
     max-width: 800px;
 }
 
@@ -927,23 +978,426 @@ nav ul li a.active {
     color: #aaa;
     font-style: italic;
     margin-top: 1rem; /* Space above the fallback paragraph */
-    margin-bottom: 0; /* No margin below */
     text-align: center; /* Center the fallback text */
     font-size: 0.9rem;
 }
 
 #trailer .video-placeholder iframe {
     display: block;
-    margin: 0 auto;
-    max-width: 100%;
+    width: 100%;
     border-radius: 5px;
 }
+
+
+
+
+/* --- Bắt đầu Styling cho Pricing Section --- */
+
+#pricing{
+    margin-top: -4.5em;
+}
+.pricing-grid {
+    display: flex;
+    flex-wrap: wrap; /* Cho phép các card xuống dòng trên màn hình nhỏ */
+    justify-content: center; /* Căn giữa các card */
+    gap: 30px; /* Khoảng cách giữa các card */
+    margin-top: 40px;
+}
+
+.pricing-card {
+    /* --- Các thuộc tính hiện có bạn muốn giữ --- */
+    border-radius: 10px;
+    width: calc(33.333% - 40px); /* Chiều rộng cho 3 card, trừ đi gap */
+    min-width: 280px; /* Chiều rộng tối thiểu cho card */
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Thêm transition cho border */
+    position: relative; /* Để định vị badge "Phổ Biến Nhất" */
+    overflow: hidden; 
+    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
+
+
+    /* 2. Nền Metallic */
+    background-color: #c0c0c0; /* Fallback color - màu bạc cơ bản */
+    background-image: linear-gradient(
+        to bottom,
+        #e8e8e8 0%,   /* Highlight sáng ở trên cùng */
+        #d1d1d1 10%,  /* Chuyển sang xám nhạt */
+        #bcbcbc 50%,  /* Xám trung bình ở giữa, phần thân chính */
+        #c4c4c4 90%,  /* Hơi sáng lên gần đáy một chút (phản chiếu nhẹ) */
+        #b0b0b0 100%  /* Cạnh dưới cùng tối hơn một chút */
+    );
+    box-shadow:
+        /* Bóng bên trong để tạo hiệu ứng nổi gờ/khắc */
+        inset 0 1px 1px rgba(255, 255, 255, 0.4), /* Ánh sáng nhẹ ở cạnh trên bên trong */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.1),    /* Bóng mờ ở cạnh dưới bên trong */
+        0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card:hover {
+    transform: translateY(-8px) scale(1.02); /* Hiệu ứng nhấc lên và to ra một chút */
+    border-top: 1px solid rgba(255, 230, 150, 0.7);
+    border-left: 1px solid rgba(255, 225, 140, 0.5);
+    border-right: 1px solid rgba(100, 70, 0, 0.3);
+    border-bottom: 1px solid rgba(100, 70, 0, 0.4);
+
+    background-color: #c5a253; /* Fallback màu vàng đồng */
+    background-image: linear-gradient(
+        to bottom,
+        #f5e5a0 0%,  /* Vàng sáng (highlight) */
+        #e6c978 10%,
+        #d4af37 50%, /* Vàng kim chính */
+        #dba740 90%,
+        #c5a253 100% /* Vàng tối hơn ở đáy */
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 245, 200, 0.6),
+        inset 0 -1px 1px rgba(80, 50, 0, 0.2),
+        0 6px 20px rgba(100, 70, 20, 0.35);
+}
+
+
+.pricing-card .card-header h3 {
+    margin-top: 0.8em;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    font-family: 'title';
+    text-transform: uppercase;
+
+     /* 1. Tạo gradient cho chữ */
+     background-image: linear-gradient(
+        to bottom,
+        #a1a1a1 0%,    /* Phần trên tối hơn */
+        #333 30%,   /* Chuyển sang đen đậm */
+        #000000 50%, /* Đen bóng ở giữa */
+        #404040 70%, /* Hơi sáng lên một chút (phản chiếu) */
+        #868686 100%  /* Phần dưới tối */
+    );
+    -webkit-background-clip: text; /* Cho Safari và Chrome cũ */
+    background-clip: text;
+    color: transparent;
+    
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); /* Bóng trắng nhẹ cho chữ */
+}
+
+.pricing-card .plan-description {
+    margin-top: -0.8em;
+    color: #000000;
+    font-size: 0.9em;
+    margin-bottom: 0;
+}
+
+.pricing-card .price .amount {
+     /* 1. Tạo gradient cho chữ */
+     background-image: linear-gradient(
+        to bottom,
+        #777777 0%,    /* Phần trên tối hơn */
+        #333 30%,   /* Chuyển sang đen đậm */
+        #000000 50%, /* Đen bóng ở giữa */
+        #404040 70%, /* Hơi sáng lên một chút (phản chiếu) */
+        #777777 100%,    /* Phần trên tối hơn */
+    );
+    -webkit-background-clip: text; /* Cho Safari và Chrome cũ */
+    background-clip: text;
+    color: transparent;
+    
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); /* Bóng trắng nhẹ cho chữ */
+
+}
+.pricing-card .price .currency,
+.pricing-card .price .period {
+    color: #000000;
+}
+.pricing-card .features-list li {
+    color: #000000;
+}
+.pricing-card .features-list li:last-child {
+    border-bottom: none;
+}
+
+
+.pricing-card.featured {
+    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
+
+
+    /* 2. Nền Metallic */
+    background-color: #c0c0c0; /* Fallback color - màu bạc cơ bản */
+    background-image: linear-gradient(
+        to bottom,
+        #e8e8e8 0%,   /* Highlight sáng ở trên cùng */
+        #d1d1d1 10%,  /* Chuyển sang xám nhạt */
+        #bcbcbc 50%,  /* Xám trung bình ở giữa, phần thân chính */
+        #c4c4c4 90%,  /* Hơi sáng lên gần đáy một chút (phản chiếu nhẹ) */
+        #b0b0b0 100%  /* Cạnh dưới cùng tối hơn một chút */
+    );
+    box-shadow:
+        /* Bóng bên trong để tạo hiệu ứng nổi gờ/khắc */
+        inset 0 1px 1px rgba(255, 255, 255, 0.4), /* Ánh sáng nhẹ ở cạnh trên bên trong */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.1),    /* Bóng mờ ở cạnh dưới bên trong */
+        0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card.featured:hover {
+    /* transform: scale(1.07) translateY(-8px); */ /* Bạn đã có scale và hover từ CSS trước */
+    box-shadow:
+        inset 0 1px 1px rgba(255, 248, 210, 0.7),
+        inset 0 -1px 1px rgba(80, 50, 0, 0.15),
+        0 10px 30px rgba(100, 70, 20, 0.4);
+    background-image: linear-gradient(
+        to bottom,
+        #f8e8a8 0%,
+        #eccf80 10%,
+        #ddb840 50%,
+        #e0ae48 90%,
+        #cfa85b 100%
+    );
+    border-top-color: rgba(255, 235, 160, 0.8);
+    border-left-color: rgba(255, 230, 150, 0.7);
+}
+
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card.featured {
+    border: 3px solid #b91c0c; /* Màu viền cho card nổi bật */
+    transform: scale(1.05); /* Làm card nổi bật to hơn một chút */
+}
+.pricing-card.featured:hover {
+    transform: scale(1.05) translateY(-10px);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 0px; /* Có thể cần điều chỉnh một chút nếu dùng transform 3D */
+    right: -1px; /* Có thể cần điều chỉnh một chút nếu dùng transform 3D */
+    background-color: #b91c0c; /* Màu badge chính */
+    color: white;
+    padding: 8px 25px;
+    font-size: 0.85em;
+    font-weight: bold;
+    border-radius: 0 0 0 10px; 
+    z-index: 15;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+
+    /* 1. Gradient nhẹ trên bề mặt badge */
+    background-image: linear-gradient(to bottom, #f1382b 0%, #cf220f 40%, #a8190b 100%);
+
+    /* 2. Box-shadow tạo hiệu ứng 3D và độ dày */
+    box-shadow:
+        2px 3px 6px rgba(0, 0, 0, 0.3),
+        0px 1px 0px 0px #e42514,  
+        1px 0px 0px 0px #98170a,
+        inset 0 1px 1px rgba(255, 255, 255, 0.815); 
+    transform: translateY(-2px); /* Nhấc badge lên một chút để tách khỏi cạnh card */
+}
+
+
+
+.pricing-card .card-header {
+    padding: 25px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+
+.pricing-card .card-body {
+    padding: 25px;
+    flex-grow: 1; /* Giúp phần body co giãn để các card bằng chiều cao */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pricing-card .price {
+    font-size: 2.8em;
+    font-weight: bold;
+    margin-bottom: 25px;
+     /* 1. Tạo gradient cho chữ */
+     background-image: linear-gradient(
+        to bottom,
+        #a1a1a1 0%,    /* Phần trên tối hơn */
+        #333 30%,   /* Chuyển sang đen đậm */
+        #000000 50%, /* Đen bóng ở giữa */
+        #404040 70%, /* Hơi sáng lên một chút (phản chiếu) */
+        #868686 100%  /* Phần dưới tối */
+    );
+    -webkit-background-clip: text; /* Cho Safari và Chrome cũ */
+    background-clip: text;
+    color: transparent;
+    
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); /* Bóng trắng nhẹ cho chữ */
+
+    text-align: center;
+}
+
+
+.pricing-card .price .currency {
+    font-size: 0.6em;
+    font-weight: bold;
+     /* 1. Tạo gradient cho chữ */
+     background-image: linear-gradient(
+        to bottom,
+        #a1a1a1 0%,    /* Phần trên tối hơn */
+        #333 30%,   /* Chuyển sang đen đậm */
+        #000000 50%, /* Đen bóng ở giữa */
+        #404040 70%, /* Hơi sáng lên một chút (phản chiếu) */
+        #868686 100%  /* Phần dưới tối */
+    );
+    -webkit-background-clip: text; /* Cho Safari và Chrome cũ */
+    background-clip: text;
+    color: transparent;
+    
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); /* Bóng trắng nhẹ cho chữ */
+    vertical-align: middle;
+}
+
+.pricing-card .price .period {
+    font-size: 0.5em;
+    font-weight: bold;
+
+     /* 1. Tạo gradient cho chữ */
+     background-image: linear-gradient(
+        to bottom,
+        #a1a1a1 0%,    /* Phần trên tối hơn */
+        #333 30%,   /* Chuyển sang đen đậm */
+        #000000 50%, /* Đen bóng ở giữa */
+        #404040 70%, /* Hơi sáng lên một chút (phản chiếu) */
+        #383838 100%  /* Phần dưới tối */
+    );
+    -webkit-background-clip: text; /* Cho Safari và Chrome cũ */
+    background-clip: text;
+    color: transparent;
+    
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); /* Bóng trắng nhẹ cho chữ */
+
+    display: block;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0px 0;
+    width: 100%;
+    text-align: left;
+}
+
+.features-list li {
+    padding: 10px 0;
+    font-size: 0.95em;
+    color: #000000;
+    border-bottom: 1px dashed #eee;
+}
+
+.features-list li:last-child {
+    border-bottom: none;
+}
+
+.features-list i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+
+.pricing-card .card-footer {
+    padding-bottom: 25px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.btn-buy {
+    display: inline-block;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #000000;           /* Màu chữ (đen) */
+    padding: 10px 20px;    
+    color: #1a1a1a; /* Màu chữ đen đậm hơn */
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3); /* Bóng trắng nhẹ hơn */
+
+    /* Viền kim loại rõ ràng */
+    border: 2px solid #777; /* Viền xám đậm hơn */
+    border-radius: 50px;
+
+    background-image: linear-gradient(
+        to bottom,
+        #fefefe 0%,  /* Bắt đầu: Trắng sáng (highlight mạnh) */
+        #d8d8d8 5%,  /* Chuyển nhanh sang xám nhạt */
+        #b8b8b8 50%, /* Xám trung bình ở giữa */
+        #c4c4c4 95%, /* Hơi sáng lên gần đáy */
+        #aaaaaa 100% /* Cạnh dưới cùng tối hơn */
+    );
+
+    /* Bóng đổ phức tạp hơn để tạo cạnh và độ bóng */
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.8),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.15),
+        0 3px 4px rgba(0, 0, 0, 0.3);
+
+    transition: all 0.2s ease-in-out;
+}
+
+
+
+
+/* --- Responsive cho Pricing Section --- */
+@media (max-width: 992px) { /* Tablet */
+    .pricing-card {
+        width: calc(50% - 30px); /* 2 card trên 1 hàng */
+        margin-bottom: 30px;
+    }
+    .pricing-card.featured {
+        transform: scale(1); /* Reset scale để không bị lấn át trên mobile */
+    }
+    .pricing-card.featured:hover {
+        transform: translateY(-10px); /* Chỉ giữ hiệu ứng hover lift */
+    }
+}
+
+@media (max-width: 767px) { /* Mobile */
+    .pricing-grid {
+        flex-direction: column; /* Các card xếp chồng lên nhau */
+        align-items: center; /* Căn giữa các card khi xếp chồng */
+    }
+    .pricing-card {
+        width: 90%; /* Card chiếm gần hết chiều rộng */
+        max-width: 400px; /* Giới hạn chiều rộng tối đa */
+        margin-bottom: 30px;
+    }
+    .pricing-card:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* --- Kết thúc Styling cho Pricing Section --- */
+
+/* Giả sử bạn đã có các class container và content-section */
+.container {
+    max-width: 1140px; /* Hoặc kích thước bạn muốn */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+
+
 
 /* ===== About Section (Alternating Layout with Backgrounds & Blending) ===== */
 #about {
     /* Keep vertical padding */
-    padding: 60px 0; /* Remove horizontal padding here, the inner items will constrain themselves */
-    /* background-color: #1a1a1a; Inherited from .content-section */
+    padding: 60px 0; 
 }
 
 #about h2 {
@@ -954,27 +1408,17 @@ nav ul li a.active {
 #about .about-item {
    display: flex; /* Keep flex layout for alternating image/text */
    align-items: center; /* Vertically center items */
-   gap: 40px; /* Space between image and text */
-   /* REMOVED margin-bottom: 60px; */ /* Remove gap between items */
+   gap: 40px;
    padding: 0; /* REMOVED padding */ /* Remove padding from the main block */
    background-color: transparent; /* Ensure background is transparent to see the image */
    border-radius: 0; /* REMOVED border-radius */ /* Remove border-radius for seamless look */
    box-shadow: none; /* REMOVED box-shadow */ /* Remove shadow */
    position: relative; /* Needed for pseudo-elements and z-indexing */
-   overflow: hidden; /* Hide any overflowing content or background parts */
-   /* Removed min-height here, let content determine height */
-   /* min-height: 450px; */
-
-   /* *** Background Image Styles for the entire item block *** */
+   overflow: hidden; 
    background-size: cover;
    background-position: center center; /* Adjust if needed for specific image */
    background-repeat: no-repeat;
-   /* *** End Background Image Styles *** */
 
-   /* Removed max-width and auto margins - let the container padding and text max-width handle it */
-   /* max-width: 1100px; */
-   /* margin-left: auto; */
-   /* margin-right: auto; */
 }
 
 #about .about-item:last-child {
@@ -984,7 +1428,7 @@ nav ul li a.active {
 /* *** Set Specific Background Images for each item *** */
 /* REMINDER: Replace with your actual image paths */
 .about-item-1 {
-   background-image: url('screenshots/14.png');
+   background-image: url('screenshots/0185.png');
 }
 
 .about-item-2 {
@@ -992,9 +1436,10 @@ nav ul li a.active {
 }
 
 .about-item-3 {
-   background-image: url('screenshots/04.png');
+   background-image: url('screenshots/09.png');
 }
-/* *** End Specific Background Images *** */
+
+
 
 
 /* *** Base Dark Overlay (Covers the background image) *** */
@@ -1002,18 +1447,16 @@ nav ul li a.active {
    content: "";
    position: absolute;
    top: 0; left: 0; right: 0; bottom: 0;
-   background-color: rgba(0, 0, 0, 0.8); /* Solid dark overlay (adjust opacity as needed) */
+   background-color: rgba(0, 0, 0, 0.9); /* Solid dark overlay (adjust opacity as needed) */
    z-index: 1; /* Below foreground content, above background image */
    pointer-events: none; /* Allow clicks through the overlay */
 }
 
-/* *** Vertical Gradient Overlay (Creates the blending effect into page background) *** */
+
 #about .about-item::after {
    content: "";
    position: absolute;
    top: 0; left: 0; right: 0; bottom: 0;
-   /* Vertical gradient: page-bg -> transparent -> transparent -> page-bg */
-   /* This gradient is applied *over* the ::before dark overlay */
    background: linear-gradient(to bottom,
        #000000 0%,    /* Start with page background color */
        rgba(0, 0, 0, 0) 15%,     /* Fade to transparent by 15% of the item height */
@@ -1058,48 +1501,84 @@ nav ul li a.active {
 
 #about .about-item .about-text {
    flex: 1; /* Keep flex properties */
-   min-width: 300px; /* Keep min-width */
-   text-align: left; /* Keep text-align */
+   max-width: 600px;
+   text-align:justify; /* Keep text-align */
    position: relative; /* Needed for z-index */
    z-index: 3; /* Ensure text is above both pseudo-elements */
-   color: #fff; /* Ensure text is white for contrast */
-   /* Padding is applied below */
+   color: #fff; 
 }
 
-/* Adjust padding for alternating text blocks */
+
 #about .about-item:nth-child(odd) .about-text { /* Text on the right */
     padding: 40px 40px 40px 0; /* Top, Right, Bottom, Left */
 }
+
 #about .about-item:nth-child(even) .about-text { /* Text on the left */
     padding: 40px 0 40px 40px; /* Top, Right, Bottom, Left */
 }
 
 
 #about .about-item .about-text h3 {
-   margin-top: 0; /* Remove top margin from headings within text block */
-   color: #fff; /* Ensure heading is white */
-   position: relative;
-   display: inline-block;
+    font-family: 'title';
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    margin-top: 0.2rem; /* Remove top margin */
+    margin-bottom: 0.2rem;
+    position: relative;
+    display: inline-block;
+
+    
+    background-image: linear-gradient(
+        175deg,
+        #ffffff 0%,
+        #ffffff 15%,
+        #e7e7e7 40%,
+        #d6d6d6 60%,
+        #a0a0a0 85%,
+        #888888 100%
+    );
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    text-shadow:
+        1px 1px 1px rgba(0, 0, 0, 0.3),
+        -1px -1px 1px rgba(255, 255, 255, 0.4); /* Highlight trắng rõ hơn */
+
+    font-weight: bold;
+
+    padding-left: 22px;
 }
 
-#about .about-item .about-text h3::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0.1em;
-    width: 100%;
-    height: 0.4em;
-    background-color: #ff03c4;
-    z-index: -1;
+
+#about .about-item .about-text h3::before {
+    content: ""; /* Bắt buộc phải có cho pseudo-elements */
+    position: absolute; /* Định vị tuyệt đối so với h3 */
+    left: 0; /* Đặt ở cạnh trái của padding-left của h3 */
+    top: 50%; /* Căn giữa theo chiều dọc */
+    transform: translateY(-50%); /* Điều chỉnh lại vị trí để căn giữa chính xác */
+
+    width: 12px;  
+    height: 12px;
+
+    /* Lựa chọn 2: Ô vuông metallic nhẹ */
+    background-image: linear-gradient(
+        135deg, /* Chéo để tạo hiệu ứng cạnh */
+        #fcc427, 
+        #dda200 
+    );
+    border: 1px solid #c08e06; /* Viền xám nhẹ */
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+
+    border-radius: 2px; 
 }
+
 
 #about .about-item .about-text p {
-    /* Keep default p styling, adjust color */
     color: #e0e0e0; /* Lighter white for body text */
     margin-bottom: 0; /* Remove margin from the last paragraph in the text block */
 }
 
-/* Adjust alternating layout (Keep original flex-direction) */
 #about .about-item:nth-child(even) { /* Target the 2nd, 4th, etc. items */
    flex-direction: row-reverse; /* Reverse order: Text Left, Image Right */
 }
@@ -1170,15 +1649,38 @@ nav ul li a.active {
 
 /* ===== System Requirements Section ===== */
 #requirements .requirements-list {
+    color:#000000;
     margin-top: 2rem;
     text-align: left; /* Align list items left */
-    background-color: #282828;
     padding: 20px;
     border-radius: 5px;
     max-width: 600px; /* Limit width for readability */
     margin-left: auto; /* Center the block */
     margin-right: auto; /* Center the block */
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+
+
+    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
+
+
+    /* 2. Nền Metallic */
+    background-color: #c0c0c0; /* Fallback color - màu bạc cơ bản */
+    background-image: linear-gradient(
+        to bottom,
+        #e8e8e8 0%,   /* Highlight sáng ở trên cùng */
+        #d1d1d1 10%,  /* Chuyển sang xám nhạt */
+        #bcbcbc 50%,  /* Xám trung bình ở giữa, phần thân chính */
+        #c4c4c4 90%,  /* Hơi sáng lên gần đáy một chút (phản chiếu nhẹ) */
+        #b0b0b0 100%  /* Cạnh dưới cùng tối hơn một chút */
+    );
+    box-shadow:
+        /* Bóng bên trong để tạo hiệu ứng nổi gờ/khắc */
+        inset 0 1px 1px rgba(255, 255, 255, 0.4), /* Ánh sáng nhẹ ở cạnh trên bên trong */
+        inset 0 -1px 1px rgba(0, 0, 0, 0.1),    /* Bóng mờ ở cạnh dưới bên trong */
+        0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #requirements .requirements-list ul {
@@ -1196,7 +1698,7 @@ nav ul li a.active {
 /* Custom bullet style */
 #requirements .requirements-list li::before {
     content: "•"; /* Dot or any character */
-    color: #00aaff; /* Bullet color */
+    color: #d33c0e; /* Bullet color */
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -1204,12 +1706,12 @@ nav ul li a.active {
 }
 
 #requirements .requirements-list strong {
-    color: #fff; /* Highlight the requirement category */
+    color: #b91c0c;
 }
 
 #requirements .requirements-list p {
     font-size: 0.9rem;
-    color: #aaa;
+    font-weight: bold;
     margin-top: 1rem;
     text-align: center; /* Center the note */
 }
@@ -1241,6 +1743,7 @@ nav ul li a.active {
 #community .social-links a {
     display: inline-block; /* Or block if using flexbox */
     padding: 8px 15px;
+    font-weight: bold;
     background-color: #3a3a3a;
     color: #e0e0e0;
     border-radius: 5px;
@@ -1248,8 +1751,9 @@ nav ul li a.active {
 }
 
 #community .social-links a:hover {
-    background-color: #00aaff;
-    color: #1a1a1a;
+    background-color: #Fcc427;
+    font-weight: bold;
+    color: #000000;
     text-decoration: none;
 }
 
@@ -1275,8 +1779,8 @@ footer {
     color: #ffffff;
     text-align: center;
     padding: 80px 0;
-    margin-top: 40px; /* Space above the footer (before overlap) */
-    border-top: 1px solid #000000;
+    margin-bottom: 0;
+    margin-top: 43px; /* Space above the footer (before overlap) */
     /* Note: No position: relative here by default */
 }
 
@@ -1463,6 +1967,7 @@ footer .footer-links a:hover {
      }
      #features .feature-item h3,
      #features .feature-item p {
+        
           text-align: center; /* Ensure text is centered */
      }
  

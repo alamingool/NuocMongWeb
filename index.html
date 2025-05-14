@@ -20,23 +20,18 @@
     <header>
         <nav class="container">
             <div class="logo">
-                <a href="index.html">
-                    <!-- Make sure the path to your logo is correct -->
-                    <!-- If logo is text, use h1 or div with styles -->
-                    <!-- REMINDER: Replace with your actual logo image -->
-                    <img src="images/logo_trắg.png" alt="Nuoc Mong Logo">
+                <a href="index.html"> 
+                  <img src="images/logo_trắg.png" alt="Nuoc Mong Logo">
                 </a>
             </div>
             <ul>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#trailer">Trailer</a></li>
+                <li><a href="#pricing">Pricing</a></li>
                 <li><a href="#features">Features</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#requirements">Requirements</a></li> <!-- Shortened link text -->
                 <li><a href="#community">Community</a></li> <!-- Re-added Community link -->
-                <!-- Optional News Link -->
-                <!-- <li><a href="#news">News</a></li> -->
             </ul>
             <!-- *** CTA Button in Navigation *** -->
             <a href="https://itch.io/your-game-link" class="cta-button nav-cta" target="_blank" rel="noopener noreferrer">Add to Collection!</a>
@@ -95,90 +90,102 @@
         <p id="appear"> Step into the story as the unseen hand behind the show—guiding puppets, shaping the world, and influencing the tale. Tradition meets technology in this unique blend of cultural heritage and modern storytelling.
         </p> 
     </div>
-
-    
 </section>
 
 
 
 
-
-
-        <!-- ===== Fluid Gallery Section ===== -->
-        <section id="gallery" class="content-section">
-            <div class="container"> <!-- Container for the heading -->
-                 <h2>Gameplay previews</h2>
-            </div>
-
-            <!-- *** Wrapper for Gallery, Buttons, and Fade *** -->
-            <div class="gallery-wrapper">
-                <!-- *** Scrolling Track for Images *** -->
-                <div class="fluid-gallery-track">
-                    <!--
-                        To create a seamless loop, duplicate the last few images
-                        and place them at the start, and duplicate the first few
-                        and place them at the end.
-                        You have 12 images (01.png to 13.png, skipping 03).
-                        Let's duplicate 2 from the end and 2 from the start.
-                        Ensure 'alt' text indicates they are duplicates if you like.
-                    -->
-                    <!-- DUPLICATES (LAST 2 REAL IMAGES) -->
-                     <img src="screenshots/14.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
-                     <img src="screenshots/15.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
-                    <!-- END DUPLICATES -->
-
-                    <!-- REAL IMAGES (Your actual screenshots) -->
-                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot showing a puppet on the water stage." class="gallery-item">
-                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot of detailed puppet design." class="gallery-item">
-                    <img src="screenshots/04.png" alt="Nuoc Mong Screenshot showing the watery stage environment." class="gallery-item">
-                    <img src="screenshots/05.png" alt="Nuoc Mong Screenshot featuring unique lighting effects." class="gallery-item">
-                    <img src="screenshots/06.png" alt="Nuoc Mong Screenshot of a character performance." class="gallery-item">
-                    <img src="screenshots/07.png" alt="Nuoc Mong Screenshot depicting a scene from Vietnamese folklore." class="gallery-item">
-                    <img src="screenshots/08.png" alt="Nuoc Mong Screenshot of the interactive interface." class="gallery-item">
-                    <img src="screenshots/09.png" alt="Nuoc Mong Screenshot showing dynamic water effects." class="gallery-item">
-                    <img src="screenshots/10.png" alt="Nuoc Mong Screenshot of another puppet character." class="gallery-item">
-                    <img src="screenshots/11.png" alt="Nuoc Mong Screenshot highlighting environmental details." class="gallery-item">
-                    <img src="screenshots/12.png" alt="Nuoc Mong Screenshot of a climactic story moment." class="gallery-item">
-                    <img src="screenshots/13.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <img src="screenshots/14.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <img src="screenshots/15.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <!-- END REAL IMAGES -->
-
-                    <!-- DUPLICATES (FIRST 2 REAL IMAGES) -->
-                     <img src="screenshots/01.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
-                     <img src="screenshots/02.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
-                    <!-- END DUPLICATES -->
-
-                </div>
-
-                <!-- Navigation Buttons -->
-                <button class="gallery-nav-button left" aria-label="Previous Screenshot">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
-                </button>
-                <button class="gallery-nav-button right" aria-label="Next Screenshot">
-                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 12.6 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
-                </button>
-            </div>
-
-            <!-- Optional: Add a button below the gallery -->
-            <div class="container" style="text-align: center; margin-top: 2rem;">
-                 <a href="https://itch.io/your-game-link#screenshots" class="cta-button secondary-cta" target="_blank" rel="noopener noreferrer">View More on Itch.io</a>
-            </div>
-        </section>
-
         <!-- ===== Trailer Section ===== -->
         <section id="trailer" class="container content-section">
-             <h2>Watch the Trailer</h2>
+             <h2>Trailer</h2>
              <div class="video-placeholder">
-                <!-- Replace with your actual YouTube/Vimeo embed code -->
-                <!-- Example YouTube Embed (Replace dQw4w9WgXcQ with your video ID) -->
-                <iframe width="681" height="383" src="https://www.youtube.com/embed/ndHbvFxscOE" title="NUOC MONG | TRAILER" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
+                <iframe width="681" height="383" src="https://www.youtube.com/embed/XsqT4hEnBKU" title="Nuoc Mong | TRAILER" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
+             
+                <iframe width="681" height="383" src="https://www.youtube.com/embed/ndHbvFxscOE" title="NUOC MONG | TRAILER" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                
+                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
+            </div>      
+        </section>
+
+
+        <section id="pricing" class="container content-section">
+            <h2 class="section-header">Pricing</h2>
+        
+            <div class="pricing-grid">
+                <!-- Gói 1: Starter -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Starter Pack</h3>
+                        <p class="plan-description">Dành cho người mới bắt đầu</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">29.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ month</span>
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Truy cập cơ bản vào game</li>
+                            <li><i class="fas fa-check-circle"></i> 500 Kim Cương khởi đầu</li>
+                            <li><i class="fas fa-times-circle"></i> Trang phục độc quyền</li>
+                            <li><i class="fas fa-times-circle"></i> Hỗ trợ ưu tiên</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary btn-buy">Chọn Gói</a>
+                    </div>
+                </div>
+        
+                <!-- Gói 2: Pro (Nổi bật) -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Phổ Biến Nhất</div>
+                    <div class="card-header">
+                        <h3>Gói Pro</h3>
+                        <p class="plan-description">Trải nghiệm toàn diện</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">129.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ month</span>
+                        </div>
+                        <ul class="features-list">
+                            <li class="fas fa-check-circle"> Truy cập đầy đủ vào game</li>
+                            <li class="fas fa-check-circle"> 1500 Kim Cương khởi đầu</li>
+                            <li> Trang phục độc quyền Pro</li>
+                            <li><i class="fas fa-check-circle"></i> Hỗ trợ ưu tiên 24/7</li>
+                            <li><i class="fas fa-check-circle"></i> Tham gia sự kiện đặc biệt</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary btn-buy">Chọn Gói</a>
+                    </div>
+                </div>
+        
+                <!-- Gói 3: Ultimate -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Rental Pack</h3>
+                        <p class="plan-description">Dành cho game thủ chuyên nghiệp</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">599.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ month</span>
+                        </div>
+                        <ul class="features-list">
+                            <li><i class="fas fa-check-circle"></i> Mọi thứ trong gói Pro</li>
+                            <li><i class="fas fa-check-circle"></i> 5000 Kim Cương khởi đầu</li>
+                            <li><i class="fas fa-check-circle"></i> Gói vật phẩm hiếm hàng tháng</li>
+                            <li><i class="fas fa-check-circle"></i> Hỗ trợ VIP</li>
+                            <li><i class="fas fa-check-circle"></i> Quyền truy cập sớm nội dung mới</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary btn-buy">Chọn Gói</a>
+                    </div>
+                </div>
             </div>
-             <!-- Optional: Add a link below the trailer -->
-             <div class="container" style="text-align: center; margin-top: 1rem;">
-                  <!-- REMINDER: Replace with your actual YouTube link -->
-                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
-             </div>
         </section>
 
         <!-- ===== Features Section ===== -->
@@ -203,7 +210,7 @@
                 </div>
                 <div class="feature-item">
                      <!-- REMINDER: Replace with your actual feature image -->
-                    <img src="screenshots/15.png" alt="Feature: Captivating Folklore">
+                    <img src="screenshots/09.png" alt="Feature: Captivating Folklore">
                      <div class="feature-text">
                         <h3>Captivating Folklore</h3>
                         <p>Immerse yourself in enchanting stories inspired by Vietnamese myths, legends, and rural life, where your actions directly influence the narrative and the puppets' fate.</p>
@@ -211,7 +218,7 @@
                 </div>
                 <div class="feature-item">
                      <!-- REMINDER: Replace with your actual feature image -->
-                     <img src="screenshots/09.png" alt="Feature: Rich Audiovisual Experience">
+                     <img src="screenshots/07.png" alt="Feature: Rich Audiovisual Experience">
                       <div class="feature-text">
                         <h3>Rich Audiovisual Experience</h3>
                         <p>Delight in a vibrant world brought to life with evocative lighting, atmospheric sounds, and a musical score inspired by traditional Vietnamese instruments.</p>
@@ -219,6 +226,7 @@
                  </div>
             </div>
         </section>
+
 
 
         <!-- ===== About the Game Section (Alternating layout) ===== -->
@@ -229,7 +237,7 @@
             <div class="about-item about-item-1"> <!-- Added unique class -->
                  <!-- REMINDER: Replace with your actual image -->
                 <div class="about-image">
-                    <img src="screenshots/14.png" alt="Description of the image related to becoming the puppeteer">
+                    <img src="screenshots/0185.png" alt="Description of the image related to becoming the puppeteer">
                 </div>
                 <div class="about-text">
                     <h3>Become the Puppeter</h3>
@@ -253,12 +261,69 @@
             <div class="about-item about-item-3"> <!-- Added unique class -->
                  <!-- REMINDER: Replace with your actual image -->
                 <div class="about-image">
-                    <img src="screenshots/04.png" alt="Description of the image related to art style and atmosphere">
+                    <img src="screenshots/09.png" alt="Description of the image related to art style and atmosphere">
                 </div>
                 <div class="about-text">
                     <h3>A Living Painting</h3>
                     <p>Every element of Nuoc Mong, from the handcrafted look of the puppets to the shimmering surface of the water and the atmospheric stage lighting, is designed to evoke the magic of a live water puppetry performance. The visuals are complemented by a rich soundscape featuring traditional instruments, creating an experience that is both visually stunning and culturally resonant.</p>
                 </div>
+            </div>
+        </section>
+
+
+
+        <section id="gallery" class="content-section">
+
+             <!-- ===== Fluid Gallery Section ===== -->
+            <div class="container"> <!-- Container for the heading -->
+                 <h2>Gameplay previews</h2>
+            </div>
+
+            <!-- *** Wrapper for Gallery, Buttons, and Fade *** -->
+            <div class="gallery-wrapper">
+                <!-- *** Scrolling Track for Images *** -->
+                <div class="fluid-gallery-track">
+                    <!-- DUPLICATES (LAST 2 REAL IMAGES) -->
+                     <img src="screenshots/14.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/15.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                    <!-- END DUPLICATES -->
+
+                    <!-- REAL IMAGES (Your actual screenshots) -->
+                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot showing a puppet on the water stage." class="gallery-item">
+                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot of detailed puppet design." class="gallery-item">
+                    <img src="screenshots/04.png" alt="Nuoc Mong Screenshot showing the watery stage environment." class="gallery-item">
+                    <img src="screenshots/05.png" alt="Nuoc Mong Screenshot featuring unique lighting effects." class="gallery-item">
+                    <img src="screenshots/06.png" alt="Nuoc Mong Screenshot of a character performance." class="gallery-item">
+                    <img src="screenshots/07.png" alt="Nuoc Mong Screenshot depicting a scene from Vietnamese folklore." class="gallery-item">
+                    <img src="screenshots/08.png" alt="Nuoc Mong Screenshot of the interactive interface." class="gallery-item">
+                    <img src="screenshots/09.png" alt="Nuoc Mong Screenshot showing dynamic water effects." class="gallery-item">
+                    <img src="screenshots/10.png" alt="Nuoc Mong Screenshot of another puppet character." class="gallery-item">
+                    <img src="screenshots/11.png" alt="Nuoc Mong Screenshot highlighting environmental details." class="gallery-item">
+                    <img src="screenshots/12.png" alt="Nuoc Mong Screenshot of a climactic story moment." class="gallery-item">
+                    <img src="screenshots/13.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
+                    <img src="screenshots/14.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
+                    <img src="screenshots/0185.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
+                    <!-- END REAL IMAGES -->
+
+                    <!-- DUPLICATES (FIRST 2 REAL IMAGES) -->
+                     <img src="screenshots/01.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                     <img src="screenshots/02.png" alt="Nuoc Mong Screenshot (Duplicate)" class="gallery-item is-duplicate">
+                    <!-- END DUPLICATES -->
+
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button class="gallery-nav-button left" aria-label="Previous Screenshot">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
+                </button>
+                <button class="gallery-nav-button right" aria-label="Next Screenshot">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 12.6 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>
+                </button>
+            </div>
+
+            <!-- Optional: Add a button below the gallery -->
+            <div class="container" style="text-align: center; margin-top: 2rem;">
+                 <a href="https://itch.io/your-game-link#screenshots" class="cta-button secondary-cta" target="_blank" rel="noopener noreferrer">View More on Itch.io</a>
             </div>
 
         </section>
@@ -295,26 +360,6 @@
                 <!-- Add other relevant links (Reddit, Instagram, etc.) -->
             </div>
         </section>
-
-        <!-- ===== 5. Optional News/Dev Blog Section ===== -->
-        <!-- You could uncomment and build this out if you plan to post updates directly on the site -->
-        <!-- <section id="news" class="container content-section">
-             <h2>Latest News</h2>
-             <div class="news-grid">
-                  <div class="news-item">
-                       <h3>[News Title 1]</h3>
-                       <p>[Summary of news item 1...]</p>
-                       <a href="#">Read More</a>
-                  </div>
-                   <div class="news-item">
-                       <h3>[News Title 2]</h3>
-                       <p>[Summary of news item 2...]</p>
-                       <a href="#">Read More</a>
-                  </div>
-                  // Add more news items
-             </div>
-        </section> -->
-
 
     </main>
 
