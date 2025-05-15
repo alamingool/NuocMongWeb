@@ -69,7 +69,7 @@ body::-webkit-scrollbar {
 @font-face {
     font-family: 'title-italic';
     letter-spacing: 1px;
-    src: url('font/Tagesschrift-Regular.ttf') format('opentype'); /* Ưu tiên WOFF2 */
+    src: url('font/SF-Pro-Display-Thin.otf') format('opentype'); /* Ưu tiên WOFF2 */
 }
 
 @font-face {
@@ -79,7 +79,7 @@ body::-webkit-scrollbar {
 
 @font-face {
     font-family: 'title-bold';
-    src: url('font/SF-Pro-Display-Semibold.otf') format('opentype'); /* Ưu tiên WOFF2 */
+    src: url('font/SF-Pro-Display-Thin.otf') format('opentype'); /* Ưu tiên WOFF2 */
 }
 
 html {
@@ -770,11 +770,10 @@ nav ul li a.active {
 }
 
 .gallery-item { /* Styling for all images (real and duplicates) */
-    height: 350px; /* Set a fixed height - ADJUST THIS */
+    height: 400px; /* Set a fixed height - ADJUST THIS */
     width: auto; /* Maintain aspect ratio */
     flex-shrink: 0; /* Prevent images from shrinking */
     border-radius: 5px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
     object-fit: cover; /* Crop images if they don't fit the height */
 
     /* Ensure snap alignment */
@@ -796,13 +795,13 @@ nav ul li a.active {
 .gallery-wrapper::before {
     left: 0;
     /* Gradient from transparent to dark background */
-    background: linear-gradient(to right, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background #1a1a1a */
+    background: linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0)); /* Match body background #1a1a1a */
 }
 
 .gallery-wrapper::after {
     right: 0;
     /* Gradient from dark background to transparent */
-     background: linear-gradient(to left, rgba(26, 26, 26, 1), rgba(26, 26, 26, 0)); /* Match body background #1a1a1a */
+     background: linear-gradient(to left, rgb(0, 0, 0), rgba(0, 0, 0, 0)); /* Match body background #1a1a1a */
 }
 
 /* --- Navigation Buttons --- */
@@ -833,7 +832,7 @@ nav ul li a.active {
 .gallery-nav-button svg {
     width: 15px; /* SVG arrow size */
     height: 15px;
-    fill: #333; /* Arrow color */
+    fill: #000000; /* Arrow color */
 }
 
 .gallery-nav-button.left {
@@ -1014,10 +1013,8 @@ nav ul li a.active {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* Thêm transition cho border */
     position: relative; /* Để định vị badge "Phổ Biến Nhất" */
     overflow: hidden; 
-    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
+    border: 3px solid #6b6b6b; /* Màu viền cho card nổi bật */
+
 
 
     /* 2. Nền Metallic */
@@ -1039,10 +1036,8 @@ nav ul li a.active {
 
 .pricing-card:hover {
     transform: translateY(-8px) scale(1.02); /* Hiệu ứng nhấc lên và to ra một chút */
-    border-top: 1px solid rgba(255, 230, 150, 0.7);
-    border-left: 1px solid rgba(255, 225, 140, 0.5);
-    border-right: 1px solid rgba(100, 70, 0, 0.3);
-    border-bottom: 1px solid rgba(100, 70, 0, 0.4);
+    border: 3px solid #6b6b6b; /* Màu viền cho card nổi bật */
+
 
     background-color: #c5a253; /* Fallback màu vàng đồng */
     background-image: linear-gradient(
@@ -1120,10 +1115,6 @@ nav ul li a.active {
 
 
 .pricing-card.featured {
-    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
 
 
     /* 2. Nền Metallic */
@@ -1157,6 +1148,7 @@ nav ul li a.active {
         #e0ae48 90%,
         #cfa85b 100%
     );
+    
     border-top-color: rgba(255, 235, 160, 0.8);
     border-left-color: rgba(255, 230, 150, 0.7);
 }
@@ -1172,6 +1164,7 @@ nav ul li a.active {
     transform: scale(1.05); /* Làm card nổi bật to hơn một chút */
 }
 .pricing-card.featured:hover {
+    border: 3px solid #b91c0c; /* Màu viền cho card nổi bật */
     transform: scale(1.05) translateY(-10px);
 }
 
@@ -1294,7 +1287,7 @@ nav ul li a.active {
     padding: 10px 0;
     font-size: 0.95em;
     color: #000000;
-    border-bottom: 1px dashed #eee;
+    border-bottom: 1px groove #dddddd;
 }
 
 .features-list li:last-child {
@@ -1345,6 +1338,11 @@ nav ul li a.active {
         0 3px 4px rgba(0, 0, 0, 0.3);
 
     transition: all 0.2s ease-in-out;
+}
+
+.btn-buy:hover{
+    color: #000000;           /* Màu chữ (đen) */
+
 }
 
 
@@ -1447,7 +1445,7 @@ nav ul li a.active {
    content: "";
    position: absolute;
    top: 0; left: 0; right: 0; bottom: 0;
-   background-color: rgba(0, 0, 0, 0.9); /* Solid dark overlay (adjust opacity as needed) */
+   background-color: rgba(0, 0, 0, 0.8); /* Solid dark overlay (adjust opacity as needed) */
    z-index: 1; /* Below foreground content, above background image */
    pointer-events: none; /* Allow clicks through the overlay */
 }
@@ -1660,11 +1658,7 @@ nav ul li a.active {
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 
 
-    border-top: 1px solid rgba(255, 255, 255, 0.5); /* Viền trên sáng hơn, tạo hiệu ứng cạnh nổi */
-    border-left: 1px solid rgba(255, 255, 255, 0.3);
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.3); /* Viền dưới tối hơn, tạo chiều sâu */
-
+    border: 3px solid #6b6b6b;
 
     /* 2. Nền Metallic */
     background-color: #c0c0c0; /* Fallback color - màu bạc cơ bản */
@@ -1709,11 +1703,22 @@ nav ul li a.active {
     color: #b91c0c;
 }
 
+#requirements .requirements-list strong:hover {
+    color: #b91c0c;
+}
+
 #requirements .requirements-list p {
     font-size: 0.9rem;
     font-weight: bold;
     margin-top: 1rem;
     text-align: center; /* Center the note */
+}
+#requirements .requirements-list a {
+    color: #b91c0c;
+}
+
+#requirements .requirements-list a:hover {
+    color: #b91c0c;
 }
 
 
@@ -1972,7 +1977,6 @@ footer .footer-links a:hover {
      }
  
      #features .feature-item h3 {
-        background-color: rgb(255, 0, 128); /* nền nhạt để làm nổi bật */
         padding: 4px 8px;
         border-radius: 6px;
         display: inline-block;
