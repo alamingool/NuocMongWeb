@@ -21,25 +21,32 @@
 
     <!-- ===== Header & Navigation ===== -->
     <header>
-        <nav class="container">
+        <nav class="container"> <!-- NAV NGOÀI làm container chính -->
             <div class="logo">
                 <a href="index.html">
                     <img src="images/logo_trắg.png" alt="Nuoc Mong Logo">
                 </a>
             </div>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#trailer">Trailer</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#requirements">Requirements</a></li> <!-- Shortened link text -->
-                <li><a href="#community">Community</a></li> <!-- Re-added Community link -->
-            </ul>
-            <!-- *** CTA Button in Navigation *** -->
-            <a href="https://itch.io/your-game-link" class="cta-button nav-cta" target="_blank"
+    
+            <button class="burger-menu" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+    
+            <nav class="inner-nav"> <!-- NAV TRONG chứa ul - Thêm class để dễ target -->
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#trailer">Trailer</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#community">Community</a></li>
+                </ul>
+                <a href="https://itch.io/your-game-link" class="cta-button nav-cta" target="_blank"
                 rel="noopener noreferrer">Add to Collection!</a>
-            <!-- Add a Mobile Menu Toggle Button here later if needed -->
+            </nav>
         </nav>
     </header>
 
@@ -50,12 +57,8 @@
         <img src="images/vua.png" class="hero-character hero-character-right" alt="Nhân vật Vua">
         <img src="images/rem.png" class="rem">
 
+
         <section id="home" class="hero">
-
-
-
-
-            <!-- 2. Nội dung chính ở giữa -->
             <div class="hero-content container">
                 <img class="logo" src="images/logo.png">
                 <!--h2>Where Tradition Meets Innovation – You're in Control</h2-->
@@ -69,8 +72,6 @@
                 <a href="https://itch.io/your-game-link" class="cta-button hero-cta" target="_blank"
                     rel="noopener noreferrer">Add to Collection on Itch.io</a>
             </div>
-
-            <!-- Optional: Add subtle scroll down indicator -->
         </section>
 
 
@@ -89,6 +90,7 @@
             <img src="images/hand.png" class="intro-foreground-image" alt="Bàn tay điều khiển">
 
             <div class="intro-content-wrapper container content-section"> <!-- Đặt class vào div con -->
+               
                 <!--h2>Discover an Enchanting World</h2-->
                 <p id="still"> Nuoc Mong is an immersive experience that brings Vietnamese water puppetry to life
                     through interactive <span class="highlight-yellow">hand-tracking controls</span>.
@@ -99,6 +101,12 @@
                     heritage and modern storytelling.
                 </p>
             </div>
+        </section>
+
+
+
+        <section class="black-break-section">
+            <img src="images/dragon.png" class="centered-break-image">
         </section>
 
 
@@ -124,81 +132,81 @@
 
 
         <section id="pricing" class="container content-section">
-    <h2 class="section-header">Pricing</h2>
+            <h2 class="section-header">Pricing</h2>
 
-    <div class="pricing-grid">
-        <!-- Starter Pack -->
-        <div class="pricing-card">
-            <div class="card-header">
-                <h3>Starter Pack</h3>
-                <p class="plan-description">Perfect for first-time explorers</p>
-            </div>
-            <div class="card-body">
-                <div class="price">
-                    <span class="amount">29.999</span>
-                    <span class="currency">VNĐ</span>
-                    <span class="period">/ play</span>
-                </div>
-                <ul class="features-list">
-                    <li>1 full digital water puppet play</li>
-                    <li>Reimagined version of "Lê Lợi Returns the Sword"</li>
-                    <li>Basic hand-tracking interaction</li>
-                    <li>Limited features</li>
-                </ul>
-            </div>
-           
-        </div>
+            <div class="pricing-grid">
+                <!-- Starter Pack -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Starter Pack</h3>
+                        <p class="plan-description">Perfect for first-time explorers</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">29.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ play</span>
+                        </div>
+                        <ul class="features-list">
+                            <li>1 full digital water puppet play</li>
+                            <li>Reimagined version of "Lê Lợi Returns the Sword"</li>
+                            <li>Basic hand-tracking interaction</li>
+                            <li>Limited features</li>
+                        </ul>
+                    </div>
 
-        <!-- Full Package (Most Popular) -->
-        <div class="pricing-card featured">
-            <div class="popular-badge">Most popular</div>
-            <div class="card-header">
-                <h3>Full Package</h3>
-                <p class="plan-description">All-access immersive experience</p>
-            </div>
-            <div class="card-body">
-                <div class="price">
-                    <span class="amount">129.999</span>
-                    <span class="currency">VNĐ</span>
-                    <span class="period">/ pack</span>
                 </div>
-                <ul class="features-list">
-                    <li>5 full digital water puppet plays</li>
-                    <li>Sound-responsive interactive features</li>
-                    <li>Reinterpretations of all classic plays</li>
-                    <li>Full hand-tracking control</li>
-                    <li>All premium features unlocked</li>
-                </ul>
-            </div>
-        </div>
 
-        <!-- Rental License -->
-        <div class="pricing-card">
-            <div class="card-header">
-                <h3>Rental License</h3>
-                <p class="plan-description">For schools, galleries & public installations</p>
-            </div>
-            <div class="card-body">
-                <div class="price">
-                    <span class="amount">899.999</span>
-                    <span class="currency">VNĐ</span>
-                    <span class="period">/ day</span>
+                <!-- Full Package (Most Popular) -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most popular</div>
+                    <div class="card-header">
+                        <h3>Full Package</h3>
+                        <p class="plan-description">All-access immersive experience</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">129.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ pack</span>
+                        </div>
+                        <ul class="features-list">
+                            <li>5 full digital water puppet plays</li>
+                            <li>Sound-responsive interactive features</li>
+                            <li>Reinterpretations of all classic plays</li>
+                            <li>Full hand-tracking control</li>
+                            <li>All premium features unlocked</li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="features-list">
-                    <li>Full access to all plays</li>
-                    <li>All interactive features included</li>
-                    <li>Designed for public events & showcases</li>
-                    <li>Large-scale projection support</li>
-                    <li>Installation support</li>
-                    <li>24/7 technical assistance</li>
-                </ul>
+
+                <!-- Rental License -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3>Rental License</h3>
+                        <p class="plan-description">For schools, galleries & public installations</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="price">
+                            <span class="amount">899.999</span>
+                            <span class="currency">VNĐ</span>
+                            <span class="period">/ day</span>
+                        </div>
+                        <ul class="features-list">
+                            <li>Full access to all plays</li>
+                            <li>All interactive features included</li>
+                            <li>Designed for public events & showcases</li>
+                            <li>Large-scale projection support</li>
+                            <li>Installation support</li>
+                            <li>24/7 technical assistance</li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="btn btn-primary btn-buy">Contact us</a>
+                    </div>
+                </div>
             </div>
-            <div class="card-footer">
-                <a href="#" class="btn btn-primary btn-buy">Contact us</a>
-            </div>
-        </div>
-    </div>
-</section>
+        </section>
 
 
         <!-- ===== Features Section ===== -->
@@ -248,7 +256,7 @@
 
         <!-- ===== About the Game Section (Alternating layout) ===== -->
         <section id="about" class="content-section">
-            <h2>About Nuoc Mong</h2>
+            <h2>About us</h2>
 
             <!-- About Item 1: Image Left, Text Right -->
             <div class="about-item about-item-1"> <!-- Added unique class -->
@@ -359,13 +367,13 @@
                 <button class="gallery-nav-button left" aria-label="Previous Screenshot">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                         <path fill="currentColor"
-    d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
+                            d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
                     </svg>
                 </button>
                 <button class="gallery-nav-button right" aria-label="Next Screenshot">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                         <path fill="currentColor"
-    d="M310.6 233.4c12.5 12.5-12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 12.6 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
+                            d="M310.6 233.4c12.5 12.5-12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 12.6 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
                     </svg>
                 </button>
             </div>
@@ -402,7 +410,7 @@
         <!-- ===== Community/Connect Section (Moved after Requirements) ===== -->
         <section id="community" class="container content-section">
             <h2>Join the Community</h2>
-            <p>Connect with us and other players! Follow our development journey, share your thoughts, and get the
+            <p class="community-intro-text">Connect with us and other players! Follow our development journey, share your thoughts, and get the
                 latest updates.</p>
             <div class="social-links">
                 <!-- REMINDER: Replace with your actual social links -->

@@ -1,462 +1,547 @@
 // Nuoc Mong - script.js
-
 console.log("Nuoc Mong JS Loaded!");
 
-// --- Gallery Scrolling and Looping Logic ---
-
-document.addEventListener('DOMContentLoaded', () => { // Ensure script runs after the DOM is fully loaded
-
+document.addEventListener('DOMContentLoaded', () => {
+    /**
+     * ------------------------------------------------------------------------
+     * GALLERY SCROLLING AND LOOPING LOGIC
+     * ------------------------------------------------------------------------
+     */
     const galleryTrack = document.querySelector('.fluid-gallery-track');
-    const galleryItems = document.querySelectorAll('.gallery-item'); // All images, including duplicates
-    const leftButton = document.querySelector('.gallery-nav-button.left');
-    const rightButton = document.querySelector('.gallery-nav-button.right');
+    const galleryItems = galleryTrack ? Array.from(galleryTrack.querySelectorAll('.gallery-item')) : [];
+    const galleryLeftButton = document.querySelector('.gallery-nav-button.left');
+    const galleryRightButton = document.querySelector('.gallery-nav-button.right');
 
-    // If we don't have the necessary elements, stop here
-    if (!galleryTrack || galleryItems.length === 0 || !leftButton || !rightButton) {
-        console.warn("Gallery elements not found. Skipping gallery JS.");
-        // Optional: Hide buttons if gallery isn't set up
-        if (leftButton) leftButton.style.display = 'none';
-        if (rightButton) rightButton.style.display = 'none';
-        return;
-    }
-
-    // Configuration based on number of actual images and duplicates
-    // Need at least 1 real image + enough duplicates for smooth looping
-    const minRequiredItems = 1 + 2 + 2; // 1 real + 2 start duplicates + 2 end duplicates
-    if (galleryItems.length < minRequiredItems) {
-         console.warn(`Not enough gallery items (${galleryItems.length}). Need at least ${minRequiredItems}. Skipping gallery JS.`);
-          if (leftButton) leftButton.style.display = 'none';
-          if (rightButton) rightButton.style.display = 'none';
-          return;
-    }
-
-    const numDuplicatesStart = 2; // Number of duplicates at the beginning
-    const numDuplicatesEnd = 2;   // Number of duplicates at the end
-    const numRealImages = galleryItems.length - numDuplicatesStart - numDuplicatesEnd;
-
-     // Function to calculate the scroll position for a specific item index
-     // We scroll to the *start* of the item, adjusted by half the track width
-     // minus half the item width to try and center it due to scroll-snap: center
-     // NOTE: This calculation might need fine-tuning based on exact element widths and padding/margin
-     // The core issue is likely the scrollBy amount, but centering helps with snap alignment.
-    function getScrollLeftForIndex(index) {
-         if (!galleryItems[index]) return 0;
-         const item = galleryItems[index];
-         // item.offsetLeft is relative to its offsetParent (usually the track)
-         const itemLeft = item.offsetLeft;
-         const itemWidth = item.offsetWidth;
-         const trackWidth = galleryTrack.offsetWidth;
-
-         // Calculate position to center the item
-         // ScrollLeft = (Start of item relative to track) - (Half track width) + (Half item width)
-         const scrollLeft = itemLeft - (trackWidth / 2) + (itemWidth / 2);
-
-         // Ensure we don't scroll past the natural limits if calculation is slightly off at ends
-         // This might interfere with loop logic if not careful. Better to trust the snap.
-         // For now, let's rely on snap and loop logic to handle boundaries.
-         return scrollLeft;
-    }
-
-
-    // 1. Initial Scroll Position: Scroll to the start of the *real* images (after the duplicates)
-    // Use a timeout to ensure layout is stable after page load
-    window.addEventListener('load', () => { // Use load event for safer layout calculation
-         // Scroll to the position that centers the first *real* image (index = numDuplicatesStart)
-         const initialScrollLeft = getScrollLeftForIndex(numDuplicatesStart);
-         galleryTrack.scrollTo({
-              left: initialScrollLeft,
-              behavior: 'instant' // Jump instantly on load
-         });
-          console.log(`Initial scroll set to center item index ${numDuplicatesStart} (${initialScrollLeft}px)`);
-    });
-
-
-    // 2. Handle Button Clicks
-    leftButton.addEventListener('click', () => {
-        // Find the index of the currently snapped/most visible item
-        // This logic can be tricky. A simpler approach might be to scroll by a fixed step (item width + gap)
-        // and let scroll-snap correct, then handle the loop. Let's try the fixed step first as it's simpler.
-
-        const firstItem = galleryItems[0]; // Assuming all items are roughly the same width
-        if (!firstItem) return;
-        const itemWidth = firstItem.offsetWidth;
-        const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
-        const scrollStep = itemWidth + gap;
-
-        console.log(`Left button clicked. Scrolling left by ${scrollStep}px`);
-         galleryTrack.scrollBy({
-             left: -scrollStep, // Scroll left by one item width + gap
-             behavior: 'smooth'
-         });
-
-        // The loop logic in the scroll listener will handle the jump if needed
-    });
-
-    rightButton.addEventListener('click', () => {
-         const firstItem = galleryItems[0]; // Assuming all items are roughly the same width
-         if (!firstItem) return;
-         const itemWidth = firstItem.offsetWidth;
-         const gap = parseFloat(getComputedStyle(galleryTrack).gap) || 0;
-         const scrollStep = itemWidth + gap;
-
-         console.log(`Right button clicked. Scrolling right by ${scrollStep}px`);
-         galleryTrack.scrollBy({
-             left: scrollStep, // Scroll right by one item width + gap
-             behavior: 'smooth'
-         });
-
-        // The loop logic in the scroll listener will handle the jump if needed
-    });
-
-
-    // 3. Implement Looping via Scroll Event Listener (Revised)
-    let isHandlingLoop = false; // Flag to prevent infinite loops during the jump
-
-    galleryTrack.addEventListener('scroll', () => {
-        if (isHandlingLoop) return; // Don't trigger loop logic while already jumping
-
-        const scrollLeft = galleryTrack.scrollLeft;
-        const totalItems = galleryItems.length;
-        const firstRealIndex = numDuplicatesStart;
-        const lastRealIndex = totalItems - 1 - numDuplicatesEnd;
-
-        // Calculate the scrollLeft positions corresponding to the *start* of the first/last real images
-        // Use the getScrollLeftForIndex function for consistency with initial scroll
-        const scrollPosAtFirstRealCentered = getScrollLeftForIndex(firstRealIndex);
-        const scrollPosAtLastRealCentered = getScrollLeftForIndex(lastRealIndex);
-
-        // Use a tolerance for floating point comparisons
-        const tolerance = 5; // Pixels
-
-        // Check if the user has scrolled "into" the duplicate sections
-        // Compare current scrollLeft to the scrollLeft needed to be centered on the *real* boundary items
-        // This needs careful calibration. A simpler trigger might be if scrollLeft is less than the offsetLeft
-        // of the first real item, or greater than the offsetLeft of the last real item + its width.
-
-        // Let's try a simpler trigger based on the offsetLeft boundaries of the real content:
-        const firstRealItemOffsetLeft = galleryItems[firstRealIndex].offsetLeft;
-        const lastRealItemOffsetLeft = galleryItems[lastRealIndex].offsetLeft;
-        const lastRealItemWidth = galleryItems[lastRealIndex].offsetWidth;
-
-
-        // Check if we have scrolled to the left of the first real item (into start duplicates)
-        // or scrolled to the right of the last real item (into end duplicates)
-        // Adding/subtracting scrollStep accounts for being one item away from the boundary after a scrollBy call
-        // This trigger logic can be complex and depends on scroll-snap's exact behavior.
-
-        // Let's try a trigger based on the *center* of the view entering the duplicate area.
-        const trackCenterScroll = scrollLeft + (galleryTrack.offsetWidth / 2); // Center of the visible viewport
-        const firstRealItemCenterScroll = galleryItems[firstRealIndex].offsetLeft + (galleryItems[firstRealIndex].offsetWidth / 2);
-        const lastRealItemCenterScroll = galleryItems[lastRealIndex].offsetLeft + (galleryItems[lastRealIndex].offsetWidth / 2);
-
-         // Check if the center of the view has passed the center of the first real item (scrolling left)
-         // or passed the center of the last real item (scrolling right)
-        if (trackCenterScroll < firstRealItemCenterScroll - tolerance) {
-             // Scrolled left past the first real item (into duplicates)
-             console.log("Boundary crossed Left (centered), jumping to end real images...");
-             isHandlingLoop = true; // Set the flag BEFORE the scroll
-
-             // Calculate the scroll position needed to center the last real item
-             const jumpTargetScrollLeft = getScrollLeftForIndex(lastRealIndex);
-
-              galleryTrack.scrollTo({
-                   left: jumpTargetScrollLeft,
-                   behavior: 'instant' // Instant jump for seamless loop
-              });
-
-              // Reset flag after the instant scroll completes. requestAnimationFrame is good for this.
-               requestAnimationFrame(() => {
-                    isHandlingLoop = false;
-                    console.log("Loop handling finished.");
-               });
-
-        } else if (trackCenterScroll > lastRealItemCenterScroll + tolerance) {
-             // Scrolled right past the last real item (into duplicates)
-             console.log("Boundary crossed Right (centered), jumping to start real images...");
-             isHandlingLoop = true; // Set the flag BEFORE the scroll
-
-             // Calculate the scroll position needed to center the first real item
-             const jumpTargetScrollLeft = getScrollLeftForIndex(firstRealIndex);
-
-              galleryTrack.scrollTo({
-                   left: jumpTargetScrollLeft,
-                   behavior: 'instant' // Instant jump
-              });
-
-               requestAnimationFrame(() => {
-                    isHandlingLoop = false;
-                    console.log("Loop handling finished.");
-               });
+    function setupGallery() {
+        if (!galleryTrack || galleryItems.length === 0 || !galleryLeftButton || !galleryRightButton) {
+            console.warn("Gallery elements not fully found. Skipping gallery JS.");
+            if (galleryLeftButton) galleryLeftButton.style.display = 'none';
+            if (galleryRightButton) galleryRightButton.style.display = 'none';
+            return;
         }
-         // If no jump was needed based on boundary, ensure flag is false
-         // This is important if a smooth scroll *stops* just before the boundary.
-         else {
-             isHandlingLoop = false;
-         }
-    });
 
-    // --- Optional: Keyboard Navigation (Left/Right Arrow Keys) ---
-    document.addEventListener('keydown', (event) => {
-        // Check if the gallery section is visible or scrolled into view
-        const gallerySection = document.getElementById('gallery');
-        if (gallerySection && gallerySection.getBoundingClientRect().top < window.innerHeight && gallerySection.getBoundingClientRect().bottom > 0) {
-             if (event.key === 'ArrowLeft') {
-                  event.preventDefault(); // Prevent default page scroll
-                  leftButton.click(); // Trigger left button click
-              } else if (event.key === 'ArrowRight') {
-                  event.preventDefault(); // Prevent default page scroll
-                  rightButton.click(); // Trigger right button click
-             }
+        const numDuplicatesStart = 2;
+        const numDuplicatesEnd = 2;
+        const minRequiredItems = 1 + numDuplicatesStart + numDuplicatesEnd;
+
+        if (galleryItems.length < minRequiredItems) {
+            console.warn(`Not enough gallery items (${galleryItems.length}). Need at least ${minRequiredItems}. Skipping gallery JS.`);
+            if (galleryLeftButton) galleryLeftButton.style.display = 'none';
+            if (galleryRightButton) galleryRightButton.style.display = 'none';
+            return;
         }
+
+        function getScrollLeftToCenterItem(index) {
+            if (index < 0 || index >= galleryItems.length) {
+                console.warn(`Gallery: Invalid index ${index} for getScrollLeftToCenterItem.`);
+                return galleryTrack.scrollLeft; // Return current scroll position as a fallback
+            }
+            const item = galleryItems[index];
+            const itemLeft = item.offsetLeft;
+            const itemWidth = item.offsetWidth;
+            const trackWidth = galleryTrack.offsetWidth;
+            return itemLeft - (trackWidth / 2) + (itemWidth / 2);
+        }
+
+        window.addEventListener('load', () => {
+            // Defer initial scroll slightly to ensure all styles and dimensions are applied
+            setTimeout(() => {
+                const initialScrollLeft = getScrollLeftToCenterItem(numDuplicatesStart);
+                galleryTrack.scrollTo({ left: initialScrollLeft, behavior: 'instant' });
+                // console.log(`Gallery: Initial scroll to center item index ${numDuplicatesStart} (${initialScrollLeft}px)`);
+            }, 100); // Small delay
+        }, { once: true });
+
+        function scrollGallery(direction) {
+            const firstItem = galleryItems[0];
+            if (!firstItem) return;
+
+            const itemWidth = firstItem.offsetWidth;
+            const gapStyle = getComputedStyle(galleryTrack).gap;
+            const gap = (gapStyle && gapStyle !== 'normal') ? parseFloat(gapStyle) : 15;
+            const scrollStep = itemWidth + gap;
+
+            galleryTrack.scrollBy({ left: direction * scrollStep, behavior: 'smooth' });
+        }
+
+        galleryLeftButton.addEventListener('click', () => scrollGallery(-1));
+        galleryRightButton.addEventListener('click', () => scrollGallery(1));
+
+        let isHandlingLoop = false;
+        const loopTolerance = 20; // Pixels tolerance for boundary checks
+
+        galleryTrack.addEventListener('scroll', () => {
+            if (isHandlingLoop || galleryItems.length < minRequiredItems) return;
+
+            const scrollLeft = galleryTrack.scrollLeft;
+            const trackWidth = galleryTrack.offsetWidth;
+            const firstRealItemIndex = numDuplicatesStart;
+            const lastRealItemIndex = galleryItems.length - 1 - numDuplicatesEnd;
+
+            // Boundaries for "real" content based on centering the first/last real item
+            const startBoundary = getScrollLeftToCenterItem(firstRealItemIndex) - loopTolerance;
+            const endBoundary = getScrollLeftToCenterItem(lastRealItemIndex) + loopTolerance;
+
+            if (scrollLeft < startBoundary) {
+                // console.log("Gallery: Scrolled to left duplicates, jumping to end.");
+                isHandlingLoop = true;
+                const jumpTargetScrollLeft = getScrollLeftToCenterItem(lastRealItemIndex);
+                galleryTrack.scrollTo({ left: jumpTargetScrollLeft, behavior: 'instant' });
+                requestAnimationFrame(() => { isHandlingLoop = false; });
+            } else if (scrollLeft > endBoundary) {
+                // console.log("Gallery: Scrolled to right duplicates, jumping to start.");
+                isHandlingLoop = true;
+                const jumpTargetScrollLeft = getScrollLeftToCenterItem(firstRealItemIndex);
+                galleryTrack.scrollTo({ left: jumpTargetScrollLeft, behavior: 'instant' });
+                requestAnimationFrame(() => { isHandlingLoop = false; });
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const gallerySection = document.getElementById('gallery');
+            // Check if the event target is not an input field to avoid interference
+            const isInputFocused = ['input', 'textarea', 'select'].includes(event.target.tagName.toLowerCase());
+
+            if (!isInputFocused && gallerySection && gallerySection.getBoundingClientRect().top < window.innerHeight && gallerySection.getBoundingClientRect().bottom > 0) {
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault(); galleryLeftButton.click();
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault(); galleryRightButton.click();
+                }
+            }
+        });
+    }
+    setupGallery();
+
+
+    const burgerMenu = document.querySelector('.burger-menu');
+    const innerNav = document.querySelector('nav.inner-nav');
+    if (burgerMenu && innerNav) {
+    }
+
+    if (typeof anime !== 'undefined') {
+
+    } else {
+        console.warn("Anime.js not found. Some animations will be skipped.");
+    }
+
+}); // END OF SINGLE DOMContentLoaded
+
+
+// script.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const IS_ANIME_LOADED = typeof anime !== 'undefined';
+
+    if (!IS_ANIME_LOADED) {
+        console.warn("Anime.js not found. Animations will be skipped.");
+        // return; // Không return ở đây nếu vẫn muốn các logic khác chạy
+    }
+
+    // ... (Các hàm và logic khác của bạn như Gallery, Burger Menu, Intro, Scroll Animations) ...
+
+
+    /**
+     * ------------------------------------------------------------------------
+     * HERO SECTION ANIMATIONS (Bao gồm cả nhân vật)
+     * ------------------------------------------------------------------------
+     */
+    function setupHeroAnimations() {
+        if (!IS_ANIME_LOADED) {
+            // console.warn("Anime.js not found. Skipping Hero section animations."); // Đã cảnh báo ở trên
+            return;
+        }
+
+        const heroLogo = document.querySelector('.hero-content img.logo');
+        const heroPriceLetters = document.querySelectorAll('.hero-price .letter');
+        const heroPriceContainer = document.querySelector('.hero-price');
+        const heroH1 = document.querySelector('.hero-content h1');
+        const heroH2 = document.querySelector('.hero-content h2');
+        const heroParagraph = document.querySelector('.hero-content > p');
+        const heroCtaButton = document.querySelector('.hero .hero-cta');
+
+        // THÊM SELECTOR CHO NHÂN VẬT
+        const characterLeft = document.querySelector('.hero-character-left');
+        const characterRight = document.querySelector('.hero-character-right');
+
+        // Tách chữ giá tiền (giữ nguyên logic này)
+        const priceTextWrapper = document.querySelector('.hero-price span');
+        if (priceTextWrapper && priceTextWrapper.textContent) {
+            const originalText = priceTextWrapper.textContent.trim();
+            priceTextWrapper.innerHTML = originalText.replace(/\S/g, "<span class='letter'>$&</span>");
+            // Cập nhật lại heroPriceLetters sau khiinnerHTML thay đổi
+            // heroPriceLetters = document.querySelectorAll('.hero-price .letter'); // Không cần thiết nếu query 1 lần ở trên đã đủ
+        }
+
+        // Set initial states
+        const elementsToFadeInSlideUp = [heroLogo, heroPriceContainer, heroH1, heroH2, heroParagraph, heroCtaButton].filter(el => el);
+        if (elementsToFadeInSlideUp.length > 0) {
+            anime.set(elementsToFadeInSlideUp, { opacity: 0, translateY: 25 });
+        }
+        const currentPriceLetters = document.querySelectorAll('.hero-price .letter'); // Query lại để chắc chắn
+        if (currentPriceLetters.length > 0) {
+            anime.set(currentPriceLetters, { opacity: 0, translateY: "1.1em" });
+        }
+
+        // Set initial states cho nhân vật (ngoài màn hình)
+        if (characterLeft) {
+            anime.set(characterLeft, { opacity: 0, translateX: '-100%', translateY: '-50%' }); // translateY để giữ căn giữa dọc
+        }
+        if (characterRight) {
+            anime.set(characterRight, { opacity: 0, translateX: '100%', translateY: '-50%' }); // translateY để giữ căn giữa dọc
+        }
+
+
+        const tl = anime.timeline({
+            easing: 'easeOutExpo',
+            duration: 850,
+            complete: () => animateCtaPulse(heroCtaButton) // Truyền target vào
+        });
+
+        // Logo Animation
+        if (heroLogo) {
+            tl.add({
+                targets: heroLogo,
+                opacity: 1,
+                translateY: 0,
+                scale: [0.7, 1],
+                duration: 900
+            }, 0); // Bắt đầu tại thời điểm 0
+        }
+
+        // Price Letters Animation
+        if (currentPriceLetters.length > 0) {
+            tl.add({
+                targets: currentPriceLetters,
+                opacity: 1,
+                translateY: 0,
+                delay: anime.stagger(35)
+            }, (heroLogo ? 100 : 50)); // Bắt đầu sau logo một chút
+        }
+
+        // Price Container (chỉ để hiện ra, không có animation phức tạp)
+        if (heroPriceContainer) {
+            tl.add({
+                targets: heroPriceContainer,
+                opacity: 1,
+                translateY: 0,
+                duration: 700
+            }, (heroLogo ? 100 : 50)); // Cùng lúc với price letters
+        }
+
+        // Text Elements (H1, H2, P)
+        const textElements = [heroH1, heroH2, heroParagraph].filter(el => el);
+        if (textElements.length > 0) {
+            tl.add({
+                targets: textElements,
+                opacity: 1,
+                translateY: 0,
+                delay: anime.stagger(100, {start: (heroLogo ? 300 : 150)}) // Delay bắt đầu cho nhóm này
+            }, 0); // Thêm vào timeline, delay nội bộ sẽ xử lý
+        }
+
+        // CTA Button
+        if (heroCtaButton) {
+            tl.add({
+                targets: heroCtaButton,
+                opacity: 1,
+                translateY: 0,
+                duration: 800,
+            }, 500 ); // Bắt đầu sau text hoặc sau logo/price
+        }
+
+
+        // === ANIMATION CHO NHÂN VẬT ===
+        const characterAnimationDelay = heroLogo ? 400 : 200; // Delay sau khi logo bắt đầu (hoặc sớm hơn nếu không có logo)
+        const characterDuration = 1500; // Thời gian nhân vật di chuyển vào
+        const characterEasing = 'easeOutQuint'; // Easing mượt mà hơn cho di chuyển dài
+
+        if (characterLeft) {
+            tl.add({
+                targets: characterLeft,
+                opacity: [0, 1], // Fade in
+                translateX: ['-100%', '0'], // Từ ngoài vào và dừng lại hơi ló ra (điều chỉnh -15% nếu muốn)
+                                                // Hoặc translateX: ['-100%', '0%'] nếu muốn vào hẳn
+                translateY: '-50%', // Giữ nguyên căn giữa dọc
+                duration: characterDuration,
+                easing: characterEasing
+            }, characterAnimationDelay); // Offset dựa trên thời điểm bắt đầu của timeline
+        }
+
+        if (characterRight) {
+            tl.add({
+                targets: characterRight,
+                opacity: [0, 1],
+                translateX: ['100%', '0'], // Từ ngoài vào và dừng lại hơi ló ra (điều chỉnh 15% nếu muốn)
+                                               // Hoặc translateX: ['100%', '0%'] nếu muốn vào hẳn
+                translateY: '-50%', // Giữ nguyên căn giữa dọc
+                duration: characterDuration,
+                easing: characterEasing
+            }, characterAnimationDelay); // Bắt đầu cùng lúc với characterLeft
+        }
+    }
+
+    function animateCtaPulse(target) { // Thêm tham số target
+        if (IS_ANIME_LOADED && target) {
+            anime({
+                targets: target,
+                scale: [{ value: 1, duration: 500 }, { value: 1.05, duration: 600 }, { value: 1, duration: 500 }],
+                easing: 'easeInOutSine',
+                loop: true
+            });
+        }
+    }
+
+    // Gọi hàm setup chính
+    setupHeroAnimations();
+
+
+    // --- (CÁC PHẦN CODE JS KHÁC CỦA BẠN NHƯ SCROLL ANIMATIONS, GALLERY, BURGER...) ---
+
+}); // END OF SINGLE DOMContentLoaded
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const IS_ANIME_LOADED = typeof anime !== 'undefined';
+
+    if (!IS_ANIME_LOADED) {
+        console.warn("Anime.js not found. Scroll and hover animations will be skipped.");
+        return; // Exit if Anime.js is not available
+    }
+
+    /**
+     * ------------------------------------------------------------------------
+     * SCROLL-TRIGGERED ANIMATIONS (Intersection Observer)
+     * ------------------------------------------------------------------------
+     */
+    const defaultObserverOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15 // Trigger when 15% of the element is visible (slightly earlier)
+    };
+
+    const animateOnScrollCallback = (entries, observerInstance) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                let animationParams = {
+                    opacity: [0, 1],
+                    translateY: [20, 0], // Default slide-up
+                    duration: 700,
+                    easing: 'easeOutCubic', // Consistent default easing
+                    delay: 0
+                };
+
+                // Customize animation based on element type/selector
+                if (element.matches('.content-section h2, #trailer .video-placeholder')) {
+                    animationParams.translateY = [30, 0];
+                    animationParams.duration = 800;
+                    animationParams.delay = parseInt(element.dataset.scrollDelay) || 50; // Use data-attribute or default
+                } else if (element.matches('#intro p')) {
+                    animationParams.delay = (element.id === 'still' ? 150 : 300); // Stagger intro paragraphs
+                    // Keep translateY from default
+                } else if (element.matches('.feature-item')) {
+                    animationParams.translateY = [40, 0];
+                    animationParams.duration = 600;
+                    animationParams.easing = 'easeOutExpo';
+                    animationParams.delay = Array.from(element.parentNode.children)
+                                            .filter(child => child.matches('.feature-item'))
+                                            .indexOf(element) * 100;
+                } else if (element.matches('.pricing-card')) { // Added Pricing Card
+                    animationParams.translateY = [40, 0];
+                    animationParams.duration = 600;
+                    animationParams.easing = 'easeOutCubic';
+                    animationParams.delay = Array.from(element.parentNode.children)
+                                            .filter(child => child.matches('.pricing-card'))
+                                            .indexOf(element) * 120; // Stagger pricing cards
+                    if (element.classList.contains('featured')) {
+                        animationParams.scale = [0.95, 1];
+                        animationParams.duration = 700;
+                        animationParams.easing = 'easeOutElastic(1, .8)';
+                    }
+                } else if (element.matches('.about-item')) {
+                    const isOddItem = Array.from(element.parentNode.children)
+                                        .filter(child => child.matches('.about-item'))
+                                        .indexOf(element) % 2 === 0;
+                    animationParams.translateX = [isOddItem ? -40 : 40, 0]; // Consistent slide distance
+                    animationParams.duration = 800;
+                    delete animationParams.translateY; // Remove default translateY for side slide
+                }else if (element.matches('#community .community-intro-text')) {
+                    animationParams.translateY = [25, 0]; // Giống social-links hoặc tùy chỉnh
+                    animationParams.delay = 150;      // Xuất hiện sau tiêu đề một chút (nếu tiêu đề có delay 50)
+                    animationParams.duration = 650;
+                }
+                else if (element.matches('.requirements-list, .social-links')) {
+                    animationParams.translateY = [25, 0]; // Đổi lại thành 25px cho nhất quán
+                    animationParams.delay = (element.matches('.social-links') ? 300 : 50); // Social links có thể delay nhiều hơn
+                }
+                
+                // Add more 'else if' for other specific elements if needed
+
+                // Apply animation if the element is currently hidden (avoids re-animating)
+                if (getComputedStyle(element).opacity === '0') { // Check computed opacity
+                    anime({ targets: element, ...animationParams });
+                }
+                observerInstance.unobserve(element);
+            }
+        });
+    };
+
+    const scrollObserver = new IntersectionObserver(animateOnScrollCallback, defaultObserverOptions);
+
+    const elementsToAnimateOnScroll = document.querySelectorAll(
+       '.content-section h2, #intro p, .feature-item, .pricing-card, .about-item, .requirements-list, #community .community-intro-text, .social-links, #trailer .video-placeholder, .black-break-section .centered-break-image'
+        // Added .pricing-card, footer elements, and black-break image
+    );
+
+    elementsToAnimateOnScroll.forEach(el => {
+        // IMPORTANT: Ensure elements start hidden via CSS for a smooth effect
+        // CSS example:
+        // .content-section h2, #intro p, /* etc... */ { opacity: 0; transform: translateY(20px); }
+        // If not set in CSS, set it here, but CSS is preferred for FOUC prevention.
+        if (getComputedStyle(el).opacity !== '0') { // Only set if not already set by CSS
+             el.style.opacity = '0';
+             // Consider setting initial transform here too if not in CSS,
+             // matching the starting point of your animations (e.g., translateY(20px))
+             // el.style.transform = 'translateY(20px)';
+        }
+        scrollObserver.observe(el);
     });
 
+    /**
+     * ------------------------------------------------------------------------
+     * GENERIC HOVER SCALE ANIMATIONS
+     * ------------------------------------------------------------------------
+     */
+    const hoverScaleElements = document.querySelectorAll(
+        '.cta-button, .gallery-nav-button, .social-links a, nav.inner-nav ul li a, header .logo a, .pricing-card .btn-buy' // Added .btn-buy
+    );
 
-    // --- Examples of using other commented-out JS features ---
+    hoverScaleElements.forEach(el => {
+        let currentHoverAnimation; // To manage and pause ongoing animations
+        const baseScale = 1;
+        const hoverScale = el.matches('header .logo a') ? 1.1 : 1.05; // Logo scales a bit more
 
-    // 1. Smooth Scrolling fallback (if scroll-behavior: smooth CSS doesn't work)
-    // Uncomment the section in script.js if needed, but modern browsers support CSS smooth scrolling.
+        const animationConfig = {
+            targets: el,
+            duration: 200,
+            easing: 'easeOutSine'
+        };
 
-    // 2. Mobile Menu Toggle
-    // You would need HTML button and CSS styles for this. The JS provided is a starting point.
-    // const mobileMenuButton = document.querySelector('.mobile-menu-toggle');
-    // const navLinks = document.querySelector('nav ul');
-    // if (mobileMenuButton && navLinks) {
-    //     mobileMenuButton.addEventListener('click', () => {
-    //         navLinks.classList.toggle('active');
-    //         mobileMenuButton.classList.toggle('active');
-    //     });
-    // }
+        el.addEventListener('mouseenter', () => {
+            if (currentHoverAnimation) {
+                currentHoverAnimation.pause(); // Pause any existing animation
+            }
+            currentHoverAnimation = anime({ ...animationConfig, scale: hoverScale });
+        });
 
-    // 3. Active Navigation Link Highlighting on Scroll
-    // Uncomment the section in script.js if you want this feature. It adds 'active' class to nav links.
+        el.addEventListener('mouseleave', () => {
+            if (currentHoverAnimation) {
+                currentHoverAnimation.pause();
+            }
+            currentHoverAnimation = anime({ ...animationConfig, scale: baseScale, duration: 300 }); // Slower return
+        });
+    });
 
-    // 4. Simple Animations on Scroll (using Intersection Observer API)
-    // Uncomment the section in script.js if you want elements to fade/slide in as you scroll down.
-    // Requires adding a CSS class like '.visible' with transition styles.
+    // --- (OTHER JS MODULES LIKE GALLERY, HERO ANIMATIONS, BURGER MENU, INTRO HIGHLIGHT WOULD BE HERE) ---
 
-}); // End DOMContentLoaded
+}); // END OF SINGLE DOMContentLoaded
 
 
-// Wait for the HTML document to be fully loaded before running scripts
 document.addEventListener('DOMContentLoaded', () => {
+    const burgerMenu = document.querySelector('.burger-menu');
+    const innerNav = document.querySelector('nav.inner-nav'); // Target nav.inner-nav
+    // const navLinks = document.querySelectorAll('nav.inner-nav ul li a');
 
-     // --- TÁCH CHỮ CÁI CHO GIÁ TIỀN ---
-     const priceTextWrapper = document.querySelector('.hero-price span');
-     if (priceTextWrapper) {
-         const originalText = priceTextWrapper.textContent;
-         priceTextWrapper.innerHTML = originalText.replace(/./g, "<span class='letter'>$&</span>");
-         // Giải thích regex:
-         // /./g : Chọn mọi ký tự (dấu .) trong chuỗi, g là global (tìm tất cả)
-         // "$&" : Trong phần thay thế, "$&" đại diện cho chính ký tự đã khớp
-         // => Bọc mỗi ký tự tìm thấy bằng <span class='letter'>...</span>
-     }
-     // --- KẾT THÚC TÁCH CHỮ ---
+    if (burgerMenu && innerNav) {
+        burgerMenu.addEventListener('click', () => {
+            innerNav.classList.toggle('nav-active');
+            burgerMenu.classList.toggle('active');
+            const isExpanded = innerNav.classList.contains('nav-active');
+            burgerMenu.setAttribute('aria-expanded', isExpanded);
 
+            if (innerNav.classList.contains('nav-active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+    }
 
-     // --- 1. Hero Section Animation on Load ---
-     function animateHeroSection() {
-         const tl = anime.timeline({
-             easing: 'easeOutExpo',
-             duration: 1000,
-             complete: function(anim) {
-                 // Giữ lại animation pulse cho CTA nếu có
-                 animateCtaPulse(); // Call pulse animation when hero animation finishes
-             }
-         });
-
-         // Logo Animation
-         tl.add({
-             targets: '.hero-content img',
-             opacity: [0, 1],
-             scale: [0.6, 1],
-             duration: 900,
-             easing: 'easeOutExpo',
-         })
-         // --- ANIMATION CHO CHỮ CÁI GIÁ TIỀN ---
-         .add({
-             targets: '.hero-price .letter', // Target the split letters
-             translateY: ["1.1em", 0], // Jump up (1.1em = slightly higher than font height)
-             opacity: [0, 1], // Fade in simultaneously
-             easing: "easeOutExpo",
-             duration: 800, // Duration for each letter's jump
-             delay: anime.stagger(40) // IMPORTANT: Each letter starts with a 40ms delay
-         }, '-=700') // Start this animation 700ms before the logo ends (runs almost simultaneously with H1/Price)
-         // --- KẾT THÚC ANIMATION CHỮ CÁI ---
-
-         // Text & Button Animations (adjust offset as needed)
-         // Ensure the price text appears before/with the h1 if that's the desired order
-         .add({
-            targets: '.hero-price', // Animate the price block's container if needed
-            opacity: [0, 1], // Price letters already animated, this might be redundant or for the container itself
-            // translateY: [30, 0] // If price container needs initial slide
-            duration: 1 // Use minimal duration as letters are already animated
-         }, '-=1000') // Adjust offset to make it appear when letters are almost done
-
-         .add({
-             targets: '.hero-content h1', // Assuming there's an H1
-             opacity: [0, 1],
-             translateY: [30, 0],
-         }, '-=900') // Adjust offset for H1 to appear after/with the price
-         .add({
-             targets: '.hero-content h2',
-             opacity: [0, 1],
-             translateY: [30, 0],
-         }, '-=800')
-         .add({
-             targets: '.hero-content p',
-             opacity: [0, 1],
-             translateY: [30, 0],
-         }, '-=800')
-         .add({
-             targets: '.hero .hero-cta',
-             opacity: [0, 1],
-             translateY: [30, 0],
-             duration: 800
-         }, '-=700'); // CTA button appears last
-     }
-     // Removed the duplicate animateHeroSection() call right here
-
-     // --- NEW FUNCTION: CTA Pulse Animation ---
-     function animateCtaPulse() {
-         anime({
-             targets: '.hero .hero-cta', // Only target the CTA button in the hero
-             scale: [
-                 { value: 1, duration: 500 },    // Normal state
-                 { value: 1.05, duration: 600 }, // Slightly enlarge
-                 { value: 1, duration: 500 }     // Return to normal
-             ],
-             easing: 'easeInOutSine', // Smooth easing for the whole process
-             duration: 1600, // Total duration for one pulse cycle (500+600+500)
-             loop: true // Repeat animation infinitely
-         });
-     }
-
-     animateHeroSection(); // Run the initial hero animation
+    const navLinks = innerNav.querySelectorAll('ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (innerNav.classList.contains('nav-active')) {
+                innerNav.classList.remove('nav-active');
+                burgerMenu.classList.remove('active');
+                burgerMenu.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+});
 
 
- }); // End DOMContentLoaded listener
+// script.js
 
-
- // Wait for the HTML document to be fully loaded before running scripts
 document.addEventListener('DOMContentLoaded', () => {
+    // ... (code JS hiện có của bạn cho Gallery, Hero, Burger Menu, Intro highlight ...) ...
 
-     // --- Scroll-Triggered Animations using Intersection Observer ---
-     const observerOptions = {
-         root: null, // Use the viewport as the root
-         rootMargin: '0px',
-         threshold: 0.1 // Trigger when 10% of the element is visible
-     };
+    const IS_ANIME_LOADED = typeof anime !== 'undefined';
 
-     const observerCallback = (entries, observer) => {
-         entries.forEach(entry => {
-             // Check if the element is intersecting (entering the viewport)
-             if (entry.isIntersecting) {
-                 const element = entry.target;
+    if (IS_ANIME_LOADED) {
+        // ... (các khối animation khác của bạn) ...
 
-                 // Apply animation based on the element's class
-                 if (element.matches('.content-section h2') || element.matches('#intro p')) {
-                     anime({
-                         targets: element,
-                         opacity: [0, 1],
-                         translateY: [20, 0],
-                         duration: 800,
-                         easing: 'easeOutSine',
-                         delay: element.matches('#intro p') ? 200 : 0 // Slight delay for intro paragraph
-                     });
-                 } else if (element.matches('.feature-item')) {
-                     // Stagger animation for feature items
-                     anime({
-                         targets: element,
-                         opacity: [0, 1],
-                         translateY: [40, 0],
-                         duration: 600,
-                         easing: 'easeOutExpo',
-                         // Find index among siblings for stagger delay (simple approach)
-                         delay: Array.from(element.parentNode.children).indexOf(element) * 100
-                     });
-                 } else if (element.matches('.about-item')) {
-                     // Slide in from alternating sides
-                     // Check if the element is the 1st, 3rd, 5th child *among about-items*
-                     // This might be better: element.classList.contains('about-item-1') etc.
-                     const isOddItem = Array.from(element.parentNode.children).filter(child => child.classList.contains('about-item')).indexOf(element) % 2 === 0;
+        /**
+         * ------------------------------------------------------------------------
+         * PRICING SECTION ANIMATIONS (SIMPLE VERSION)
+         * ------------------------------------------------------------------------
+         */
+        const pricingCards = document.querySelectorAll('#pricing .pricing-card');
 
-                     // If odd index (0, 2, 4...) --> image left, text right. Image comes from left. Text comes from right.
-                     // If even index (1, 3, 5...) --> text left, image right. Text comes from left. Image comes from right.
-                     // Since the *container* .about-item is the target, and we reversed flex-direction for even items,
-                     // if the item itself is the target, we need to slide the *whole block*.
-                     // Let's slide the odd blocks from left, even blocks from right.
-                     const slideDirection = isOddItem ? -50 : 50; // Slide from left or right based on index
+        if (pricingCards.length > 0) {
+            const pricingObserverOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15 // Kích hoạt khi 15% của card hiển thị
+            };
 
+            const pricingObserverCallback = (entries, observerInstance) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const cardIndex = Array.from(pricingCards).indexOf(card);
 
-                     anime({
-                         targets: element,
-                         opacity: [0, 1],
-                         translateX: [slideDirection, 0],
-                         duration: 900,
-                         easing: 'easeOutCubic'
-                     });
-                 } else if (element.matches('.requirements-list') || element.matches('.social-links')) {
-                      anime({
-                         targets: element,
-                         opacity: [0, 1],
-                         translateY: [30, 0],
-                         duration: 700,
-                         easing: 'easeOutSine'
-                     });
-                 }
-                 // Add more specific animations for other sections if needed
+                        anime({
+                            targets: card,
+                            opacity: [0, 1],
+                            translateY: [30, 0], // Từ dưới lên
+                            duration: 500,       // Thời gian animation ngắn hơn
+                            easing: 'easeOutQuad', // Easing mượt mà, không quá phức tạp
+                            delay: cardIndex * 100 // Stagger delay ngắn hơn
+                        });
 
-                 // Stop observing the element after it has animated once
-                 observer.unobserve(element);
-             }
-         });
-     };
+                        observerInstance.unobserve(card); // Ngừng observe sau khi animate
+                    }
+                });
+            };
 
-     // Create the Intersection Observer
-     const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+            const pricingScrollObserver = new IntersectionObserver(pricingObserverCallback, pricingObserverOptions);
+            pricingCards.forEach(card => {
+                // CSS đã đặt opacity: 0 và transform
+                pricingScrollObserver.observe(card);
+            });
+        } // End if (pricingCards.length > 0)
 
-     // Select all elements you want to animate on scroll
-     const elementsToAnimate = document.querySelectorAll(
-         '.content-section h2, #intro p, .feature-item, .about-item, .requirements-list, .social-links, #trailer .video-placeholder'
-         // Added video-placeholder
-         // Add other selectors here, e.g., '.trailer iframe', '.news-item'
-     );
+    } // End if (IS_ANIME_LOADED)
 
-     // Start observing each element
-     elementsToAnimate.forEach(el => {
-         // Set initial state to invisible (optional, can also be done with CSS)
-         // el.style.opacity = 0;
-         scrollObserver.observe(el);
-     });
+    // ... (code JS còn lại của bạn) ...
 
-     // --- Simple Hover Animations ---
-     const interactiveElements = document.querySelectorAll('.cta-button, .gallery-nav-button, .social-links a, nav ul li a');
-
-     interactiveElements.forEach(el => {
-         el.addEventListener('mouseenter', () => {
-             anime({
-                 targets: el,
-                 scale: 1.05, // Slightly enlarge
-                 duration: 200,
-                 easing: 'easeOutSine'
-             });
-         });
-
-         el.addEventListener('mouseleave', () => {
-             anime({
-                 targets: el,
-                 scale: 1, // Return to normal size
-                 duration: 300,
-                 easing: 'easeOutSine'
-             });
-         });
-     });
-     
-
-     // --- REMOVED DUPLICATE GALLERY SCROLLING LOGIC HERE ---
-     // The gallery scrolling and looping is handled by the block at the top.
-
-}); // End DOMContentLoaded listener
+}); // END OF SINGLE DOMContentLoaded
 
 
 
