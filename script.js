@@ -535,3 +535,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 }); // END OF DOMContentLoaded
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const imageToAnimate = document.querySelector('.slide-down-on-load');
+    if (imageToAnimate) {
+        // Thêm một chút delay nhỏ để trình duyệt có thời gian "thở" trước khi bắt đầu transition
+        setTimeout(() => {
+            imageToAnimate.classList.add('loaded');
+        }, 100); // 100ms delay, có thể điều chỉnh
+    }
+});

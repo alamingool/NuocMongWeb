@@ -14,8 +14,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    padding: 20px;
+    padding: 50px;
 }
 
 
@@ -124,14 +123,17 @@ h2 { /* This is the general H2 for section titles */
             #d6d6d6 60%,
             #a0a0a0 85%,
             #888888 100%);
-    color: transparent;
+    -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     background-clip: text;
-    text-shadow:
+    /*text-shadow:
         1px 1px 1px rgba(0, 0, 0, 0.3),
-        -1px -1px 1px rgba(255, 255, 255, 0.4);
+        -1px -1px 1px rgba(255, 255, 255, 0.4);*/
     font-weight: bold;
     font-size: 2.5rem; /* Original global h2 size */
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 1.1;
 }
 
 #title { /* This was an ID in your original CSS, likely for a specific H1 if it was text */
@@ -173,7 +175,6 @@ h2 { /* This is the general H2 for section titles */
     flex-direction: column; 
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .hero-content.container {
@@ -211,7 +212,7 @@ h2 { /* This is the general H2 for section titles */
 /* "NUOC MONG WATER.DREAM" logo image */
 .hero-content .logo {
     width: 100%; /* MODIFIED: Make it responsive to its container */
-    max-width: 700px; /* MODIFIED: Set a max-width to prevent it from being too huge on large screens */
+    max-width: 800px; /* MODIFIED: Set a max-width to prevent it from being too huge on large screens */
                      /* Adjust 700px based on your design preference */
     height:auto;
     margin-bottom: 1rem; /* Original */
@@ -221,7 +222,7 @@ h2 { /* This is the general H2 for section titles */
     overflow: hidden; /* This is for the letter animation if you re-enable it, not directly for wrapping */
     display: inline-block;
     white-space: normal; /* Explicitly set to normal to allow wrapping at spaces */
-    font-size: 1.8rem; 
+    font-size: 2.5rem; 
     font-family: 'title'; 
     text-transform: uppercase;
     background-image: linear-gradient(175deg, #ffffff 0%, #ffffff 15%, #e7e7e7 40%, #d6d6d6 60%, #a0a0a0 85%, #888888 100%);
@@ -231,6 +232,7 @@ h2 { /* This is the general H2 for section titles */
     text-shadow: 1px 1px 1px rgba(70, 70, 70, 0.3), -1px -1px 1px rgba(255, 255, 255, 0.4);
     font-weight: bold;
     line-height: 1.2; /* Default line height */
+    margin-bottom:0.2rem;
 
     /* ADD THESE FOR BETTER WORD WRAPPING CONTROL BY DEFAULT (can be overridden by nowrap if needed) */
     word-break: normal; /* Default, but good to be explicit if issues persist */
@@ -263,7 +265,7 @@ h2 { /* This is the general H2 for section titles */
 
 .hero-content h2 { /* This is for the tagline "Where tradition meets..." */
     font-family: 'title-italic'; /* SF-Pro-Display-Thin */
-    font-size: 1.8rem; 
+    font-size: 1.4rem; 
     margin-bottom: 1rem; 
     font-weight: lighter; 
     font-style: normal; 
@@ -271,7 +273,10 @@ h2 { /* This is the general H2 for section titles */
     /* Ensure it doesn't inherit gradient from global h2 */
     background-image: none; 
     -webkit-background-clip: initial; 
+    -webkit-text-fill-color:white;
     background-clip: initial; 
+
+    line-height: 1.1;
     text-shadow: none; /* Original did not have specific shadow here */
 }
 
@@ -380,7 +385,6 @@ nav.inner-nav ul li a.active {
     flex-shrink: 0;
     font-size: 1.3rem;
     font-weight: bold; 
-    margin-top: 1rem; 
     /* font-family: 'Montserrat', sans-serif; /* REMOVED - Let it inherit or use browser default for CTAs if that was original intent */
 }
 .cta-button:hover {
@@ -397,13 +401,13 @@ nav.inner-nav .nav-cta {
 @media (max-width: 992px) {
     html { scroll-padding-top: 60px; } 
     .burger-menu { display: flex; order: 2; }
-    nav.inner-nav { display: none; position: fixed; top: 0; right: 0; width: 50%; height: 60vh; background-color: rgba(0,0,0,.9); flex-direction: column; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; gap: 20px; transform: translateX(100%); transition: transform .3s ease-in-out; }
+    nav.inner-nav { display: none; position: fixed; top: 0; right: 0; width: 100%; height: 100vh; background-color: rgba(0,0,0,.9); flex-direction: column; justify-content: center; align-items: center; z-index: 1000; overflow-y: auto; gap: 30px; transform: translateX(100%); transition: transform .3s ease-in-out; }
     nav.inner-nav.nav-active { display: flex; transform: translateX(0%); }
     nav.inner-nav ul { flex-direction: column; width: 100%; text-align: center; }
     nav.inner-nav ul li { margin-left: 0; width: 100%; }
     nav.inner-nav ul li a { padding: 15px 20px; font-size: 1.3rem; border-radius: 0; }
     nav.inner-nav ul li:last-child a { border-bottom: none; }
-    nav.inner-nav .nav-cta { margin-top: 15px; width: auto; max-width: 300px; }
+    nav.inner-nav .nav-cta {margin-top: 15px; width: auto; max-width: 300px; }
     .burger-menu.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
     .burger-menu.active span:nth-child(2) { opacity: 0; }
     .burger-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(7px,-6px); }
@@ -416,7 +420,7 @@ nav.inner-nav .nav-cta {
 
     .hero-price span { 
         white-space: normal !important; /* MODIFIED: Allow price to wrap, !important to ensure it overrides */
-        font-size: 1.1rem; /* Your existing responsive size */
+        font-size: 2.5rem; /* Your existing responsive size */
         line-height: 1.3;  /* Adjust line height if it wraps */
         word-break: normal; /* Ensure it tries to break at spaces first */
         overflow-wrap: break-word; /* Allow breaking words if necessary to prevent overflow */
@@ -428,7 +432,7 @@ nav.inner-nav .nav-cta {
     .hero-cta { 
         width: 80%; 
         max-width: 280px;
-        font-size: 1.1rem; 
+        font-size: 1rem; 
     }
 }
 
@@ -444,7 +448,7 @@ nav.inner-nav .nav-cta {
     height: 135%;
     width: auto;
     z-index: -4; 
-    top: 55%;
+    top: 50%;
     transform: translateY(-50%);
     display: block;
     object-fit: contain; 
@@ -459,8 +463,17 @@ nav.inner-nav .nav-cta {
     width: 100%;
     height:auto; 
     object-fit: cover; 
-    left: 50%;
-    transform: translateX(-50%);
+
+}
+.slide-down-on-load {
+    opacity: 0; /* Bắt đầu ẩn */
+    transform: translateY(-100%); /* Bắt đầu ở vị trí trên cùng (ngoài viewport) */
+    transition: transform 1s ease-out, opacity 0.5s ease-out; /* Thời gian và kiểu chuyển động */
+}
+
+.slide-down-on-load.loaded {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Original responsive rules for these images */
@@ -469,9 +482,9 @@ nav.inner-nav .nav-cta {
     .rem { height: 30%; } 
 }
 @media (max-width: 850px) {
-    .hero-content.container { margin-bottom: -20rem; }
+    .hero-content.container { margin-bottom: 0rem; }
     .hero-content p { font-size: 1rem; margin-bottom: 1rem; }
-    .hero-price span { font-size: 1.6rem; }
+    .hero-price span { font-size: 2rem; }
     .hero-cta { width: 100%; max-width: 300px; } 
     .hero-character { max-height: 100vh; height: 100%; }
     .hero-character-left { left: 0; max-width: 100%; }
@@ -479,13 +492,14 @@ nav.inner-nav .nav-cta {
     .rem { height: 40%; }
 }
 @media (max-width: 620px) {
-    .hero-price span { font-size: 1.35rem; }
+    .hero-price span { font-size: 1.8rem; }
 }
 @media (max-width: 480px) {
-    .hero-content.container { margin-bottom: -20rem; }
+    .hero-content.container { margin-bottom: -7rem; }
     /* .hero-price span { font-size: 1.1rem; } /* Handled above */
-    .hero-content h2 { font-size: 1.5rem; } 
+    .hero-content h2 { font-size: 1rem; } 
     .hero-content p { font-size: 1rem; }
+    .hero-cta { width: 90%; max-width: 300px; } 
     /* .hero-cta { width: 100%; max-width: 300px; } /* Handled above */
     .hero-character { max-height: 90vh; height: 100%; }
     .rem { height: 40%; }
@@ -503,12 +517,12 @@ nav.inner-nav .nav-cta {
 .intro-content-wrapper p { font-size: 1.1rem; line-height: 1.2; box-decoration-break: clone; -webkit-box-decoration-break: clone; color: #fff; text-shadow: 1px 1px 2px #000,0 0 5px rgba(0,0,0,.6); position: absolute; margin: 0; text-align: center; }
 .intro-content-wrapper span { font-family: 'title-bold'; } 
 #still { top: 0; left: 0; right: 0; padding: 50px; width: auto; }
-#appear { bottom: 9%; width: auto; left: 0; right: 0; padding: 100px; line-height: 1.2rem; opacity: 0; transform: translateY(15px); pointer-events: none; transition: opacity .5s ease-in-out,transform .5s ease-in-out; }
+#appear { bottom: 0; width: auto; left: 0; right: 0; padding: 100px; line-height: 1.2rem; opacity: 0; transform: translateY(15px); pointer-events: none; transition: opacity .5s ease-in-out,transform .5s ease-in-out; }
 .intro-content-wrapper p span.highlight-yellow { color: #ff5900; font-weight: bold; box-decoration-break: clone; -webkit-box-decoration-break: clone; text-shadow: none; cursor: pointer; transition: color .3s ease; } 
 .highlight-yellow .letter { display: inline-block; } 
 .intro-content-wrapper p span.highlight-yellow:hover { color: #Fcc427; }
 @media (max-width: 992px) { .intro-content-wrapper p { font-size: 1rem; line-height: 1.2; text-align: center; } .intro-background-image, .intro-foreground-image { position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; height: 50%; object-fit: cover; } #still { margin-top: 50px; left: 0; right: 0; width: auto; padding: 30px; } #appear { width: auto; margin-bottom: 0; left: 0; right: 0; padding: 30px; } }
-@media (max-width: 767px) { #intro { width: 100%; height: 100vh; } #still { margin-top: 100px; } #appear { margin-bottom: 2rem; } }
+@media (max-width: 800px) { #intro { width: 100%; height: 100vh; } #still { margin-top: 100px; } #appear { margin-bottom: 10rem; } }
 @media (max-width: 500px) { #intro::before, #intro::after { height: 30%; } .intro-background-image, .intro-foreground-image { height: 40%; } }
 
 
@@ -538,18 +552,18 @@ nav.inner-nav .nav-cta {
 #features .feature-item img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: 5px; margin-bottom: 1rem; }
 #features .feature-item .icon-placeholder { display: none; }
 #features .feature-item .feature-text { min-height: 0; overflow: visible; }
-#features .feature-item h3 { font-family: 'title', sans-serif; font-size: 1.7rem; text-transform: uppercase; margin-top: .2rem; margin-bottom: .2rem; position: relative; display: inline-block; background-image: linear-gradient(175deg,#fff 0%,#fff 15%,#e7e7e7 40%,#d6d6d6 60%,#a0a0a0 85%,#888 100%); color: transparent; -webkit-background-clip: text; background-clip: text; text-shadow: 1px 1px 1px rgba(0,0,0,.3), -1px -1px 1px hsla(0,0%,100%,.4); font-weight: 700; padding-left: 22px; }
+#features .feature-item h3 { font-family: 'title', sans-serif; font-size: 1.7rem; text-transform: uppercase; margin-top: .2rem; margin-bottom: .2rem; position: relative; display: inline-block; background-image: linear-gradient(175deg,#fff 0%,#fff 15%,#e7e7e7 40%,#d6d6d6 60%,#a0a0a0 85%,#888 100%);     -webkit-text-fill-color: transparent    ; -webkit-background-clip: text; background-clip: text;  font-weight: 700; padding-left: 22px; }
 #features .feature-item h3::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-image: linear-gradient(135deg,#fcc427,#dda200); border: 1px solid #c08e06; box-shadow: 1px 1px 2px rgba(0,0,0,.3); border-radius: 2px; }
 #features .feature-item p { margin-bottom: 0; text-align: justify; line-height: 1.3; max-width: 500px; }
 @media (max-width: 992px) { #features { padding: 50px 100px; } #features .features-grid { gap: 30px; } #features .feature-item h3 { font-size: 1.5rem; } #features .feature-item p { font-size: 1.1rem; max-width: none; } }
-@media (max-width: 767px) { #features { padding: 40px 20px; } #features h2 { margin-bottom: 2rem; } #features .features-grid { grid-template-columns: 1fr; gap: 35px; } #features .feature-item { text-align: center; } #features .feature-item img { margin-left: auto; margin-right: auto; max-width: 85%; height: auto; } #features .feature-item h3 { font-size: 1.5rem; display: block; padding-left: 0; margin-left: auto; margin-right: auto; max-width: -moz-max-content; max-width: max-content; } #features .feature-item h3::before { left: -18px; } #features .feature-item p { text-align: justify; font-size: 1.2rem; max-width: 85%; margin-left: auto; margin-right: auto; } }
-@media (max-width: 480px) { #features { padding: 30px 15px; } #features .features-grid { gap: 30px; } #features .feature-item h3 { font-size: 1.3rem; } #features .feature-item h3::before { left: -16px; width: 10px; height: 10px; } #features .feature-item p { font-size: 1rem; } }
+@media (max-width: 767px) { #features { padding: 40px 20px; } #features h2 { margin-bottom: 2rem; } #features .features-grid { grid-template-columns: 1fr; gap: 35px; } #features .feature-item { text-align: center; } #features .feature-item img { margin-left: auto; margin-right: auto; max-width: 85%; height: auto; } #features .feature-item h3 { font-size: 1.4rem; display: block; padding-left: 0; margin-left: auto; margin-right: auto; max-width: -moz-max-content; max-width: max-content; } #features .feature-item h3::before { left: -18px; } #features .feature-item p { text-align: justify; font-size: 1.2rem; max-width: 85%; margin-left: auto; margin-right: auto; } }
+@media (max-width: 480px) { #features { padding: 30px 15px; } #features .features-grid { gap: 30px; } #features .feature-item h3 { font-size: 1.2rem; } #features .feature-item h3::before { left: -16px; width: 10px; height: 10px; } #features .feature-item p { font-size: 1rem; } }
 @media (max-width: 450px) { #features .feature-item h3 { font-size: 1rem; } #features .feature-item h3::before { left: -16px; width: 10px; height: 10px; } #features .feature-item p { font-size: .9rem; } }
 
 
 /* ===== Trailer Section - Styles for YouTube Facade ===== */
 #trailer.video-section { }
-#trailer .video-container { text-align: center; margin-bottom: 2rem; max-width: 681px; margin-left: auto; margin-right: auto; }
+#trailer .video-container { text-align: center; margin-bottom: 2rem; max-width: 681px; margin-left: auto; margin-right: auto; margin-top: 2.2rem;}
 #trailer .youtube-facade { position: relative; display: inline-block; cursor: pointer; overflow: hidden; border-radius: 5px; width: 100%; aspect-ratio: 16 / 9; background-color: #222; }
 #trailer .youtube-facade img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 5px; transition: transform 0.3s ease; }
 #trailer .youtube-facade:hover img { transform: scale(1.05); }
@@ -613,14 +627,15 @@ nav.inner-nav .nav-cta {
 #about .about-item:nth-child(even) .about-text { padding: 40px 0 40px 40px; }
 #about .about-item .about-image img { display: block; width: 100%; height: auto; object-fit: cover; border-radius: 5px; }
 #about .about-item .about-text { max-width: 600px; text-align: justify; color: #fff; line-height: 1.6; }
-#about .about-item .about-text h3 { font-family: title,sans-serif; font-size: 1.7rem; text-transform: uppercase; margin-top: 0; margin-bottom: .5rem; position: relative; display: inline-block; background-image: linear-gradient(175deg,#fff 0%,#fff 15%,#e7e7e7 40%,#d6d6d6 60%,#a0a0a0 85%,#888 100%); color: transparent; -webkit-background-clip: text; background-clip: text; text-shadow: 1px 1px 1px rgba(0,0,0,.3),-1px -1px 1px hsla(0,0%,100%,.4); font-weight: 700; padding-left: 22px; }
+#about .about-item .about-text h3 { font-family: title,sans-serif;text-align: left; font-size: 1.7rem; text-transform: uppercase; margin-top: 0; margin-bottom: .5rem; position: relative; display: inline-block; background-image: linear-gradient(175deg,#fff 0%,#fff 15%,#e7e7e7 40%,#d6d6d6 60%,#a0a0a0 85%,#888 100%);     -webkit-text-fill-color: transparent;    -webkit-background-clip: text; background-clip: text; font-weight: 700; padding-left: 22px; }
 #about .about-item .about-text h3::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; background-image: linear-gradient(135deg,#fcc427,#dda200); border: 1px solid #c08e06; box-shadow: 1px 1px 2px rgba(0,0,0,.3); border-radius: 2px; }
 #about .about-item .about-text p { color: #e0e0e0; margin-bottom: 1rem; line-height: 1.3; }
 #about .about-item .about-text p:last-child { margin-bottom: 0; }
 #about .about-item:nth-child(even) { flex-direction: row-reverse; }
-@media (max-width: 992px) { #about { padding: 50px 0; } #about h2 { margin-bottom: 2.5rem; } #about .about-item { align-items: center; gap: 30px; } #about .about-item:nth-child(odd) .about-image, #about .about-item:nth-child(even) .about-text { padding-left: 30px; padding-top: 30px; padding-bottom: 30px; } #about .about-item:nth-child(even) .about-image, #about .about-item:nth-child(odd) .about-text { padding-right: 30px; padding-top: 30px; padding-bottom: 30px; } #about .about-item:nth-child(odd) .about-image { padding-right: 0; } #about .about-item:nth-child(even) .about-image { padding-left: 0; } #about .about-item:nth-child(odd) .about-text { padding-left: 0; } #about .about-item:nth-child(even) .about-text { padding-right: 0; } #about .about-item .about-text h3 { font-size: 1.5rem; } #about .about-item .about-text p { font-size: 1rem; } }
-@media (max-width: 800px) { #about { padding: 40px 0; } #about h2 { margin-bottom: 2rem; } #about .about-item { flex-direction: column!important; gap: 25px; } #about .about-item::after { background: linear-gradient(to bottom,#000 0%,transparent 10%,transparent 90%,#000 100%); } #about .about-item .about-image, #about .about-item .about-text { flex: none; width: 100%; max-width: 90%; margin-left: auto; margin-right: auto; padding: 25px; min-width: unset; } #about .about-item .about-image { padding-bottom: 0; max-width: 80%; } #about .about-item .about-image img { max-height: 350px; } #about .about-item .about-text { text-align: justify; } #about .about-item .about-text h3 { font-size: 1.4rem; display: block; padding-left: 0; margin-left: auto; margin-right: auto; max-width: -moz-max-content; max-width: max-content; } #about .about-item .about-text h3::before { left: -18px; } #about .about-item .about-text p { font-size: 1rem; text-align: justify; } }
-@media (max-width: 480px) { #about { padding: 30px 0; } #about .about-item { gap: 20px; } #about .about-item .about-image, #about .about-item .about-text { padding: 20px; max-width: 85%; } #about .about-item .about-image img { max-height: 300px; } #about .about-item .about-text h3 { font-size: 1.3rem; } #about .about-item .about-text h3::before { left: -16px; width: 10px; height: 10px; } #about .about-item .about-text p { font-size: .9rem; } }
+@media (max-width: 992px) { #about { padding: 50px 0; } #about h2 { margin-bottom: 2.5rem; } #about .about-item { align-items: center; gap: 30px; } #about .about-item:nth-child(odd) .about-image, #about .about-item:nth-child(even) .about-text { padding-left: 30px; padding-top: 30px; padding-bottom: 30px; } #about .about-item:nth-child(even) .about-image, #about .about-item:nth-child(odd) .about-text { padding-right: 30px; padding-top: 30px; padding-bottom: 30px; } #about .about-item:nth-child(odd) .about-image { padding-right: 0; } #about .about-item:nth-child(even) .about-image { padding-left: 0; } #about .about-item:nth-child(odd) .about-text { padding-left: 0; } #about .about-item:nth-child(even) .about-text { padding-right: 0; } #about .about-item .about-text h3 { font-size: 1.7rem; } #about .about-item .about-text p { font-size: 1rem; } }
+@media (max-width: 500px) { #about { padding: 40px 0; } #about h2 { margin-bottom: 2rem; } #about .about-item { flex-direction: column!important; gap: 25px; } #about .about-item::after { background: linear-gradient(to bottom,#000 0%,transparent 10%,transparent 90%,#000 100%); } #about .about-item .about-image, #about .about-item .about-text { flex: none; width: 100%; max-width: 90%; margin-left: auto; margin-right: auto; padding: 25px; min-width: unset; } #about .about-item .about-image { padding-bottom: 0; max-width: 80%; } #about .about-item .about-image img { max-height: 350px; } #about .about-item .about-text { text-align: justify; } #about .about-item .about-text h3 { font-size: 1.4rem; display: block; padding-left: 0; margin-left: auto; margin-right: auto; max-width: -moz-max-content; max-width: max-content; } #about .about-item .about-text h3::before { left: -18px; } #about .about-item .about-text p { font-size: 1rem; text-align: justify; } }
+@media (max-width: 480px) { 
+    #about { padding: 30px 0; } #about .about-item { gap: 20px; } #about .about-item .about-image, #about .about-item .about-text { padding: 20px; max-width: 85%; } #about .about-item .about-image img { max-height: 300px; } #about .about-item .about-text h3 { font-size: 1rem; } #about .about-item .about-text h3::before { left: -16px; width: 10px; height: 10px; } #about .about-item .about-text p { font-size: .9rem; } }
 
 
 /* ===== System Requirements Section (Original) ===== */
@@ -633,6 +648,14 @@ nav.inner-nav .nav-cta {
 #requirements .requirements-list p { font-size: .9rem; font-weight: 700; margin-top: 1rem; text-align: center; }
 #requirements .requirements-list a { color: #b91c0c; }
 #requirements .requirements-list a:hover { color: #b91c0c; }
+
+@media (max-width: 480px) { 
+    #requirements .requirements-list{
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+}
+
 
 
 /* ===== Community Section (Original) ===== */
@@ -657,7 +680,10 @@ nav.inner-nav .nav-cta {
 }
 /* Specific initial states if needed - KEPT */
 #community .community-intro-text {
+    margin-top: 1rem;
     transform: translateY(25px); 
+    padding-left:20px;
+    padding-right:20px;
 }
 
 #community .social-links {
@@ -667,6 +693,8 @@ nav.inner-nav .nav-cta {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    padding-left:20px;
+    padding-right:20px;
 }
 
 #community .social-links a {
@@ -699,6 +727,6 @@ nav.inner-nav .nav-cta {
 footer { background-color: #b91c0c; color: #fff; text-align: center; padding: 80px 0; margin-bottom: 0; margin-top: 43px; }
 footer .container { text-align: center; }
 footer .footer-links { margin-bottom: 10px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; font-size: .9rem; }
-footer .footer-links a { color: #fff; padding: 0 5px; text-decoration: none; }
+footer .footer-links a { color: #d8d8d8; padding: 0 5px; text-decoration: none; }
 footer p { margin-bottom: 0; text-align: center; font-size: .9rem; }
 footer .footer-links a:hover { color: #fff; text-decoration: underline; }
