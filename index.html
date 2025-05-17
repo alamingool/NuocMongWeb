@@ -6,14 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuoc Mong - Interactive Water Puppetry Game</title>
     <link rel="stylesheet" href="style.css">
-    <!-- You might add Favicons here later -->
+    <meta name="description" content="Nuoc Mong is an interactive PC game bringing Vietnamese water puppetry to life with hand-tracking controls. Discover folklore, tradition, and innovation.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-
-    <link rel="icon" href="images/motconsoi.png" type="image/png">
+    
+    <!-- Preload local fonts - ensure these paths are correct and files exist -->
+    <link rel="preload" href="font/palab.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" href="font/SF-Pro-Display-Thin.woff2" as="font" type="font/woff2" crossorigin="anonymous"> 
+    
+    <link rel="icon" href="images/motconsoi.webp" type="image/webp">
 
 </head>
 
@@ -21,10 +25,10 @@
 
     <!-- ===== Header & Navigation ===== -->
     <header>
-        <nav class="container"> <!-- NAV NGOÀI làm container chính -->
+        <nav class="container"> 
             <div class="logo">
                 <a href="index.html">
-                    <img src="images/logo_trắg.png" alt="Nuoc Mong Logo">
+                    <img src="images/logo_trắg.webp" alt="Nuoc Mong Logo" width="150" height="35"> 
                 </a>
             </div>
     
@@ -34,7 +38,7 @@
                 <span></span>
             </button>
     
-            <nav class="inner-nav"> <!-- NAV TRONG chứa ul - Thêm class để dễ target -->
+            <nav class="inner-nav"> 
                 <ul>
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="#trailer">Trailer</a></li>
@@ -51,51 +55,35 @@
     </header>
 
     <main>
-
-        <!-- 1. Ảnh nhân vật đặt ở đây, bên ngoài content -->
-        <img src="images/linh.png" class="hero-character hero-character-left" alt="Nhân vật Lính">
-        <img src="images/vua.png" class="hero-character hero-character-right" alt="Nhân vật Vua">
-        <img src="images/rem.png" class="rem">
-
+        <img src="images/linh.webp" class="hero-character hero-character-left" alt="Nhân vật Lính - Soldier Character" width="600" height="1200" loading="lazy">
+        <img src="images/vua.webp" class="hero-character hero-character-right" alt="Nhân vật Vua - King Character" width="600" height="1200" loading="lazy">
+        <img src="images/rem.webp" class="rem" alt="Red stage curtains" width="1920" height="500" fetchpriority="high">
 
         <section id="home" class="hero">
             <div class="hero-content container">
-                <img class="logo" src="images/logo.png">
-                <!--h2>Where Tradition Meets Innovation – You're in Control</h2-->
+                <img class="logo" src="images/logo.webp" alt="Nuoc Mong Game Title Logo" width="800" height="250">
+                <h2>Where Tradition Meets Innovation – You're in Control</h2>
                 <p>Uncover the vibrant tapestry of Vietnamese heritage, where centuries-old traditions come to life with
                     stunning precision. All from the comfort of your PC.</p>
-
                 <div class="hero-price">
                     <span>Available Now for 29.999 VND</span>
                 </div>
-
                 <a href="https://itch.io/your-game-link" class="cta-button hero-cta" target="_blank"
                     rel="noopener noreferrer">Add to Collection on Itch.io</a>
             </div>
         </section>
 
-
-
         <section class="black-break-section">
-            <img src="images/dragon.png" class="centered-break-image">
+            <img src="images/dragon.webp" class="centered-break-image" alt="Decorative dragon element" width="1200" height="200" loading="lazy">
         </section>
 
-
-
-
-        <!-- ===== Intro Section ===== -->
-        <section id="intro"> <!-- Chỉ giữ lại ID -->
-
-            <img src="images/chua.png" class="intro-background-image" alt="Nền giới thiệu">
-            <img src="images/hand.png" class="intro-foreground-image" alt="Bàn tay điều khiển">
-
-            <div class="intro-content-wrapper container content-section"> <!-- Đặt class vào div con -->
-               
-                <!--h2>Discover an Enchanting World</h2-->
+        <section id="intro"> 
+            <img src="images/chua.webp" class="intro-background-image" alt="Nền giới thiệu - Temple background" width="1920" height="1080">
+            <img src="images/hand.webp" class="intro-foreground-image" alt="Bàn tay điều khiển - Controlling hands" width="800" height="600">
+            <div class="intro-content-wrapper container content-section"> 
                 <p id="still"> Nuoc Mong is an immersive experience that brings Vietnamese water puppetry to life
                     through interactive <span class="highlight-yellow">hand-tracking controls</span>.
                 </p>
-
                 <p id="appear"> Step into the story as the unseen hand behind the show—guiding puppets, shaping the
                     world, and influencing the tale. Tradition meets technology in this unique blend of cultural
                     heritage and modern storytelling.
@@ -103,39 +91,31 @@
             </div>
         </section>
 
-
-
         <section class="black-break-section">
-            <img src="images/dragon.png" class="centered-break-image">
+            <img src="images/dragon.webp" class="centered-break-image" alt="Decorative dragon element" width="1200" height="200" loading="lazy">
         </section>
 
-
-
-
-        <!-- ===== Trailer Section ===== -->
-        <section id="trailer" class="container content-section">
+        <section id="trailer" class="container content-section video-section">
             <h2>Trailer</h2>
-            <div class="video-placeholder">
-                <iframe width="681" height="383" src="https://www.youtube.com/embed/XsqT4hEnBKU"
-                    title="Nuoc Mong | TRAILER" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
-
-                <iframe width="681" height="383" src="https://www.youtube.com/embed/ndHbvFxscOE"
-                    title="NUOC MONG | TRAILER" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <p><em>Cannot see the trailer? View it directly on YouTube.</em></p>
+            <div class="video-container">
+                <div class="youtube-facade" data-youtube-id="XsqT4hEnBKU">
+                    <img src="https://i.ytimg.com/vi/XsqT4hEnBKU/hqdefault.jpg" alt="Nuoc Mong Trailer Thumbnail" loading="lazy" width="681" height="383">
+                    <button class="play-button" aria-label="Play Nuoc Mong Trailer"></button>
+                </div>
+                <p><em>Cannot see the trailer? <a href="https://www.youtube.com/watch?v=XsqT4hEnBKU" target="_blank" rel="noopener noreferrer">View it directly on YouTube</a>.</em></p>
+            </div>
+            <div class="video-container">
+                 <div class="youtube-facade" data-youtube-id="ndHbvFxscOE">
+                    <img src="https://i.ytimg.com/vi/ndHbvFxscOE/hqdefault.jpg" alt="Nuoc Mong Second Trailer Thumbnail" loading="lazy" width="681" height="383">
+                    <button class="play-button" aria-label="Play Nuoc Mong Second Trailer"></button>
+                </div>
+                <p><em>Cannot see the trailer? <a href="https://www.youtube.com/watch?v=ndHbvFxscOE" target="_blank" rel="noopener noreferrer">View it directly on YouTube</a>.</em></p>
             </div>
         </section>
 
-
         <section id="pricing" class="container content-section">
             <h2 class="section-header">Pricing</h2>
-
             <div class="pricing-grid">
-                <!-- Starter Pack -->
                 <div class="pricing-card">
                     <div class="card-header">
                         <h3>Starter Pack</h3>
@@ -154,10 +134,7 @@
                             <li>Limited features</li>
                         </ul>
                     </div>
-
                 </div>
-
-                <!-- Full Package (Most Popular) -->
                 <div class="pricing-card featured">
                     <div class="popular-badge">Most popular</div>
                     <div class="card-header">
@@ -179,8 +156,6 @@
                         </ul>
                     </div>
                 </div>
-
-                <!-- Rental License -->
                 <div class="pricing-card">
                     <div class="card-header">
                         <h3>Rental License</h3>
@@ -208,14 +183,11 @@
             </div>
         </section>
 
-
-        <!-- ===== Features Section ===== -->
         <section id="features" class="content-section">
             <h2>Key Features</h2>
             <div class="features-grid">
                 <div class="feature-item">
-                    <!-- REMINDER: Replace with your actual feature image -->
-                    <img src="screenshots/10.png" alt="Feature: Intuitive Hand Controls">
+                    <img src="screenshots/10.webp" alt="Feature: Intuitive Hand Controls for Nuoc Mong game" width="1920" height="1080" loading="lazy">
                     <div class="feature-text">
                         <h3>Intuitive Hand Controls</h3>
                         <p>Utilize webcam-based hand tracking to interact naturally with the watery stage, controlling
@@ -223,8 +195,7 @@
                     </div>
                 </div>
                 <div class="feature-item">
-                    <!-- REMINDER: Replace with your actual feature image -->
-                    <img src="screenshots/02.png" alt="Feature: Authentic Water Puppetry">
+                    <img src="screenshots/02.webp" alt="Feature: Authentic Water Puppetry in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                     <div class="feature-text">
                         <h3>Authentic Water Puppetry</h3>
                         <p>Experience the unique aesthetic and charm of traditional Vietnamese water puppetry,
@@ -232,8 +203,7 @@
                     </div>
                 </div>
                 <div class="feature-item">
-                    <!-- REMINDER: Replace with your actual feature image -->
-                    <img src="screenshots/09.png" alt="Feature: Captivating Folklore">
+                    <img src="screenshots/09.webp" alt="Feature: Captivating Folklore in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                     <div class="feature-text">
                         <h3>Captivating Folklore</h3>
                         <p>Immerse yourself in enchanting stories inspired by Vietnamese myths, legends, and rural life,
@@ -241,8 +211,7 @@
                     </div>
                 </div>
                 <div class="feature-item">
-                    <!-- REMINDER: Replace with your actual feature image -->
-                    <img src="screenshots/07.png" alt="Feature: Rich Audiovisual Experience">
+                    <img src="screenshots/07.webp" alt="Feature: Rich Audiovisual Experience in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                     <div class="feature-text">
                         <h3>Rich Audiovisual Experience</h3>
                         <p>Delight in a vibrant world brought to life with evocative lighting, atmospheric sounds, and a
@@ -252,17 +221,11 @@
             </div>
         </section>
 
-
-
-        <!-- ===== About the Game Section (Alternating layout) ===== -->
         <section id="about" class="content-section">
             <h2>About us</h2>
-
-            <!-- About Item 1: Image Left, Text Right -->
-            <div class="about-item about-item-1"> <!-- Added unique class -->
-                <!-- REMINDER: Replace with your actual image -->
+            <div class="about-item about-item-1"> 
                 <div class="about-image">
-                    <img src="screenshots/0185.png" alt="Description of the image related to becoming the puppeteer">
+                    <img src="screenshots/0185.webp" alt="Player becoming the puppeteer in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                 </div>
                 <div class="about-text">
                     <h3>Become the Puppeter</h3>
@@ -273,12 +236,9 @@
                         between player and performer.</p>
                 </div>
             </div>
-
-            <!-- About Item 2: Text Left, Image Right -->
-            <div class="about-item about-item-2"> <!-- Added unique class -->
-                <!-- REMINDER: Replace with your actual image -->
+            <div class="about-item about-item-2"> 
                 <div class="about-image">
-                    <img src="screenshots/13.png" alt="Description of the image related to folklore stories">
+                    <img src="screenshots/13.webp" alt="Ancient Vietnamese folklore stories in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                 </div>
                 <div class="about-text">
                     <h3>Unfold Ancient Tales</h3>
@@ -289,12 +249,9 @@
                         expressing the narrative and feeling the rhythm of the show.</p>
                 </div>
             </div>
-
-            <!-- About Item 3: Image Left, Text Right -->
-            <div class="about-item about-item-3"> <!-- Added unique class -->
-                <!-- REMINDER: Replace with your actual image -->
+            <div class="about-item about-item-3"> 
                 <div class="about-image">
-                    <img src="screenshots/09.png" alt="Description of the image related to art style and atmosphere">
+                    <img src="screenshots/09.webp" alt="Living painting art style and atmosphere in Nuoc Mong game" width="1920" height="1080" loading="lazy">
                 </div>
                 <div class="about-text">
                     <h3>A Living Painting</h3>
@@ -306,64 +263,46 @@
             </div>
         </section>
 
-
-
         <section id="gallery" class="content-section">
-
-            <!-- ===== Fluid Gallery Section ===== -->
-            <div class="container"> <!-- Container for the heading -->
+            <div class="container"> 
                 <h2>Gameplay previews</h2>
             </div>
-
-            <!-- *** Wrapper for Gallery, Buttons, and Fade *** -->
             <div class="gallery-wrapper">
-                <!-- *** Scrolling Track for Images *** -->
                 <div class="fluid-gallery-track">
-                    <!-- DUPLICATES (LAST 2 REAL IMAGES) -->
-                    <img src="screenshots/14.png" alt="Nuoc Mong Screenshot (Duplicate)"
-                        class="gallery-item is-duplicate">
-                    <img src="screenshots/15.png" alt="Nuoc Mong Screenshot (Duplicate)"
-                        class="gallery-item is-duplicate">
-                    <!-- END DUPLICATES -->
-
-                    <!-- REAL IMAGES (Your actual screenshots) -->
-                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot showing a puppet on the water stage."
-                        class="gallery-item">
-                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot of detailed puppet design."
-                        class="gallery-item">
-                    <img src="screenshots/04.png" alt="Nuoc Mong Screenshot showing the watery stage environment."
-                        class="gallery-item">
-                    <img src="screenshots/05.png" alt="Nuoc Mong Screenshot featuring unique lighting effects."
-                        class="gallery-item">
-                    <img src="screenshots/06.png" alt="Nuoc Mong Screenshot of a character performance."
-                        class="gallery-item">
-                    <img src="screenshots/07.png" alt="Nuoc Mong Screenshot depicting a scene from Vietnamese folklore."
-                        class="gallery-item">
-                    <img src="screenshots/08.png" alt="Nuoc Mong Screenshot of the interactive interface."
-                        class="gallery-item">
-                    <img src="screenshots/09.png" alt="Nuoc Mong Screenshot showing dynamic water effects."
-                        class="gallery-item">
-                    <img src="screenshots/10.png" alt="Nuoc Mong Screenshot of another puppet character."
-                        class="gallery-item">
-                    <img src="screenshots/11.png" alt="Nuoc Mong Screenshot highlighting environmental details."
-                        class="gallery-item">
-                    <img src="screenshots/12.png" alt="Nuoc Mong Screenshot of a climactic story moment."
-                        class="gallery-item">
-                    <img src="screenshots/13.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <img src="screenshots/14.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <img src="screenshots/0185.png" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item">
-                    <!-- END REAL IMAGES -->
-
-                    <!-- DUPLICATES (FIRST 2 REAL IMAGES) -->
-                    <img src="screenshots/01.png" alt="Nuoc Mong Screenshot (Duplicate)"
-                        class="gallery-item is-duplicate">
-                    <img src="screenshots/02.png" alt="Nuoc Mong Screenshot (Duplicate)"
-                        class="gallery-item is-duplicate">
-                    <!-- END DUPLICATES -->
-
+                    <img src="screenshots/14.webp" alt="Nuoc Mong Screenshot (Duplicate)"
+                        class="gallery-item is-duplicate" width="711" height="400" loading="lazy">
+                    <img src="screenshots/0185.webp" alt="Nuoc Mong Screenshot (Duplicate)" 
+                        class="gallery-item is-duplicate" width="711" height="400" loading="lazy">
+                    <img src="screenshots/01.webp" alt="Nuoc Mong Screenshot showing a puppet on the water stage."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/02.webp" alt="Nuoc Mong Screenshot of detailed puppet design."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/04.webp" alt="Nuoc Mong Screenshot showing the watery stage environment."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/05.webp" alt="Nuoc Mong Screenshot featuring unique lighting effects."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/06.webp" alt="Nuoc Mong Screenshot of a character performance."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/07.webp" alt="Nuoc Mong Screenshot depicting a scene from Vietnamese folklore."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/08.webp" alt="Nuoc Mong Screenshot of the interactive interface."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/09.webp" alt="Nuoc Mong Screenshot showing dynamic water effects."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/10.webp" alt="Nuoc Mong Screenshot of another puppet character."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/11.webp" alt="Nuoc Mong Screenshot highlighting environmental details."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/12.webp" alt="Nuoc Mong Screenshot of a climactic story moment."
+                        class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/13.webp" alt="Nuoc Mong Screenshot of the stage setup." class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/14.webp" alt="Nuoc Mong Screenshot of the stage setup with puppet." class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/0185.webp" alt="Nuoc Mong Screenshot of a beautiful stage setup." class="gallery-item" width="711" height="400" loading="lazy">
+                    <img src="screenshots/01.webp" alt="Nuoc Mong Screenshot (Duplicate)"
+                        class="gallery-item is-duplicate" width="711" height="400" loading="lazy">
+                    <img src="screenshots/02.webp" alt="Nuoc Mong Screenshot (Duplicate)"
+                        class="gallery-item is-duplicate" width="711" height="400" loading="lazy">
                 </div>
-
-                <!-- Navigation Buttons -->
                 <button class="gallery-nav-button left" aria-label="Previous Screenshot">
                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                         <path fill="currentColor"
@@ -377,18 +316,12 @@
                     </svg>
                 </button>
             </div>
-
-            <!-- Optional: Add a button below the gallery -->
             <div class="container" style="text-align: center; margin-top: 2rem;">
                 <a href="https://itch.io/your-game-link#screenshots" class="cta-button secondary-cta" target="_blank"
                     rel="noopener noreferrer">View More on Itch.io</a>
             </div>
-
         </section>
 
-
-        <!-- ===== System Requirements Section (Recommended) ===== -->
-        <!-- Good to include for a PC game -->
         <section id="requirements" class="container content-section">
             <h2>System Requirements</h2>
             <div class="requirements-list">
@@ -407,41 +340,31 @@
             </div>
         </section>
 
-        <!-- ===== Community/Connect Section (Moved after Requirements) ===== -->
         <section id="community" class="container content-section">
             <h2>Join the Community</h2>
             <p class="community-intro-text">Connect with us and other players! Follow our development journey, share your thoughts, and get the
                 latest updates.</p>
             <div class="social-links">
-                <!-- REMINDER: Replace with your actual social links -->
                 <a href="https://itch.io/your-game-link" target="_blank" rel="noopener noreferrer">Itch.io Page</a>
                 <a href="https://discord.gg/your-invite-code" target="_blank" rel="noopener noreferrer">Discord</a>
                 <a href="https://twitter.com/your-handle" target="_blank" rel="noopener noreferrer">Twitter</a>
                 <a href="https://facebook.com/your-page" target="_blank" rel="noopener noreferrer">Facebook</a>
-                <!-- Add other relevant links (Reddit, Instagram, etc.) -->
             </div>
         </section>
 
     </main>
 
-
     <div class="footer-separator">
-        <img src="images/chua.png" alt="Water ripples decoration">
+        <img src="images/chua.webp" alt="Water ripples decoration for footer" width="1920" height="1080" loading="lazy">
     </div>
 
-
-    <!-- ===== Footer ===== -->
     <footer>
-
         <div class="container">
             <div class="footer-links">
-                <!-- REMINDER: Replace with your actual policy links -->
-                <a href="[Your Privacy Policy Link]">Privacy Policy</a>
-                <a href="[Your Terms of Service Link]">Terms of Service</a>
-                <!-- Add credits or other links here -->
+                <a href="[Your Privacy Policy Link]" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                <a href="[Your Terms of Service Link]" target="_blank" rel="noopener noreferrer">Terms of Service</a>
             </div>
             <p>© 2025 BaConSoi. All rights reserved.</p>
-            <!-- Maybe add platform logos (Itch.io, etc.) here -->
         </div>
     </footer>
 
@@ -449,3 +372,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 </body>
+</html>
